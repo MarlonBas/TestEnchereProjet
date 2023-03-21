@@ -40,7 +40,7 @@ public class AjouterUtilisateur extends HttpServlet {
 									 Integer.parseInt(request.getParameter("codePostal")),
 									 request.getParameter("ville")),
 						new UtilisateurDao().getRoleById(Integer.parseInt(request.getParameter("role"))), 12332234l);
-			UtilisateurManager.getInstance().save(u);
+			UtilisateurManager.getInstance().creerUtilisateur(u);
 			
 			
 			
