@@ -4,6 +4,6 @@ import fr.eni.enchere.bo.Adresse;
 
 public interface AdresseDAO {
 	
-	public Adresse selectById(int id_Adresse);
+	public Adresse selectById(int no_utilisateur);
 
 }

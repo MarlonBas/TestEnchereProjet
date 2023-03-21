@@ -8,4 +8,7 @@ public class DAOFactory {
 		return new UtilisateurDAOJdbcImpl();
 	}
 
+	public static AdresseDAO getAdresseDAO() {
+		return new AdresseDAOJdbcImpl();
+	}
 }

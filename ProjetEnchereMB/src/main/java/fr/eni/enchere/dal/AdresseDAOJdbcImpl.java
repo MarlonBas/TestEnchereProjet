@@ -8,25 +8,25 @@ import fr.eni.enchere.bo.Adresse;
 
 public class AdresseDAOJdbcImpl implements AdresseDAO{
 
-	private static final String SELECT_ADRESSE_BY_ID = "SELECT FROM ADRESSE (id_adresse,rue,code_postal,ville) WHERE id_adresse=?;";
+	private static final String SELECT_ADRESSE_BY_NO_UTILISATEUR = "SELECT FROM ADRESSE (id_adresse,id_utilisateur,rue,code_postal,ville) WHERE no_utilisateur=?;";
 	
 	@Override
-	public Adresse selectById(int id_Adresse) {
+	public Adresse selectById(int no_utilisateur) {
 		Adresse adresse=null;
 		try {
 		ResultSet rs;
 		Connection cnx = ConnectionProvider.getConnection();
-		PreparedStatement pstmt = cnx.prepareStatement(SELECT_ADRESSE_BY_ID);
-		pstmt.setInt(1, id_Adresse);
+		PreparedStatement pstmt = cnx.prepareStatement(SELECT_ADRESSE_BY_NO_UTILISATEUR);
+		pstmt.setInt(1, no_utilisateur);
 		rs=pstmt.executeQuery();
 		if(rs.next()) {
-			adresse= new Adresse(rs.getInt(1),rs.getString(2),rs.getInt(3),rs.getString(4));
+			adresse= new Adresse(rs.getInt("id_adresse"),rs.getInt("no_utilisateur"),rs.getString("rue"),rs.getInt("code_postal"),rs.getString("ville"));
 		}
-		
+		pstmt.close();
+		cnx.close();
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
-		
 		
 		return adresse;
 	}
