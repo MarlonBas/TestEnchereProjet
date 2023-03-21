@@ -3,12 +3,12 @@ package fr.eni.enchere;
 import java.io.IOException;
 import java.time.LocalDate;
 
-import fr.eni.ecole.BO.Adresse;
-import fr.eni.ecole.BO.Utilisateur;
-import fr.eni.ecole.Bll.UtilisateurManager;
-import fr.eni.ecole.DAL.UtilisateurDao;
-import fr.eni.ecole.Exceptions.CodePostalException;
-import fr.eni.ecole.Exceptions.NumeroException;
+import fr.eni.enchere.bo.Adresse;
+import fr.eni.enchere.bo.Utilisateur;
+import fr.eni.enchere.bll.UtilisateurManager;
+import fr.eni.enchere.dal.UtilisateurDAO;
+import fr.eni.enchere.exceptions.CodePostalException;
+import fr.eni.enchere.exceptions.NumeroException;
 
 
 @WebServlet("/ajouterutilisateur")
