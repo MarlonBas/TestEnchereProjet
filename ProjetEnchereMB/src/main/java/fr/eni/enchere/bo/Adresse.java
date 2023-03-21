@@ -2,6 +2,7 @@ package fr.eni.enchere.bo;
 
 public class Adresse {
 	
+	private int idAdresse;
 	private String rue;
 	private int codePostal;
 	private String ville;
@@ -41,6 +42,14 @@ public class Adresse {
 
 	public void setVille(String ville) {
 		this.ville = ville;
+	}
+
+	public int getIdAdresse() {
+		return idAdresse;
+	}
+
+	public void setIdAdresse(int idAdresse) {
+		this.idAdresse = idAdresse;
 	}
 	
 

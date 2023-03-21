@@ -5,12 +5,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.List;
 
-import fr.eni.javaee.tpmodule6.dal.ConnectionProvider;
+import fr.eni.enchere.bo.Utilisateur;
+
+
 
 public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 
 	private static final String INSERT_UTILISATEUR = "INSERT INTO UTILISATEUR (pseudo,nom,prenom,email,telephone,idAdresse,motDePasse,credit,administrateur) VALUES (?,?,?,?,?,?,?,?,);";
-	
 	private static final String INSERT_ADRESSE = "INSERT INTO ADRESSE (rue,code_postal,ville) VALUES (?,?,?);";
 	
 	@Override
@@ -20,33 +21,33 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 			PreparedStatement pstmt;
 			ResultSet rs;
 			pstmt = cnx.prepareStatement(INSERT_ADRESSE, PreparedStatement.RETURN_GENERATED_KEYS);
-			pstmt.setString(1,Utilisateur.getAdresse().getRue());
-			pstmt.setString(2,Utilisateur.getAdresse().getCodePostal());
-			pstmt.setString(2,Utilisateur.getAdresse().getVille());
+			pstmt.setString(1, utilisateur.getAdresse().getRue());
+			pstmt.setInt(2, utilisateur.getAdresse().getCodePostal());
+			pstmt.setString(2,utilisateur.getAdresse().getVille());
 			pstmt.executeUpdate();
 			rs=pstmt.getGeneratedKeys();
 			if(rs.next())
 			{
-				Utilisateur.getAdresse().setIdAdresse(rs.getInt("idAdresse"));
+				utilisateur.getAdresse().setIdAdresse(rs.getInt("idAdresse"));
 			}
 			rs.close();
 			pstmt.close();
 			
 			pstmt = cnx.prepareStatement(INSERT_UTILISATEUR, PreparedStatement.RETURN_GENERATED_KEYS);
-			pstmt.setString(1,Utilisateur.getPseudo());
-			pstmt.setString(2,Utilisateur.getNom());
-			pstmt.setString(3,Utilisateur.getPrenom());
-			pstmt.setString(4,Utilisateur.getEmail());
-			pstmt.setString(5,Utilisateur.getTelephone());
-			pstmt.setInt(6, Utilisateur.getAdresse().getIdAdresse());
-			pstmt.setString(7, Utilisateur.getMotDePasse());
-			pstmt.setInt(8, Utilisateur.getCredit());
-			pstmt.setBoolean(9, Utilisateur.getAdministrateur());
+			pstmt.setString(1,utilisateur.getPseudo());
+			pstmt.setString(2,utilisateur.getNom());
+			pstmt.setString(3,utilisateur.getPrenom());
+			pstmt.setString(4,utilisateur.getEmail());
+			pstmt.setString(5,utilisateur.getTelephone());
+			pstmt.setInt(6, utilisateur.getAdresse().getIdAdresse());
+			pstmt.setString(7, utilisateur.getMotDePasse());
+			pstmt.setInt(8, utilisateur.getCredit());
+			pstmt.setBoolean(9, utilisateur.isAdministrateur());
 			pstmt.executeUpdate();
 			rs = pstmt.getGeneratedKeys();
 			if(rs.next())
 			{
-				Utilisateur.setNoUtilisateur(rs.getInt("noUtilisateur"));
+				utilisateur.setNoUtilisateur(rs.getInt("noUtilisateur"));
 			}
 			rs.close();
 			pstmt.close();
@@ -70,5 +71,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	public Utilisateur selectById(int noUtilisateur) {
 		return null;
 	}
+
+	
 
 }
