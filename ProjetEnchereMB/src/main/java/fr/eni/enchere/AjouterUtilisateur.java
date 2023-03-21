@@ -3,12 +3,16 @@ package fr.eni.enchere;
 import java.io.IOException;
 import java.time.LocalDate;
 
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import fr.eni.enchere.bo.Adresse;
 import fr.eni.enchere.bo.Utilisateur;
 import fr.eni.enchere.bll.UtilisateurManager;
 import fr.eni.enchere.dal.UtilisateurDAO;
-import fr.eni.enchere.exceptions.CodePostalException;
-import fr.eni.enchere.exceptions.NumeroException;
 
 
 @WebServlet("/ajouterutilisateur")
@@ -30,7 +34,7 @@ public class AjouterUtilisateur extends HttpServlet {
 	{
 		Utilisateur u;
 		try {
-			u=new Utilisateur.java(request.getParameter("nom"),
+			u=new Utilisateur(request.getParameter("nom"),
 					request.getParameter("prenom"), 
 					request.getParameter("email"),
 					request.getParameter("motDePasse"),
@@ -39,7 +43,7 @@ public class AjouterUtilisateur extends HttpServlet {
 								     request.getParameter("rue"),
 									 Integer.parseInt(request.getParameter("codePostal")),
 									 request.getParameter("ville")),
-						new UtilisateurDao().getRoleById(Integer.parseInt(request.getParameter("role"))), 12332234l);
+						new UtilisateurDAO().getRoleById(Integer.parseInt(request.getParameter("role"))), 12332234l);
 			UtilisateurManager.getInstance().creerUtilisateur(u);
 			
 			
@@ -47,13 +51,7 @@ public class AjouterUtilisateur extends HttpServlet {
 		} catch (NumberFormatException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (CodePostalException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (NumeroException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+			
 		response.sendRedirect("index.html");
 		
 	}
