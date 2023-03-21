@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import fr.eni.enchere.bo.Adresse;
 import fr.eni.enchere.bo.Utilisateur;
 import fr.eni.enchere.bll.UtilisateurManager;
+import fr.eni.enchere.dal.DAOFactory;
 import fr.eni.enchere.dal.UtilisateurDAO;
 
 
@@ -22,7 +23,7 @@ public class AjouterUtilisateur extends HttpServlet {
  
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
-		request.setAttribute("roles", new .UtilisateurDAO().selectAll());
+		request.setAttribute("roles",DAOFactory.getUtilisateurDAO().selectAll());
 		getServletContext().getRequestDispatcher("/WEB-INF/ajout.jsp").forward(request, response);
 		
 	}
@@ -39,12 +40,12 @@ public class AjouterUtilisateur extends HttpServlet {
 					request.getParameter("email"),
 					request.getParameter("motDePasse"),
 					LocalDate.of(2000, 12, 31), 
-						new Adresse(Integer.parseInt(request.getParameter("numero")),
-								     request.getParameter("rue"),
-									 Integer.parseInt(request.getParameter("codePostal")),
-									 request.getParameter("ville")),
-						new UtilisateurDAO().getRoleById(Integer.parseInt(request.getParameter("role"))), 12332234l);
-			UtilisateurManager.getInstance().creerUtilisateur(u);
+			  new Adresse(Integer.parseInt(request.getParameter("numero")),
+					request.getParameter("rue"),
+					Integer.parseInt(request.getParameter("codePostal")),
+					request.getParameter("ville")),
+					DAOFactory.getUtilisateurDAO().getClassAdresse(request.getParameter("role"))), 12332234l);
+			     UtilisateurManager.getInstance().creerUtilisateur(u);
 			
 			
 			
@@ -54,6 +55,9 @@ public class AjouterUtilisateur extends HttpServlet {
 			
 		response.sendRedirect("index.html");
 		
+		}
+		
+		
 	}
-
+	
 }
