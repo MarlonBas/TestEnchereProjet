@@ -30,15 +30,18 @@ public class ServletLogin extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String email;
+		String identifiant;
 		String password;
 		Utilisateur utilisateur=null;
+		Boolean typeEmail = false;
 		
-		email=request.getParameter("email");
-		password=request.getParameter("password");
+		identifiant = request.getParameter("identifiant");
+		if (identifiant.contains("@")) {
+			typeEmail = true;
+		}
+		password = request.getParameter("password");
 		
-		//En commentaire le temps de mettre login() en BLL
-		utilisateur=UtilisateurManager.getInstance().login(email, password);
+		utilisateur = UtilisateurManager.getInstance().login(identifiant, password, typeEmail);
 		
 		if(utilisateur!=null) {
 			// Creer une session pour l'utilisateur
@@ -50,8 +53,7 @@ public class ServletLogin extends HttpServlet {
 			response.addCookie(cookieLog);
 			response.sendRedirect("Utilisateur.jsp");
 		}
-		else
-		{
+		else {
 			request.setAttribute("erreur", "L'email ou le mot de passe est invalide");
 			doGet(request, response);
 		}

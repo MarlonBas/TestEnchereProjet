@@ -12,5 +12,6 @@ public interface UtilisateurDAO {
 	public List<Utilisateur> selectAll();
 	public Utilisateur selectById(int noUtilisateur);
 	public Utilisateur login(String pseudo, String motDePasse);
+	public Utilisateur loginEmail(String email, String motDePasse);
 	
 }
