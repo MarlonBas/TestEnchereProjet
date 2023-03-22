@@ -9,7 +9,7 @@
     <h1>Se connecter</h1>
     <form action="ServletLogin" method="post">
         <label for="identifiant">Identifiant (pseudo ou email)</label><br>
-        <input type="identifiant" name="identifiant" required>
+        <input type="text" name="identifiant" required>
         <br><br>
         <label for="password">Mot de passe</label><br>
         <input type="password" name="password" required>
