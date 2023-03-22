@@ -9,7 +9,7 @@ import fr.eni.enchere.bo.Adresse;
 
 public class AdresseDAOJdbcImpl implements AdresseDAO{
 
-	private static final String SELECT_ADRESSE_BY_NO_UTILISATEUR = "SELECT(id_adresse,id_utilisateur,rue,code_postal,ville) FROM ADRESSES WHERE no_utilisateur=?;";
+	private static final String SELECT_ADRESSE_BY_NO_UTILISATEUR = "SELECT(id_adresse,no_utilisateur,rue,code_postal,ville) FROM ADRESSES WHERE no_utilisateur=?;";
 	
 	@Override
 	public Adresse selectById(int no_utilisateur) {
