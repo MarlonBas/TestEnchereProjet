@@ -1,6 +1,7 @@
 package fr.eni.enchere.dal;
 
 import java.sql.Connection;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
@@ -8,7 +9,7 @@ import fr.eni.enchere.bo.Adresse;
 
 public class AdresseDAOJdbcImpl implements AdresseDAO{
 
-	private static final String SELECT_ADRESSE_BY_NO_UTILISATEUR = "SELECT FROM ADRESSE (id_adresse,id_utilisateur,rue,code_postal,ville) WHERE no_utilisateur=?;";
+	private static final String SELECT_ADRESSE_BY_NO_UTILISATEUR = "SELECT(id_adresse,id_utilisateur,rue,code_postal,ville) FROM ADRESSES WHERE no_utilisateur=?;";
 	
 	@Override
 	public Adresse selectById(int no_utilisateur) {

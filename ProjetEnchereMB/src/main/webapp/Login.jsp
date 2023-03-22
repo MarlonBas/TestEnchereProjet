@@ -8,10 +8,10 @@
 <body>
     <h1>Se connecter</h1>
     <form action="ServletLogin" method="post">
-        <label>Email:</label>
-        <input type="text" name="email" required>
+        <label for="identifiant">Identifiant (pseudo ou email)</label><br>
+        <input type="identifiant" name="identifiant" required>
         <br><br>
-        <label>Password:</label>
+        <label for="password">Mot de passe</label><br>
         <input type="password" name="password" required>
         <br><br>
         <input type="submit" value="Login">
@@ -19,5 +19,10 @@
     <% if (request.getAttribute("erreur") != null) { %>
         <p style="color: red;"><%= request.getAttribute("erreur") %></p>
     <% } %>
+    <br>
+    <br>
+    <form action="AjoutUtilisateur" method="get">
+  		<button type="submit">Créer un compte</button>
+	</form>
 </body>
 </html>

@@ -30,8 +30,11 @@ public class UtilisateurManager {
 	}
 	
 	//LOGIN
-	public Utilisateur login(String email,String password) {
-		return utilisateurDAO.login(email,password);
+	public Utilisateur login(String login,String password, boolean typeEmail) {
+		if (typeEmail == true) {
+			return utilisateurDAO.loginEmail(login,password);
+		}
+		return utilisateurDAO.login(login,password);
 	}
 	
 	//SUPPRIMER UTILISATEUR
