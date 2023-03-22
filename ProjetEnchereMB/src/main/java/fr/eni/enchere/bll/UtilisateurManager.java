@@ -26,7 +26,21 @@ public class UtilisateurManager {
 	
 	// CREER UN NOUVEAU UTILISATEUR
 	public void creerUtilisateur(Utilisateur utilisateur) {
-		utilisateurDAO.insert(utilisateur);
+		
+		boolean verifEmail = utilisateurDAO.isEmailOk(utilisateur.getEmail());
+		boolean verifPseudo = utilisateurDAO.isPseudoOk(utilisateur.getPseudo());
+		
+		if(verifEmail && verifPseudo) {
+			utilisateurDAO.insert(utilisateur);
+		}else if(verifEmail && !verifPseudo) {
+			//Creer erreur pseudo deja utilisé
+		}else if(!verifEmail && verifPseudo) {
+			//Creer erreur email deja utilisé
+		}else {
+			//Creer erreur pseudo et email deja utilisé
+		}
+		
+		
 	}
 	
 	//LOGIN

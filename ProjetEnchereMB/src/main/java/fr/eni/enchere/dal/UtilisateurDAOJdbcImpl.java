@@ -20,6 +20,8 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	private static final String DELETE_ADRESSE = "DELETE FROM UTILISATEUR WHERE no_utilisateur=";
 	private static final String LOGIN = "SELECT no_utilisateur,pseudo,nom,prenom,email,telephone,mot_de_passe,credit,administrateur FROM UTILISATEURS WHERE pseudo=? and mot_de_passe=?";
 	private static final String LOGIN_EMAIL = "SELECT no_utilisateur,pseudo,nom,prenom,email,telephone,mot_de_passe,credit,administrateur FROM UTILISATEURS WHERE email=? and mot_de_passe=?";
+	private final static String VERIF_EMAIL = "SELECT * FROM UTILISATEURS WHERE email=?";
+	private static final String VERIF_PSEUDO = "SELECT * FROM UTILISATEURS WHERE pseudo=?";
 	
 	@Override
 	public void insert(Utilisateur utilisateur) {
@@ -204,4 +206,43 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 		return utilisateur;
 	}
 
+	@Override
+	public boolean isEmailOk(String email) {
+		boolean isEmailAvailable = false;
+		Connection cnx;
+		try {
+			cnx = ConnectionProvider.getConnection();
+		
+		PreparedStatement pstmt = cnx.prepareStatement(VERIF_EMAIL);
+		pstmt.setString(1, email);
+		ResultSet rs = pstmt.executeQuery();
+		isEmailAvailable = !rs.next();
+		pstmt.close();
+		cnx.close();
+		
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return isEmailAvailable;
+	}
+
+	@Override
+	public boolean isPseudoOk(String pseudo) {
+		boolean isPseudoAvailable = false;
+		Connection cnx;
+		try {
+			cnx = ConnectionProvider.getConnection();
+		
+		PreparedStatement pstmt = cnx.prepareStatement(VERIF_PSEUDO);
+		pstmt.setString(1, pseudo);
+		ResultSet rs = pstmt.executeQuery();
+		isPseudoAvailable = !rs.next();
+		
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return isPseudoAvailable;
+	}
 }

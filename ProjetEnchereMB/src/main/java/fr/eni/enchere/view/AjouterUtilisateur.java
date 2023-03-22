@@ -32,6 +32,7 @@ public class AjouterUtilisateur extends HttpServlet {
 	{
 		Utilisateur u;
 		Adresse adresse;
+		
 		try {
 			adresse = new Adresse(
 					request.getParameter("rue"),
@@ -47,11 +48,18 @@ public class AjouterUtilisateur extends HttpServlet {
 					adresse,
 					request.getParameter("mot_de_passe")
 					); 
-			  
-					
-			     UtilisateurManager.getInstance().creerUtilisateur(u);
 			
-			
+			if( request.getParameter("confirmation_mot_de_passe").equals(request.getParameter("mot_de_passe")))
+			{
+				
+				UtilisateurManager.getInstance().creerUtilisateur(u);
+				
+			} else 	
+				{
+						request.setAttribute("utilisateurEnCreation", u);
+						RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/Utilisateur.jsp");
+						rd.forward(request, response);
+				}
 			
 		} catch (NumberFormatException e) {
 			// TODO Auto-generated catch block
@@ -61,7 +69,9 @@ public class AjouterUtilisateur extends HttpServlet {
 		
 		}
 		
+		}
+		
 		
 	}
 	
-}
+

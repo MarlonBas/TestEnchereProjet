@@ -14,5 +14,7 @@ public interface UtilisateurDAO {
 	public Utilisateur selectById(int noUtilisateur);
 	public Utilisateur login(String pseudo, String motDePasse);
 	public Utilisateur loginEmail(String email, String motDePasse);
+	boolean isEmailOk(String email);
+	boolean isPseudoOk(String pseudo);
 	
 }
