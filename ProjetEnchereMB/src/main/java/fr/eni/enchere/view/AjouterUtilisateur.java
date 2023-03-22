@@ -12,10 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 import fr.eni.enchere.bo.Adresse;
 import fr.eni.enchere.bo.Utilisateur;
 import fr.eni.enchere.bll.UtilisateurManager;
-import fr.eni.enchere.dal.AdresseDAO;
 import fr.eni.enchere.dal.DAOFactory;
 import fr.eni.enchere.dal.UtilisateurDAO;
-import fr.eni.enchere.dal.UtilisateurDAOJdbcImpl;
 
 
 @WebServlet("/ajouterutilisateur")
@@ -36,18 +34,25 @@ public class AjouterUtilisateur extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
 		Utilisateur u;
+		Adresse adresse;
 		try {
-			u=new Utilisateur(request.getParameter("nom"),
-					        request.getParameter("prenom"), 
-					        request.getParameter("email"),
-					        request.getParameter("motDePasse"),
-					        LocalDate.of(2000, 12, 31), 
-			        Adresse(Integer.parseInt(request.getParameter("numero")),
-			        		request.getrue("rue"),
-					        Integer.parseInt(request.getParameter("codePostal")),
-					        request.getParameter("ville")),
-					        DAOFactory.getUtilisateurDAO() new UtilisateurDAOJdbcImpl();
-			                UtilisateurManager.getInstance().creerUtilisateur(u);
+			adresse = new Adresse(
+					request.getParameter("rue"),
+					Integer.parseInt(request.getParameter("code_postal")),
+					request.getParameter("ville")
+					);
+			u=new Utilisateur(
+					request.getParameter("pseudo"),
+					request.getParameter("nom"),
+					request.getParameter("prenom"),
+					request.getParameter("telephone"),
+					request.getParameter("email"),
+					adresse,
+					request.getParameter("mot_de_passe")
+					); 
+			  
+					
+			     UtilisateurManager.getInstance().creerUtilisateur(u);
 			
 			
 			
@@ -55,7 +60,7 @@ public class AjouterUtilisateur extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			
-		response.sendRedirect("Utilisateur.jsp");
+		response.sendRedirect("index.html");
 		
 		}
 		
