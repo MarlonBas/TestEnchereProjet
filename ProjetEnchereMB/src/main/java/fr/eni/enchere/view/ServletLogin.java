@@ -38,7 +38,7 @@ public class ServletLogin extends HttpServlet {
 		password=request.getParameter("password");
 		
 		//En commentaire le temps de mettre login() en BLL
-		//utilisateur=UtilisateurManager.getInstance().login(email, password);
+		utilisateur=UtilisateurManager.getInstance().login(email, password);
 		
 		if(utilisateur!=null) {
 			// Creer une session pour l'utilisateur

@@ -8,10 +8,10 @@
 <body>
     <h1>Se connecter</h1>
     <form action="ServletLogin" method="post">
-        <label>Email:</label>
-        <input type="text" name="email" required>
+        <label for="email">Email:</label>
+        <input type="email" name="email" required>
         <br><br>
-        <label>Password:</label>
+        <label for="password">Password:</label>
         <input type="password" name="password" required>
         <br><br>
         <input type="submit" value="Login">
