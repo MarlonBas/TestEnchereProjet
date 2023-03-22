@@ -32,8 +32,8 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 			pstmt.setString(4,utilisateur.getEmail());
 			pstmt.setString(5,utilisateur.getTelephone());
 			pstmt.setString(6, utilisateur.getMotDePasse());
-			pstmt.setInt(7, utilisateur.getCredit());
-			pstmt.setBoolean(8, utilisateur.isAdministrateur());
+			pstmt.setInt(7, 100);
+			pstmt.setBoolean(8, false);
 			pstmt.executeUpdate();
 			rs = pstmt.getGeneratedKeys();
 			if(rs.next())
@@ -122,6 +122,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	private Utilisateur rsToUtilisateur(ResultSet rs)
 	{
 		Utilisateur utilisateur = null;
+		
 		try {
 			utilisateur =new Utilisateur(rs.getInt("no_utilisateur"),
 							  rs.getString("pseudo"),
@@ -134,6 +135,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 							  rs.getInt("credit"),
 							  rs.getBoolean("administrateur")
 							  );
+			;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

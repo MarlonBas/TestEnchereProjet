@@ -14,7 +14,6 @@ public class AdresseDAOJdbcImpl implements AdresseDAO{
 	@Override
 	public Adresse selectById(int no_utilisateur) {
 		Adresse adresse=null;
-		System.out.println(no_utilisateur);
 		try {
 		ResultSet rs;
 		Connection cnx = ConnectionProvider.getConnection();
