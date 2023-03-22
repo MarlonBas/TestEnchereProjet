@@ -30,13 +30,13 @@
 			<input name="telephone" type="text" value="<%= utilisateur.getTelephone() %>" readonly>
 			
 			<label for="rue">Rue :</label>
-		<%--	<input name="rue" type="text" value="<%= utilisateur.getAdresse().getRue() %>" readonly>  
+		<	<input name="rue" type="text" value="<%= utilisateur.getAdresse().getRue() %>" readonly>  
 			
 			<label for="cp">Code Postal :</label>
 			<input name="cp" type="text" value="<%= utilisateur.getAdresse().getCodePostal() %>" readonly>
 			
 			<label for="ville">Ville :</label>
-			<input name="ville" type="text" value="<%= utilisateur.getAdresse().getVille() %>" readonly>--%>
+			<input name="ville" type="text" value="<%= utilisateur.getAdresse().getVille() %>" readonly>
 	
 		</form>
 	
