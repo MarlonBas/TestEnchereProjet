@@ -7,6 +7,8 @@
     <title>Login</title>
 </head>
 <body>
+
+
 <h1>Se connecter</h1>
     <form action="ServletLogin" method="post">
 		<label for="identifiant">Identifiant (pseudo ou email)</label><br>
