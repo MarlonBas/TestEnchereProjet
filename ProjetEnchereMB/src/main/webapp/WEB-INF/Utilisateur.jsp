@@ -41,6 +41,7 @@
 <label for="confirmation_mot_de_passe">Confirmation mot de passe:</label>
 <input type ="password" placeholder ="********" name="confirmation_mot_de_passe" required><br/>
 
+
 <input type="submit" name="valider" value="Créer">
 <input type="submit" name="annuler" value="Annuler">
 </form>

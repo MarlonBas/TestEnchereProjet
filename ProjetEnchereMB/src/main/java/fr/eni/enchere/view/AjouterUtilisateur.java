@@ -56,6 +56,7 @@ public class AjouterUtilisateur extends HttpServlet {
 				UtilisateurManager.getInstance().creerUtilisateur(u);
 				
 				
+				
 				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/MonCompte.jsp");
 				rd.forward(request, response);
 				
