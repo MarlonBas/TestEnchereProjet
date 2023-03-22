@@ -48,10 +48,10 @@ public class ServletLogin extends HttpServlet {
 			HttpSession ses = request.getSession();
 			ses.setAttribute("utilisateur", utilisateur);
 			Cookie cookieLog;
-			cookieLog=new Cookie("DernierEmail", utilisateur.getEmail());
+			cookieLog=new Cookie("DernierId", request.getParameter("identifiant"));
 			cookieLog.setMaxAge(60*60*24*7*4); // 1 mois
 			response.addCookie(cookieLog);
-			response.sendRedirect("Utilisateur.jsp");
+			request.getRequestDispatcher("/WEB-INF/MonCompte.jsp").forward(request, response);
 		}
 		else {
 			request.setAttribute("erreur", "L'email ou le mot de passe est invalide");
