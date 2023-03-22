@@ -39,7 +39,7 @@
     <% } %>
     <br>
     <br>
-    <form action="AjoutUtilisateur" method="get">
+    <form action="ajouterutilisateur" method="get">
   		<button type="submit">Créer un compte</button>
 	</form>
 </body>
