@@ -43,7 +43,7 @@ public class UtilisateurManager {
 	}
 	
 	//MODIFIER UTILISATEUR
-	/*public void modifier(Utilisateur utilisateur) {
+	public void modifier(Utilisateur utilisateur) {
 		utilisateurDAO.update(utilisateur);
-	}*/
+	}
 }

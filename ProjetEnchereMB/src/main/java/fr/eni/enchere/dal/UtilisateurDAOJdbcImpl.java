@@ -13,7 +13,11 @@ import fr.eni.enchere.bo.Utilisateur;
 public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 
 	private static final String INSERT_UTILISATEUR = "INSERT INTO UTILISATEUR (pseudo,nom,prenom,email,telephone,mot_de_passe,credit,administrateur) VALUES (?,?,?,?,?,?,?,?);";
+	private static final String UPDATE_UTILISATEUR = "UPDATE UTILISATEUR SET pseudo=?, nom=?, prenom=?, email=?, telephone=?, mot_de_passe=?, credit=?, administrateur=? WHERE no_utilisateur=?";
 	private static final String INSERT_ADRESSE = "INSERT INTO ADRESSE (no_utilisateur,rue,code_postal,ville) VALUES (?,?,?,?);";
+	private static final String UPDATE_ADRESSE = "UPDATE ADRESSE SET rue=?,code_postal=?,ville=? WHERE no_utilisateur=?;";
+	private static final String DELETE_UTILISATEUR = "DELETE FROM UTILISATEUR WHERE no_utilisateur=";
+	private static final String DELETE_ADRESSE = "DELETE FROM UTILISATEUR WHERE no_utilisateur=";
 	private static final String LOGIN = "SELECT no_utilisateur,pseudo,nom,prenom,email,telephone,mot_de_passe,credit,administrateur FROM UTILISATEURS WHERE pseudo=? and mot_de_passe=?";
 	private static final String LOGIN_EMAIL = "SELECT no_utilisateur,pseudo,nom,prenom,email,telephone,mot_de_passe,credit,administrateur FROM UTILISATEURS WHERE email=? and mot_de_passe=?";
 	
@@ -58,10 +62,66 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 		}
 		
 	}
+	
+	@Override
+	public void update(Utilisateur utilisateur)
+	{
+		try (Connection cnx = ConnectionProvider.getConnection()){
+			PreparedStatement pstmt;
+			
+			//Mise à jour de l'utilisateur et récupération de son numéro
+			pstmt = cnx.prepareStatement(UPDATE_UTILISATEUR);
+			pstmt.setString(1,utilisateur.getPseudo());
+			pstmt.setString(2,utilisateur.getNom());
+			pstmt.setString(3,utilisateur.getPrenom());
+			pstmt.setString(4,utilisateur.getEmail());
+			pstmt.setString(5,utilisateur.getTelephone());
+			pstmt.setString(6, utilisateur.getMotDePasse());
+			pstmt.setInt(7, 100);
+			pstmt.setBoolean(8, false);
+			pstmt.setInt(9, utilisateur.getNoUtilisateur());
+			pstmt.executeUpdate();
+			
+			pstmt.close();
+			
+			//Mise à jour de l'adresse de l'utilisateur dans la table adresse
+			pstmt = cnx.prepareStatement(UPDATE_ADRESSE);
+			pstmt.setString(1, utilisateur.getAdresse().getRue());
+			pstmt.setInt(2, utilisateur.getAdresse().getCodePostal());
+			pstmt.setString(3,utilisateur.getAdresse().getVille());
+			pstmt.setInt(4,utilisateur.getNoUtilisateur());
+			pstmt.executeUpdate();
+			pstmt.close();
+			
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
 
 	@Override
 	public void delete(int noUtilisateur) {
-		
+		try (Connection cnx = ConnectionProvider.getConnection()){
+			PreparedStatement pstmt;
+			
+			pstmt = cnx.prepareStatement(DELETE_UTILISATEUR);
+			pstmt.setInt(1, noUtilisateur);
+			pstmt.executeUpdate();
+			
+			pstmt.close();
+			
+			// Supprimer l'addresse lié au compte
+			pstmt = cnx.prepareStatement(DELETE_ADRESSE);
+			pstmt.setInt(1, noUtilisateur);
+			pstmt.executeUpdate();
+			
+			pstmt.close();
+			
+			
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
