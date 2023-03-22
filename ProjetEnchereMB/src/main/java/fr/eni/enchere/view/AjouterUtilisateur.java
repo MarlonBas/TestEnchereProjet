@@ -49,14 +49,19 @@ public class AjouterUtilisateur extends HttpServlet {
 					request.getParameter("mot_de_passe")
 					); 
 			
-			if( request.getParameter("confirmation_mot_de_passe").equals(request.getParameter("mot_de_passe")))
+					request.setAttribute("utilisateurEnCreation", u);
+			
+			if(request.getParameter("confirmation_mot_de_passe").equals(request.getParameter("mot_de_passe")) && !request.getParameter("mot_de_passe").isEmpty())
 			{
-				
 				UtilisateurManager.getInstance().creerUtilisateur(u);
+				
+				
+				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/MonCompte.jsp");
+				rd.forward(request, response);
 				
 			} else 	
 				{
-						request.setAttribute("utilisateurEnCreation", u);
+						
 						RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/Utilisateur.jsp");
 						rd.forward(request, response);
 				}
@@ -65,7 +70,6 @@ public class AjouterUtilisateur extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			
-		response.sendRedirect("index.html");
 		
 		}
 		
