@@ -3,10 +3,10 @@
 	<Resource
 		name="jdbc/pool_cnx"
 		
-		driverClassName="com.mysql.jdbc.Driver"
+		driverClassName="com.mysql.cj.jdbc.Driver"
 		type="javax.sql.DataSource"
 		
-		url="jdbc:sqlserver://localhost;databasename=ProjetEncheres;encrypt=true;trustServerCertificate=true"
+		url="jdbc:mysql://localhost:3306/ProjetEncheres"
 		username="utilisateurBDD"
 		password="Pa$$w0rd"
 		
