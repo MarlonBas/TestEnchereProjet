@@ -1,4 +1,4 @@
-package fr.eni.enchere;
+package fr.eni.enchere.view;
 
 import java.io.IOException;
 import java.time.LocalDate;

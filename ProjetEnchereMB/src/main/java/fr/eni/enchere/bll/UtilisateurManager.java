@@ -30,12 +30,9 @@ public class UtilisateurManager {
 	}
 	
 	//LOGIN
-	//commenté le temps de mettre login dans le DAO
-	
-	/*public Utilisateur login(String email,String password)
-	{
+	public Utilisateur login(String email,String password) {
 		return utilisateurDAO.login(email,password);
-	}*/
+	}
 	
 	//SUPPRIMER UTILISATEUR
 	public void deleteById(int id) {
@@ -43,8 +40,6 @@ public class UtilisateurManager {
 	}
 	
 	//MODIFIER UTILISATEUR
-	//commenté le temps de mettre modifier dans le DAO
-	
 	/*public void modifier(Utilisateur utilisateur) {
 		utilisateurDAO.update(utilisateur);
 	}*/
