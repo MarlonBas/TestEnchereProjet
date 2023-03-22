@@ -34,17 +34,24 @@ public class AjouterUtilisateur extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
 		Utilisateur u;
+		Adresse adresse;
 		try {
-			u=new Utilisateur(request.getParameter("nom"),
-					request.getParameter("prenom"), 
-					request.getParameter("email"),
-					request.getParameter("motDePasse"),
-					LocalDate.of(2000, 12, 31), 
-			  new Adresse(Integer.parseInt(request.getParameter("numero")),
+			adresse = new Adresse(
 					request.getParameter("rue"),
-					Integer.parseInt(request.getParameter("codePostal")),
-					request.getParameter("ville")),
-					DAOFactory.getUtilisateurDAO().getClassAdresse(request.getParameter("role"))), 12332234l);
+					Integer.parseInt(request.getParameter("code_postal")),
+					request.getParameter("ville")
+					);
+			u=new Utilisateur(
+					request.getParameter("pseudo"),
+					request.getParameter("nom"),
+					request.getParameter("prenom"),
+					request.getParameter("telephone"),
+					request.getParameter("email"),
+					adresse,
+					request.getParameter("mot_de_passe")
+					); 
+			  
+					
 			     UtilisateurManager.getInstance().creerUtilisateur(u);
 			
 			
