@@ -23,6 +23,13 @@ public class ServletLogin extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.getRequestDispatcher("Login.jsp").forward(request, response);	
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String email;
 		String password;
 		Utilisateur utilisateur=null;
@@ -30,11 +37,10 @@ public class ServletLogin extends HttpServlet {
 		email=request.getParameter("email");
 		password=request.getParameter("password");
 		
-		// En commentaire le temps de mettre login() en BLL
+		//En commentaire le temps de mettre login() en BLL
 		//utilisateur=UtilisateurManager.getInstance().login(email, password);
 		
-		if(utilisateur!=null)
-		{
+		if(utilisateur!=null) {
 			// Creer une session pour l'utilisateur
 			HttpSession ses = request.getSession();
 			ses.setAttribute("utilisateur", utilisateur);
@@ -47,16 +53,9 @@ public class ServletLogin extends HttpServlet {
 		else
 		{
 			request.setAttribute("erreur", "L'email ou le mot de passe est invalide");
-            request.getRequestDispatcher("Login.jsp").forward(request, response);
+			doGet(request, response);
 		}
-			
-	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
+		
 	}
 
 }
