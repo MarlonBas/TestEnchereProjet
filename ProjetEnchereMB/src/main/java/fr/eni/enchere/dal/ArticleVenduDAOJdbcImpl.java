@@ -11,9 +11,14 @@ import fr.eni.enchere.bo.ArticleVendu;
 
 public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 
-	private final String SELECT_All = "select nomArticle, description, datDebutEncheres, dateFinEncheres, misAPrix, adresse ";
+	private final String SELECT_All = "SELECT (nomArticle, description, datDebutEncheres, dateFinEncheres, misAPrix, adresse) ";
+	private final String INSERT = "INSERT (nomArticle, description, datDebutEncheres, dateFinEncheres, misAPrix, adresse)VALUES(?,?,?,?,?,?);";
+    private final String DELETE = "DELETE FROM ARTICLEVENDU WHERE noArticle=";
+	private final String UPDATE = "UPDATE FROM ARTICLEVENDU SET nomArticle=?, description=?, dateDebutEncheres=?, dateFinEncheres=?, misAPrix=?, adresse=?,";
 	
-   @Override
+	
+	
+	@Override
    public List<ArticleVendu> selectAll() throws SQLException {
 
 	    	Connection cnx = ConnectionProvider.getConnection();
