@@ -12,7 +12,7 @@ public class ArticleVendu {
 	private int miseAPrix;
 	private int prixVente;
 	private String etatVente;
-	
+	private Adresse adresse;
 	
 	
 	public ArticleVendu() {

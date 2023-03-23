@@ -9,4 +9,10 @@ public class DAOFactory {
 	public static AdresseDAO getAdresseDAO() {
 		return new AdresseDAOJdbcImpl();
 	}
+	
+	
+	public static ArticleVenduDAO getArticleVenduDAO() {
+		
+		return new ArticleVenduDAOJdbcImpl();
+	}
 }
