@@ -51,7 +51,7 @@ public class ServletLogin extends HttpServlet {
 			cookieLog=new Cookie("DernierId", request.getParameter("identifiant"));
 			cookieLog.setMaxAge(60*60*24*7*4); // durée de vie du cookie 1 mois
 			response.addCookie(cookieLog);
-			request.getRequestDispatcher("/WEB-INF/MonCompte.jsp").forward(request, response);
+			request.getRequestDispatcher("accueil.jsp").forward(request, response);
 		}
 		else {
 			request.setAttribute("erreur", "L'email ou le mot de passe est invalide");
