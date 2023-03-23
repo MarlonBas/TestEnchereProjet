@@ -11,4 +11,5 @@ public interface ArticleVenduDAO {
 	
 	List<ArticleVendu> selectAll() throws  SQLException;
 
+	
 }

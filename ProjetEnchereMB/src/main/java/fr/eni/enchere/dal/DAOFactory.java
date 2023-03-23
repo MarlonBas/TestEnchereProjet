@@ -16,3 +16,4 @@ public class DAOFactory {
 		return new ArticleVenduDAOJdbcImpl();
 	}
 }
+
