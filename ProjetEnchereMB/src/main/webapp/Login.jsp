@@ -4,6 +4,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <link href=”bootstrap/css/bootstrap.min.css” rel=”stylesheet” type=”text/css” />
+    <link rel="stylesheet" type="text/css" href="ProjetEnchereMB/src/main/webapp/WEB-inf/login.css">
     <title>Login</title>
 </head>
 <body>
