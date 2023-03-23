@@ -22,7 +22,7 @@ public class AjouterUtilisateur extends HttpServlet {
  
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/Utilisateur.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/CreerUtilisateur.jsp");
 		rd.forward(request, response);
 		
 	}
@@ -65,7 +65,7 @@ public class AjouterUtilisateur extends HttpServlet {
 				} catch (BllException e) {
 			
 					request.setAttribute("erreur", e.getMessage());
-					RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/Utilisateur.jsp");
+					RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/CreerUtilisateur.jsp");
 					rd.forward(request, response);
 					
 				}
@@ -73,7 +73,7 @@ public class AjouterUtilisateur extends HttpServlet {
 				else 	
 				{
 					request.setAttribute("erreur", "Les mots de passes sont différents");
-					RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/Utilisateur.jsp");
+					RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/CreerUtilisateur.jsp");
 					rd.forward(request, response);
 						
 				}
