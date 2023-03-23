@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 
 import fr.eni.enchere.bo.Adresse;
 import fr.eni.enchere.bo.Utilisateur;
+import fr.eni.enchere.exceptions.BllException;
 import fr.eni.enchere.bll.UtilisateurManager;
 
 
@@ -44,8 +45,8 @@ public class AjouterUtilisateur extends HttpServlet {
 					request.getParameter("pseudo"),
 					request.getParameter("nom"),
 					request.getParameter("prenom"),
-					request.getParameter("telephone"),
 					request.getParameter("email"),
+					request.getParameter("telephone"),
 					adresse,
 					request.getParameter("mot_de_passe")
 					); 
@@ -55,30 +56,41 @@ public class AjouterUtilisateur extends HttpServlet {
 					// Verification que le mot de passe soit le meme dans la case confirmation et qu'elle n'est pas vide.
 			if(request.getParameter("confirmation_mot_de_passe").equals(request.getParameter("mot_de_passe")) && !request.getParameter("mot_de_passe").isEmpty())
 			{
-				UtilisateurManager.getInstance().creerUtilisateur(u);
-				
-				HttpSession ses = request.getSession();
-				ses.setAttribute("utilisateur", u);
-				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/MonCompte.jsp");
-				rd.forward(request, response);
-				
-			} else 	
+				try {
+					UtilisateurManager.getInstance().creerUtilisateur(u);
+					HttpSession ses = request.getSession();
+					ses.setAttribute("utilisateur", u);
+					RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/MonCompte.jsp");
+					rd.forward(request, response);
+				} catch (BllException e) {
+			
+					request.setAttribute("erreur", e.getMessage());
+					RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/Utilisateur.jsp");
+					rd.forward(request, response);
+					
+				}
+			}
+				else 	
 				{
+					request.setAttribute("erreur", "Les mots de passes sont différents");
+					RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/Utilisateur.jsp");
+					rd.forward(request, response);
 						
-						RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/Utilisateur.jsp");
-						rd.forward(request, response);
 				}
 			
-		} catch (NumberFormatException e) {
+			
+		}catch (NumberFormatException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			
 		
 		}
-		
-		}
-		
-		
 	}
+}
+		
+		
+		
+	
+	
 	
 

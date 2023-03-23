@@ -3,6 +3,7 @@ package fr.eni.enchere.bll;
 import fr.eni.enchere.bo.Utilisateur;
 import fr.eni.enchere.dal.DAOFactory;
 import fr.eni.enchere.dal.UtilisateurDAO;
+import fr.eni.enchere.exceptions.BllException;
 
 public class UtilisateurManager {
 	
@@ -25,7 +26,7 @@ public class UtilisateurManager {
 	// LES FONCTIONS DE GESTION UTILISATEUR
 	
 	// CREER UN NOUVEAU UTILISATEUR
-	public void creerUtilisateur(Utilisateur utilisateur) {
+	public void creerUtilisateur(Utilisateur utilisateur) throws BllException {
 		
 		boolean verifEmail = utilisateurDAO.isEmailOk(utilisateur.getEmail());
 		boolean verifPseudo = utilisateurDAO.isPseudoOk(utilisateur.getPseudo());
@@ -33,11 +34,11 @@ public class UtilisateurManager {
 		if(verifEmail && verifPseudo) {
 			utilisateurDAO.insert(utilisateur);
 		}else if(verifEmail && !verifPseudo) {
-			//Creer erreur pseudo deja utilisé
+			throw new BllException("Le pseudo est déjà utilisé");
 		}else if(!verifEmail && verifPseudo) {
-			//Creer erreur email deja utilisé
+			throw new BllException ("L'email est déjà utilisé");
 		}else {
-			//Creer erreur pseudo et email deja utilisé
+			throw new BllException ("Le pseudo et l'email sont déjà utilisés");
 		}
 		
 		

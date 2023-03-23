@@ -12,9 +12,9 @@ import fr.eni.enchere.bo.Utilisateur;
 
 public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 
-	private static final String INSERT_UTILISATEUR = "INSERT INTO UTILISATEUR (pseudo,nom,prenom,email,telephone,mot_de_passe,credit,administrateur) VALUES (?,?,?,?,?,?,?,?);";
-	private static final String UPDATE_UTILISATEUR = "UPDATE UTILISATEUR SET pseudo=?, nom=?, prenom=?, email=?, telephone=?, mot_de_passe=?, credit=?, administrateur=? WHERE no_utilisateur=?";
-	private static final String INSERT_ADRESSE = "INSERT INTO ADRESSE (no_utilisateur,rue,code_postal,ville) VALUES (?,?,?,?);";
+	private static final String INSERT_UTILISATEUR = "INSERT INTO UTILISATEURS (pseudo,nom,prenom,email,telephone,mot_de_passe,credit,administrateur) VALUES (?,?,?,?,?,?,?,?);";
+	private static final String UPDATE_UTILISATEUR = "UPDATE UTILISATEURS SET pseudo=?, nom=?, prenom=?, email=?, telephone=?, mot_de_passe=?, credit=?, administrateur=? WHERE no_utilisateur=?";
+	private static final String INSERT_ADRESSE = "INSERT INTO ADRESSES (no_utilisateur,rue,code_postal,ville) VALUES (?,?,?,?);";
 	private static final String UPDATE_ADRESSE = "UPDATE ADRESSE SET rue=?,code_postal=?,ville=? WHERE no_utilisateur=?;";
 	private static final String DELETE_UTILISATEUR = "DELETE FROM UTILISATEUR WHERE no_utilisateur=";
 	private static final String DELETE_ADRESSE = "DELETE FROM UTILISATEUR WHERE no_utilisateur=";
@@ -44,7 +44,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 			rs = pstmt.getGeneratedKeys();
 			if(rs.next())
 			{
-				utilisateur.setNoUtilisateur(rs.getInt("no_utilisateur"));
+				utilisateur.setNoUtilisateur(rs.getInt(1));
 			}
 			rs.close();
 			pstmt.close();
