@@ -15,7 +15,7 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 	
    @Override
    public List<ArticleVendu> selectAll() throws SQLException {
-	
+
 	    	Connection cnx = ConnectionProvider.getConnection();
 	    	Statement stmt = cnx.createStatement();
 	    	ResultSet rs = stmt.executeQuery(SELECT_All);
@@ -37,6 +37,5 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 			return liste;
            }
 }      
-
 
 

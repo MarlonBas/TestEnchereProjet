@@ -14,7 +14,7 @@ public class ArticleVendu {
 	private String etatVente;
 	private Adresse adresse;
 	
-	
+
 	public ArticleVendu() {
 		super();
 	}
