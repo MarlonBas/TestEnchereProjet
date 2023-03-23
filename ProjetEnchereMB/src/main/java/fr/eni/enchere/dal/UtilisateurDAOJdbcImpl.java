@@ -52,9 +52,9 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 			//Insertion de l'adresse de l'utilisateur dans la table adresse
 			pstmt = cnx.prepareStatement(INSERT_ADRESSE, PreparedStatement.RETURN_GENERATED_KEYS);
 			pstmt.setInt(1,utilisateur.getNoUtilisateur());
-			pstmt.setString(1, utilisateur.getAdresse().getRue());
-			pstmt.setInt(2, utilisateur.getAdresse().getCodePostal());
-			pstmt.setString(2,utilisateur.getAdresse().getVille());
+			pstmt.setString(2, utilisateur.getAdresse().getRue());
+			pstmt.setInt(3, utilisateur.getAdresse().getCodePostal());
+			pstmt.setString(4,utilisateur.getAdresse().getVille());
 			pstmt.executeUpdate();
 			pstmt.close();
 			

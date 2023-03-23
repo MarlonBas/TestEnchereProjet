@@ -12,6 +12,7 @@
 <h1>Se connecter</h1>
     <form action="ServletLogin" method="post">
 		<label for="identifiant">Identifiant (pseudo ou email)</label><br>
+		<%-- Récupère un cookie DernierId qui contient le dernier identifiant qui a marché --%>
 		<%
 		    Cookie[] cookies = request.getCookies();
 		    String identifiant = null;
@@ -35,7 +36,8 @@
         <input type="password" name="password" required>
         <br><br>
         <input type="submit" value="Login">
-    </form>
+    </form> 
+    <%-- Afficher une erreur si on retourne sur la page après une de connection --%>
     <% if (request.getAttribute("erreur") != null) { %>
         <p style="color: red;"><%= request.getAttribute("erreur") %></p>
     <% } %>

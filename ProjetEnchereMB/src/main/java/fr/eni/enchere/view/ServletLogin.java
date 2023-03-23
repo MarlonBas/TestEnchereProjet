@@ -34,7 +34,7 @@ public class ServletLogin extends HttpServlet {
 		String password;
 		Utilisateur utilisateur=null;
 		Boolean typeEmail = false;
-		
+		// RECUPERATION DES PARAMETRES ENVOYES PAR LA JSP Login
 		identifiant = request.getParameter("identifiant");
 		if (identifiant.contains("@")) {
 			typeEmail = true;
@@ -49,7 +49,7 @@ public class ServletLogin extends HttpServlet {
 			ses.setAttribute("utilisateur", utilisateur);
 			Cookie cookieLog;
 			cookieLog=new Cookie("DernierId", request.getParameter("identifiant"));
-			cookieLog.setMaxAge(60*60*24*7*4); // 1 mois
+			cookieLog.setMaxAge(60*60*24*7*4); // durée de vie du cookie 1 mois
 			response.addCookie(cookieLog);
 			request.getRequestDispatcher("/WEB-INF/MonCompte.jsp").forward(request, response);
 		}

@@ -7,6 +7,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import fr.eni.enchere.bo.Adresse;
 import fr.eni.enchere.bo.Utilisateur;
@@ -51,12 +52,13 @@ public class AjouterUtilisateur extends HttpServlet {
 			
 					request.setAttribute("utilisateurEnCreation", u);
 			
+					// Verification que le mot de passe soit le meme dans la case confirmation et qu'elle n'est pas vide.
 			if(request.getParameter("confirmation_mot_de_passe").equals(request.getParameter("mot_de_passe")) && !request.getParameter("mot_de_passe").isEmpty())
 			{
 				UtilisateurManager.getInstance().creerUtilisateur(u);
 				
-				
-				
+				HttpSession ses = request.getSession();
+				ses.setAttribute("utilisateur", u);
 				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/MonCompte.jsp");
 				rd.forward(request, response);
 				
