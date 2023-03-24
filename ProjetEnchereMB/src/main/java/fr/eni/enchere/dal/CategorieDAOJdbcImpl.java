@@ -35,12 +35,13 @@ public class CategorieDAOJdbcImpl implements CategorieDAO {
 	@Override
 	public List<Categorie> selectAll() {
 		List<Categorie> categories = new ArrayList<Categorie>();
-		try {	Connection cnx = ConnectionProvider.getConnection();
+		try {	
+			Connection cnx = ConnectionProvider.getConnection();
 			PreparedStatement pstmt = cnx.prepareStatement(SELECT_ALL);
 			
 			ResultSet rs=pstmt.executeQuery();
 			while(rs.next()) {
-				categories.add(new Categorie(rs.getInt("id"),rs.getString("nom")));
+				categories.add(new Categorie(rs.getInt("id_categorie"),rs.getString("libelle")));
 			}
 			cnx.close();		
 		}

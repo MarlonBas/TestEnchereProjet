@@ -1,23 +1,30 @@
 body{
-	width: 100%;
-	background: linear-gradient(#FF79DA,yellow);
+	margin:auto;
 }
 nav{
-	text-align: center;
-	padding-top: 180px;
+	width:auto;
+	margin:30px;
+	display:flex;
+	justify-content:space-between;
 }
-h1{
-	text-align: center;
-    color: blue;
+nav div{
+	display:flex;
+	align-items:center;
+	gap:15px;
+	flex-wrap:wrap;
+	
 }
+
 a{
 	text-decoration: none;
-	border-bottom-right-radius: 55%;
-    border-top-left-radius: 30px;
-    border-top-right-radius: 30px;
-    border-bottom-left-radius: 30px;
-    border: none;
+	border-radius:10px;
+    border: 1px solid white;
     color: white;
-    padding: 35px;
-    background: linear-gradient(#FF79DA,#9356DC);
+    padding: 10px; 
+    background-color: #4d5154;
+}
+
+a:hover{
+	
+	background-color: #646669;
 }
