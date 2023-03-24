@@ -13,7 +13,9 @@
 	<br/>
 	${article.description}
 	<br/>
-	${article.prix}
+	${article.miseAPrix}
+	<br/>
+	${article.prixVente}
 	<br/>
 	${article.dateFinEncheres.toString()}
 </body>
