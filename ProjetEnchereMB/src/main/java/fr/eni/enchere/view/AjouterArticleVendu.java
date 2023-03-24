@@ -9,16 +9,16 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import fr.eni.enchere.bll.ArticleVenduManager;
+import fr.eni.enchere.bo.Adresse;
 import fr.eni.enchere.bo.ArticleVendu;
 
 /**
- * Servlet implementation class ServletNouvelleVente
+ * Servlet implementation class AjouterArticleVendu
  */
-@WebServlet("/ServletNouvelleVente")
-public class ServletNouvelleVente extends HttpServlet {
+@WebServlet("/AjouterArticleVendu")
+public class AjouterArticleVendu extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+    
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
@@ -31,29 +31,40 @@ public class ServletNouvelleVente extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		ArticleVendu article = null;
 		
+		// CONVERSION DES PARAMETRES
 		LocalDate debutEnchere = LocalDate.parse(request.getParameter("debutenchere"));
 		LocalDate finEnchere = LocalDate.parse(request.getParameter("finenchere"));
-		
 		int prix = Integer.parseInt(request.getParameter("prix"));
+		int codePostal = Integer.parseInt(request.getParameter("codepostal"));
 		
+		// DETERMINATION DU STATUT DE LA VENTE
 		String etatVente = "En cours";
 		if (LocalDate.now().isBefore(debutEnchere)){
 			etatVente = "Pas encore commencé";
 		}
 		
-		article = new ArticleVendu(
+		// CREATION DE L'ADDRESSE DE RETRAIT
+		Adresse adresse = new Adresse(
+				request.getParameter("rue"),
+				codePostal,
+				request.getParameter("ville")
+				);
+		
+		// CREATION DE L'ARTICLE A VENDRE
+		ArticleVendu article = new ArticleVendu(
 				request.getParameter("nom"),
 				request.getParameter("description"),
 				debutEnchere,
 				finEnchere,
 				prix,
 				prix,
-				etatVente
+				etatVente,
+				adresse
 				);
 		
-		//A decommenter quand il sera dispo dans ArticleVenduManager
+		// ENVOIE DE L'ARTICLE A LA BLL
+		//A decommenter quand creerArticleVendu sera dispo dans ArticleVenduManager
 		//ArticleVenduManager.getInstance().creerArticleVendu();
 		
 		//request.getRequestDispatcher("Article.jsp").forward(request, response);

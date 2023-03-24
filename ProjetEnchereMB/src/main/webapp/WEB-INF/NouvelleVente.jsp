@@ -10,7 +10,7 @@
 <body>
 <% Utilisateur utilisateur = (Utilisateur)session.getAttribute("utilisateur"); %>
 <h1>Nouvelle vente</h1>
-	<form method="post" action="ServletNouvelleVente">
+	<form method="post" action="AjouterArticleVendu">
 		<label for="nom">Article :</label>
 		<input name ="nom" type="text"><br/>
 			
@@ -42,6 +42,7 @@
 			<input name="ville" type="text" value="<%= utilisateur.getAdresse().getVille() %>"><br/>
 		</fieldset>
 	<% } %>
+	<%-- POUR LE TEST POUR GERER L'ABSENCE DE SESSION --%>
 	<% if(utilisateur == null) { %>	
 		<fieldset>
   			<legend>Retrait</legend>
