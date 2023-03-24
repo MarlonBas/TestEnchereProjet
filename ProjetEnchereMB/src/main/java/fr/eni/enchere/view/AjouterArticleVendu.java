@@ -2,15 +2,19 @@ package fr.eni.enchere.view;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import fr.eni.enchere.bo.Adresse;
 import fr.eni.enchere.bo.ArticleVendu;
+import fr.eni.enchere.bo.Categorie;
+import fr.eni.enchere.bo.Utilisateur;
 
 /**
  * Servlet implementation class AjouterArticleVendu
@@ -24,6 +28,9 @@ public class AjouterArticleVendu extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		//A decommenter quand selectAllCategories sera dispo dans CategorieManage
+		List<Categorie> categories = null; //CategorieManager.selectAllCategories();
+		request.setAttribute("categories", categories);
 		request.getRequestDispatcher("/WEB-INF/NouvelleVente.jsp").forward(request, response);	
 	}
 
@@ -37,38 +44,46 @@ public class AjouterArticleVendu extends HttpServlet {
 		LocalDate finEnchere = LocalDate.parse(request.getParameter("finenchere"));
 		int prix = Integer.parseInt(request.getParameter("prix"));
 		int codePostal = Integer.parseInt(request.getParameter("codepostal"));
+		HttpSession session = request.getSession();
+		Utilisateur utilisateur = (Utilisateur) session.getAttribute("utilisateur");
+		Categorie categorie = new Categorie();
+		//A decommenter quand selectCategorie sera dispo dans CategorieManager
+		//categorie = categorieManager.selectCategorie(request.getParameter("categorie"));
 		
-		// DETERMINATION DU STATUT DE LA VENTE
-		String etatVente = "En cours";
-		if (LocalDate.now().isBefore(debutEnchere)){
-			etatVente = "Pas encore commencé";
+		if (utilisateur != null) {
+			// DETERMINATION DU STATUT DE LA VENTE
+			String etatVente = "En cours";
+			if (LocalDate.now().isBefore(debutEnchere)){
+				etatVente = "Pas encore commencé";
+			}
+			
+			// CREATION DE L'ADDRESSE DE RETRAIT
+			Adresse adresse = new Adresse(
+					request.getParameter("rue"),
+					codePostal,
+					request.getParameter("ville")
+					);
+			
+			// CREATION DE L'ARTICLE A VENDRE
+			ArticleVendu article = new ArticleVendu(
+					request.getParameter("nom"),
+					request.getParameter("description"),
+					debutEnchere,
+					finEnchere,
+					prix,
+					prix,
+					etatVente,
+					adresse,
+					utilisateur,
+					categorie
+					);
+			
+			// ENVOIE DE L'ARTICLE A LA BLL
+			//A decommenter quand creerArticleVendu sera dispo dans ArticleVenduManager
+			//ArticleVenduManager.getInstance().creerArticleVendu();
+			
+			//request.getRequestDispatcher("Article.jsp").forward(request, response);
 		}
-		
-		// CREATION DE L'ADDRESSE DE RETRAIT
-		Adresse adresse = new Adresse(
-				request.getParameter("rue"),
-				codePostal,
-				request.getParameter("ville")
-				);
-		
-		// CREATION DE L'ARTICLE A VENDRE
-		ArticleVendu article = new ArticleVendu(
-				request.getParameter("nom"),
-				request.getParameter("description"),
-				debutEnchere,
-				finEnchere,
-				prix,
-				prix,
-				etatVente,
-				adresse
-				);
-		
-		// ENVOIE DE L'ARTICLE A LA BLL
-		//A decommenter quand creerArticleVendu sera dispo dans ArticleVenduManager
-		//ArticleVenduManager.getInstance().creerArticleVendu();
-		
-		//request.getRequestDispatcher("Article.jsp").forward(request, response);
 		doGet(request, response);
 	}
-
 }

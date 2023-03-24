@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="fr.eni.enchere.bo.Utilisateur" %>
+<%@ page import="fr.eni.enchere.bo.Categorie" %>
+<%@ page import="java.util.List" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,6 +12,7 @@
 </head>
 <body>
 <% Utilisateur utilisateur = (Utilisateur)session.getAttribute("utilisateur"); %>
+<% List<Categorie> categories = (List<Categorie>)request.getAttribute("categories"); %>
 <h1>Nouvelle vente</h1>
 	<form method="post" action="AjouterArticleVendu">
 		<label for="nom">Article :</label>
@@ -18,7 +22,15 @@
 		<textarea name="description" type="text" rows=7 cols=30></textarea><br/>
 			
 		<label for="categorie">Catégorie :</label>
-		<input name="categorie" type="text"><br/>
+		<input name="categorie" type="text">
+		 <select id="category" name="category">
+        <% 
+        if (categories != null) {
+        	for (Categorie categorie : categories){ %>
+            <option value="<%=categorie.getNoCategorie()%>"><%=categorie.getLibelle()%></option>
+        <% } 
+        }%>
+    	</select><br/>
 			
 		<label for="image">Photo de l'article :</label>
 		<input name="image" type="file"><br/>
