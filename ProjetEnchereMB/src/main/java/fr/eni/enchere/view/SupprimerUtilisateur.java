@@ -1,13 +1,17 @@
 package fr.eni.enchere.view;
 
 import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import fr.eni.enchere.bll.UtilisateurManager;
+import fr.eni.enchere.bo.Utilisateur;
 
 /**
  * Servlet implementation class SupprimerUtilisateur
@@ -22,11 +26,12 @@ public class SupprimerUtilisateur extends HttpServlet
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
-		int id;
-		id=Integer.parseInt(request.getParameter("id"));
-		UtilisateurManager.getInstance().deleteById(id);
-		response.sendRedirect("listerutilisateurs");
+		HttpSession ses = request.getSession();
+		Utilisateur utilisateur;
+		utilisateur = (Utilisateur)ses.getAttribute("utilisateur");
+		UtilisateurManager.getInstance().delete(utilisateur);
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/accueil.jsp");
+		rd.forward(request, response);
 	}
 
 	/**
