@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import fr.eni.enchere.bll.CategorieManager;
 import fr.eni.enchere.bo.Adresse;
 import fr.eni.enchere.bo.ArticleVendu;
 import fr.eni.enchere.bo.Categorie;
@@ -28,8 +29,7 @@ public class AjouterArticleVendu extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//A decommenter quand selectAllCategories sera dispo dans CategorieManage
-		List<Categorie> categories = null; //CategorieManager.selectAllCategories();
+		List<Categorie> categories = CategorieManager.getInstance().selectAllCategories();
 		request.setAttribute("categories", categories);
 		request.getRequestDispatcher("/WEB-INF/NouvelleVente.jsp").forward(request, response);	
 	}
@@ -39,7 +39,7 @@ public class AjouterArticleVendu extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		// CONVERSION DES PARAMETRES
+		// CONVERSION DES PARAMETRES - de String en int, LocalDate, et Categorie
 		LocalDate debutEnchere = LocalDate.parse(request.getParameter("debutenchere"));
 		LocalDate finEnchere = LocalDate.parse(request.getParameter("finenchere"));
 		int prix = Integer.parseInt(request.getParameter("prix"));
@@ -47,8 +47,8 @@ public class AjouterArticleVendu extends HttpServlet {
 		HttpSession session = request.getSession();
 		Utilisateur utilisateur = (Utilisateur) session.getAttribute("utilisateur");
 		Categorie categorie = new Categorie();
-		//A decommenter quand selectCategorie sera dispo dans CategorieManager
-		//categorie = categorieManager.selectCategorie(request.getParameter("categorie"));
+		int noCategorie = Integer.parseInt(request.getParameter("categorie"));
+		categorie = CategorieManager.getInstance().selectCategorie(noCategorie);
 		
 		if (utilisateur != null) {
 			// DETERMINATION DU STATUT DE LA VENTE

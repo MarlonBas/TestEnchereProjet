@@ -22,12 +22,11 @@
 		<textarea name="description" type="text" rows=7 cols=30></textarea><br/>
 			
 		<label for="categorie">Catégorie :</label>
-		<input name="categorie" type="text">
-		 <select id="category" name="category">
+		<select id="categorie" name="categorie">
         <% 
         if (categories != null) {
         	for (Categorie categorie : categories){ %>
-            <option value="<%=categorie.getNoCategorie()%>"><%=categorie.getLibelle()%></option>
+ 		<option value="<%=categorie.getNoCategorie()%>"><%=categorie.getLibelle()%></option>
         <% } 
         }%>
     	</select><br/>
