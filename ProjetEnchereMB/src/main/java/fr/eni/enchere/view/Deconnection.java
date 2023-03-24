@@ -23,9 +23,11 @@ public class Deconnection extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
-		session.invalidate();
-		RequestDispatcher rd = request.getRequestDispatcher("encheres");
-		rd.forward(request, response);
+		if(session!=null)
+			session.invalidate();
+		
+		response.sendRedirect("encheres");
+		
 	}
 
 	/**

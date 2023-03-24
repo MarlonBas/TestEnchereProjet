@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * Servlet implementation class MonCompte
@@ -21,8 +22,13 @@ public class MonCompte extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession ses = request.getSession();
+		if(ses.getAttribute("utilisateur")!=null) {
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/MonCompte.jsp");
 		rd.forward(request, response);
+		}else {
+			response.sendRedirect("ServletLogin");
+		}
 	}
 
 	/**

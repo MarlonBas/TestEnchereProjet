@@ -16,7 +16,10 @@
 <a href="ajouterutilisateur">S'inscrire</a>
 <a href="ServletLogin">Se connecter</a>
 <% } else { %>
+<p>Bienvenue  ${utilisateur.prenom} </p>
+<a href="MonCompte">Voir mon profil</a>
 <a href="Deconnection">Se déconnecter</a>
+
 <% } %>
 
 </nav>

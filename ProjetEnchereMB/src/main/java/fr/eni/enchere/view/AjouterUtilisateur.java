@@ -60,8 +60,7 @@ public class AjouterUtilisateur extends HttpServlet {
 					UtilisateurManager.getInstance().creerUtilisateur(u);
 					HttpSession ses = request.getSession();
 					ses.setAttribute("utilisateur", u);
-					RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/MonCompte.jsp");
-					rd.forward(request, response);
+					response.sendRedirect("encheres");
 				} catch (BllException e) {
 			
 					request.setAttribute("erreur", e.getMessage());

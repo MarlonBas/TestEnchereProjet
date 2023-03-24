@@ -23,7 +23,13 @@ public class ServletLogin extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession ses = request.getSession();
+		if (ses.getAttribute("utilisateur")==null) {
 		request.getRequestDispatcher("/WEB-INF/Login.jsp").forward(request, response);	
+		}else {
+		response.sendRedirect("encheres");	
+		}
+		
 	}
 
 	/**
@@ -51,7 +57,7 @@ public class ServletLogin extends HttpServlet {
 			cookieLog=new Cookie("DernierId", request.getParameter("identifiant"));
 			cookieLog.setMaxAge(60*60*24*7*4); // durée de vie du cookie 1 mois
 			response.addCookie(cookieLog);
-			request.getRequestDispatcher("/WEB-INF/accueil.jsp").forward(request, response);
+			response.sendRedirect("encheres");	
 		}
 		else {
 			request.setAttribute("erreur", "L'email ou le mot de passe est invalide");
