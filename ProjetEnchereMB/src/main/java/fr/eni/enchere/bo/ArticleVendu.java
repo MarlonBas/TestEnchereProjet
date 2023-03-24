@@ -13,14 +13,15 @@ public class ArticleVendu {
 	private int prixVente;
 	private String etatVente;
 	private Adresse adresse;
-	
+	private Utilisateur utilisateur;
+	private Categorie categorie;
 
 	public ArticleVendu() {
 		super();
 	}
 
 	public ArticleVendu(String nomArticle, String description, LocalDate dateDebutEncheres, LocalDate dateFinEncheres,
-			int miseAPrix, int prixVente, String etatVente, Adresse adresse) {
+			int miseAPrix, int prixVente, String etatVente, Adresse adresse, Utilisateur utilisateur, Categorie categorie) {
 		super();
 		this.nomArticle = nomArticle;
 		this.description = description;
@@ -30,6 +31,8 @@ public class ArticleVendu {
 		this.prixVente = prixVente;
 		this.etatVente = etatVente;
 		this.adresse = adresse;
+		this.utilisateur = utilisateur;
+		this.categorie = categorie;
 	}
 
 	public int getNoArticle() {
@@ -95,6 +98,32 @@ public class ArticleVendu {
 	public void setEtatVente(String etatVente) {
 		this.etatVente = etatVente;
 	}
+
+	public Utilisateur getUtilisateur() {
+		return utilisateur;
+	}
+
+	public void setUtilisateur(Utilisateur utilisateur) {
+		this.utilisateur = utilisateur;
+	}
+
+	/**
+	 * @return the categorie
+	 */
+	public Categorie getCategorie() {
+		return categorie;
+	}
+
+	/**
+	 * @param categorie the categorie to set
+	 */
+	public void setCategorie(Categorie categorie) {
+		this.categorie = categorie;
+	}
+
+	
+
+	
 	
 	
 
