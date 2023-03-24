@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="fr.eni.enchere.bo.Utilisateur" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,6 +8,7 @@
 <title>Nouvelle vente</title>
 </head>
 <body>
+<% Utilisateur utilisateur = (Utilisateur)session.getAttribute("utilisateur"); %>
 <h1>Nouvelle vente</h1>
 	<form method="post" action="ServletNouvelleVente">
 		<label for="nom">Article :</label>
@@ -29,7 +31,18 @@
 			
 		<label for="finenchere">Fin de l'enchère :</label>
 		<input name="finenchere" type="date"><br/>
-		
+	<% if(utilisateur != null) { %>	
+		<fieldset>
+  			<legend>Retrait</legend>
+			<label for="rue">Rue :</label>
+			<input name="rue" type="text" value="<%= utilisateur.getAdresse().getRue() %>"><br/>
+			<label for="codepostal">Code postal :</label>
+			<input name="codepostal" type="text" value="<%= utilisateur.getAdresse().getCodePostal() %>"><br/>
+			<label for="ville">Ville :</label>
+			<input name="ville" type="text" value="<%= utilisateur.getAdresse().getVille() %>"><br/>
+		</fieldset>
+	<% } %>
+	<% if(utilisateur == null) { %>	
 		<fieldset>
   			<legend>Retrait</legend>
 			<label for="rue">Rue :</label>
@@ -39,7 +52,7 @@
 			<label for="ville">Ville :</label>
 			<input name="ville" type="text"><br/>
 		</fieldset>
-		
+	<% } %>
 		<br/>
 		<br/>
 		<input type="submit" name="valider" value="Enregistrer">
