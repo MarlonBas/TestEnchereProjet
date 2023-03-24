@@ -25,4 +25,16 @@ public class AdresseManager {
 		return adresseDAO.selectById(no_utilisateur);
 	}
 	
+	public Adresse insert(Adresse adresse) {
+		return adresseDAO.insert(adresse);
+	}
+	
+	public void update(Adresse adresse) {
+		adresseDAO.update(adresse);
+	}
+	
+	public void delete(Adresse adresse) {
+		adresseDAO.delete(adresse);
+	}
+	
 }

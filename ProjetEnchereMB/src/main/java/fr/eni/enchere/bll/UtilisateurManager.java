@@ -53,8 +53,8 @@ public class UtilisateurManager {
 	}
 	
 	//SUPPRIMER UTILISATEUR
-	public void deleteById(int id) {
-		utilisateurDAO.delete(id);
+	public void delete(Utilisateur utilisateur ) {
+		utilisateurDAO.delete(utilisateur);
 	}
 	
 	//MODIFIER UTILISATEUR
