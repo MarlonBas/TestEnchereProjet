@@ -19,4 +19,11 @@ public class DAOFactory {
 	public static CategorieDAO getCategorieDAO() {
 		return new CategorieDAOJdbcImpl();
 	}
+
+	public static EnchereDAO getEnchereDAO() {
+		
+		return new  EnchereDAOJdbcImpl();
+	}
+
+	
 }

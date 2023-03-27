@@ -36,7 +36,7 @@ public  class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 	    	Connection cnx = ConnectionProvider.getConnection();
 	    	Statement stmt = cnx.createStatement();
 	    	ResultSet rs = stmt.executeQuery(SELECT_All);
-		    int no_utilisateur, id_adresse, id_categorie, prix_vente ,mise_a_prix;
+	   	    int no_utilisateur, id_adresse, id_categorie, prix_vente ,mise_a_prix;
 			String nom_article, descr_article, date_Debut_Encheres, date_Fin_Encheres,  etat_vente;
 			LocalDate date_debut_encheres, date_fin_encheres;
 			ArticleVendu av = null ;
