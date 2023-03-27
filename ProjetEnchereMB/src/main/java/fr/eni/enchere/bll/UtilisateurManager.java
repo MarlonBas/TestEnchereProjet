@@ -57,6 +57,11 @@ public class UtilisateurManager {
 		utilisateurDAO.delete(utilisateur);
 	}
 	
+	//SELECT UTILISATEUR
+	public Utilisateur selectById(int id_utilisateur) {
+		utilisateurDAO.selectById(id_utilisateur);
+	}
+	
 	//MODIFIER UTILISATEUR
 	public void modifier(Utilisateur utilisateur) {
 		utilisateurDAO.update(utilisateur);
