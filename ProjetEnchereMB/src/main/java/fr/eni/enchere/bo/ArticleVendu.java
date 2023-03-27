@@ -121,6 +121,20 @@ public class ArticleVendu {
 		this.categorie = categorie;
 	}
 
+	/**
+	 * @return the adresse
+	 */
+	public Adresse getAdresse() {
+		return adresse;
+	}
+
+	/**
+	 * @param adresse the adresse to set
+	 */
+	public void setAdresse(Adresse adresse) {
+		this.adresse = adresse;
+	}
+
 	
 
 	
