@@ -33,7 +33,7 @@
 			<h2><%= article.getNomArticle()%></h2>
 			<p>Prix actuel : <%= article.getPrixVente() %></p>
 			<p>Fin de l'enchere le : <%= article.getDateFinEncheres() %></p>
-			<p>Vendeur : <a href="VoirProfil/pseudo?=<%= article.getUtilisateur().getPseudo()%>"><%= article.getUtilisateur().getPseudo() %></a></p>
+			<p>Vendeur : <a href="AfficherUtilisateur?pseudo=<%= article.getUtilisateur().getPseudo() %>"><%= article.getUtilisateur().getPseudo() %></a></p>
 			
 		</div>
 	<% } %>
