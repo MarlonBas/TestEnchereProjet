@@ -53,10 +53,14 @@ public class AjouterArticleVendu extends HttpServlet {
 		
 		if (utilisateur != null) {
 			// DETERMINATION DU STATUT DE LA VENTE
-			String etatVente = "En cours";
+			String etatVente = "en cours";
 			if (LocalDate.now().isBefore(debutEnchere)){
-				etatVente = "Pas encore commencé";
+				etatVente = "Pas debute";
 			}
+			if (LocalDate.now().isAfter(finEnchere)){
+				etatVente = "termine";
+			}
+			
 			
 			// CREATION DE L'ADDRESSE DE RETRAIT
 			Adresse adresse = new Adresse(
