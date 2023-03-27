@@ -1,0 +1,43 @@
+@charset "UTF-8";
+
+body{
+margin:20px;	
+}
+
+.listeEncheres {
+	display:flex;
+	justify-content:space-evenly;
+	flex-wrap:wrap;
+	width:auto;
+	gap:15px;
+}
+
+.article{
+	width:30%;
+	min-width:250px;
+	padding:10px;
+	border-radius:10px;
+	background-color:#4d5154;
+	border:1px solid white;
+	display : flex;
+	flex-direction:column;
+}
+
+.searchBar{
+	display : flex;
+	justify-content : center;
+	padding: 10px;
+	gap:10px;
+	border:1px solid white;
+	border-radius: 10px;
+	flex-wrap:wrap;
+	margin:20px;
+}
+.searchBar label {
+	display:flex;
+	align-items:center;
+}
+.searchBar .button {
+	border-radius:5px;
+    padding: 5px; 
+}

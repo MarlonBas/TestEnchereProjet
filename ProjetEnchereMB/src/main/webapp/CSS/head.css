@@ -1,0 +1,50 @@
+body{
+	margin:20px;
+}
+nav{
+	width:auto;
+	display:flex;
+	justify-content:space-between;
+	flex-wrap:wrap;
+}
+@media only screen and (max-width: 600px) {
+  nav {
+  	flex-direction:column;
+    justify-content:space-around;
+  }
+}
+
+#logoAccueil{
+	font-size:2.8em;
+	font-weight:bold;
+	text-decoration:none;
+	color:white;
+}
+nav div{
+	display:flex;
+	align-items:center;
+	justify-content: space-evenly;
+	gap:15px;
+	flex-wrap:wrap;
+	
+}
+
+.button{
+	text-decoration: none;
+	border-radius:10px;
+    border: 1px solid white;
+    color: white;
+    padding: 10px; 
+    background-color: #4d5154;
+}
+#deco {
+	background-color:#f27676;
+}
+
+.button:hover{
+	background-color: #646669;
+}
+
+#deco:hover{
+	background-color: #e85353;
+}
