@@ -10,8 +10,8 @@ import fr.eni.enchere.bo.Enchere;
 
 public class EnchereDAOJdbcImpl implements EnchereDAO{
 	
-	private final String INSERT = "INSERT into ENCHERES (date_enchere, montant_enchere )VALUES(?,?)";
-	private final String DELETE = "DELETE FROM ENCHERES where montant_enchere =?";
+	private final String INSERT = "INSERT into ENCHERES (date_enchere, montant_enchere, id_article, no_utilisateur)VALUES(?,?,?,?)";
+	private final String DELETE = "DELETE FROM ENCHERES where id_enchere=?";
 	
 	
 	@Override
@@ -36,7 +36,7 @@ public class EnchereDAOJdbcImpl implements EnchereDAO{
 	}
 	}
 	@Override
-    public void delete (int Enchere) {
+    public void delete (int Encheres) {
     	
     
     	Connection cnx = null;
@@ -49,7 +49,7 @@ public class EnchereDAOJdbcImpl implements EnchereDAO{
 			PreparedStatement stmt;
 			stmt= cnx.prepareStatement(DELETE);
 			
-				stmt.setInt(1, Enchere);
+				stmt.setInt(1, Encheres);
 			
     	
 			stmt.executeUpdate();
