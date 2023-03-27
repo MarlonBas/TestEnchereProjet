@@ -16,7 +16,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	private static final String INSERT_UTILISATEUR = "INSERT INTO UTILISATEURS (pseudo,nom,prenom,email,telephone,mot_de_passe,credit,administrateur,id_adresse) VALUES (?,?,?,?,?,?,?,?,?);";
 	private static final String UPDATE_UTILISATEUR = "UPDATE UTILISATEURS SET nom=?, prenom=?, email=?, telephone=?, mot_de_passe=?, credit=?, administrateur=? WHERE no_utilisateur=?";
 	private static final String DELETE_UTILISATEUR = "DELETE FROM UTILISATEURS WHERE no_utilisateur=?";
-	private static final String SELECT_UTILISATEUR_BY_ID = "SELECT * FROM UTILISATEURS WHERE no_utilisateur=?";
+	private static final String SELECT_UTILISATEUR_BY_ID = "SELECT no_utilisateur,pseudo,nom,prenom,email,telephone,mot_de_passe,credit,administrateur,id_adresse FROM UTILISATEURS WHERE no_utilisateur=?";
 	private static final String SELECT_UTILISATEUR_BY_NAME = "SELECT * FROM UTILISATEURS WHERE nom=?";
 	private static final String LOGIN_PSEUDO = "SELECT no_utilisateur,pseudo,nom,prenom,email,telephone,mot_de_passe,credit,administrateur,id_adresse FROM UTILISATEURS WHERE pseudo=? and mot_de_passe=?";
 	private static final String LOGIN_EMAIL = "SELECT no_utilisateur,pseudo,nom,prenom,email,telephone,mot_de_passe,credit,administrateur,id_adresse FROM UTILISATEURS WHERE email=? and mot_de_passe=?";
@@ -28,7 +28,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 		
 		try (Connection cnx = ConnectionProvider.getConnection()){
 			PreparedStatement pstmt;
-			ResultSet rs;
+			
 			
 			//Insertion de l'adresse de l'utilisateur dans la base de données
 			Adresse nouvelleAdresseAvecId = AdresseManager.getInstance().insert(utilisateur.getAdresse());
@@ -106,12 +106,15 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	@Override
 	public Utilisateur selectById(int noUtilisateur) {
 		Utilisateur utilisateur = null;
+		ResultSet rs;
 		try {
 			Connection cnx = ConnectionProvider.getConnection();
 			PreparedStatement pstmt = cnx.prepareStatement(SELECT_UTILISATEUR_BY_ID);
 			pstmt.setInt(1, noUtilisateur);
-			ResultSet rs = pstmt.executeQuery();
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
 			utilisateur = rsToUtilisateur(rs);
+			}
 			pstmt.close();
 			cnx.close();
 		}catch(SQLException e) {
@@ -202,7 +205,6 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 							  rs.getInt("credit"),
 							  rs.getBoolean("administrateur")
 							  );
-			;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
