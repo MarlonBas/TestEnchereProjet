@@ -19,6 +19,7 @@
 <p>Bienvenue  ${utilisateur.prenom} </p>
 <a href="MonCompte">Voir mon profil</a>
 <a href="Deconnection">Se déconnecter</a>
+<a href="AjouterArticleVendu">Mettre en vente un article</a>
 </div>
 <% } %>
 </nav>

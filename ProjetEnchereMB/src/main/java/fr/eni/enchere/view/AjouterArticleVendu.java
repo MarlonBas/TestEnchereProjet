@@ -43,7 +43,7 @@ public class AjouterArticleVendu extends HttpServlet {
 		// CONVERSION DES PARAMETRES - de String en int, LocalDate, et Categorie
 		LocalDate debutEnchere = LocalDate.parse(request.getParameter("debutenchere"));
 		LocalDate finEnchere = LocalDate.parse(request.getParameter("finenchere"));
-		int prix = Integer.parseInt(request.getParameter("prix"));
+		int prix = Integer.valueOf(request.getParameter("prix"));
 		int codePostal = Integer.parseInt(request.getParameter("codepostal"));
 		HttpSession session = request.getSession();
 		Utilisateur utilisateur = (Utilisateur) session.getAttribute("utilisateur");
@@ -55,7 +55,7 @@ public class AjouterArticleVendu extends HttpServlet {
 			// DETERMINATION DU STATUT DE LA VENTE
 			String etatVente = "en cours";
 			if (LocalDate.now().isBefore(debutEnchere)){
-				etatVente = "Pas debute";
+				etatVente = "pas debute";
 			}
 			if (LocalDate.now().isAfter(finEnchere)){
 				etatVente = "termine";
