@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import fr.eni.enchere.bll.ArticleVenduManager;
 import fr.eni.enchere.bll.CategorieManager;
 import fr.eni.enchere.bo.Adresse;
 import fr.eni.enchere.bo.ArticleVendu;
@@ -79,8 +80,7 @@ public class AjouterArticleVendu extends HttpServlet {
 					);
 			
 			// ENVOIE DE L'ARTICLE A LA BLL
-			//A decommenter quand creerArticleVendu sera dispo dans ArticleVenduManager
-			//ArticleVenduManager.getInstance().creerArticleVendu();
+			ArticleVenduManager.getInstance().creerArticleVendu(article);
 			
 			//request.getRequestDispatcher("Article.jsp").forward(request, response);
 		}

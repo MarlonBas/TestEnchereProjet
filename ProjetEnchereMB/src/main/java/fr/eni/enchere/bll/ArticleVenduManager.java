@@ -29,12 +29,25 @@ public class ArticleVenduManager {
 	
 	public List<ArticleVendu> getAllArticleVendu() throws BllException, SQLException{
 		
-		List<ArticleVendu> lst= ArticleVenduDAO.selectAll();
-		if(lst == null) {
+		List<ArticleVendu> articles= ArticleVenduDAO.selectAll();
+		if(articles == null) {
 			throw new BllException ("Liste des articles vendu vide");
 		}
-		return lst;
+		return articles;
 	
+	}
+	
+	public void creerArticleVendu(ArticleVendu article) {
+		ArticleVenduDAO.insert(article);
+	}
+	
+	//Corriger delete dans le DAO
+	public void supprimerArticleVendu(ArticleVendu article) {
+		ArticleVenduDAO.delete(article);
+	}
+	
+	public void modifierArticleVendu(ArticleVendu article) {
+		ArticleVenduDAO.update(article);
 	}
 }
 
