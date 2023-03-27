@@ -10,6 +10,7 @@
 <body>
 <header>
 <nav>
+
 <a href="encheres" id="logoAccueil">ENI Encheres</a>
 <div>
 <% if(session.getAttribute("utilisateur")==null){ %>
