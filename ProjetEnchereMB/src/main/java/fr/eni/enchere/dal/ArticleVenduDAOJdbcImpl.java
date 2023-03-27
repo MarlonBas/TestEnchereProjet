@@ -1,6 +1,7 @@
 package fr.eni.enchere.dal;
 
 import java.sql.Connection;
+
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,16 +14,18 @@ import java.util.List;
 
 
 import fr.eni.enchere.bll.AdresseManager;
+import fr.eni.enchere.bll.CategorieManager;
+import fr.eni.enchere.bll.UtilisateurManager;
 import fr.eni.enchere.bo.Adresse;
 import fr.eni.enchere.bo.ArticleVendu;
 import fr.eni.enchere.bo.Utilisateur;
 
 public  class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 
-	private final String SELECT_All = "SELECT nomArticle, description, datDebutEncheres, dateFinEncheres, misAPrix, adresse";
-	private final String INSERT = "INSERT into ARTICLE_VENDU (nomArticle, description, datDebutEncheres, dateFinEncheres, misAPrix, adresse)VALUES(?,?,?,?,?,?)";
-    private final String DELETE = "DELETE FROM ARTICLE_VENDU WHERE noArticle=";
-	private final String UPDATE = "UPDATE FROM ARTICLE_VENDU SET nomArticle=?, description=?, dateDebutEncheres=?, dateFinEncheres=?, misAPrix=?, adresse=?";
+	private final String SELECT_All = "SELECT * FROM articles ";
+	private final String INSERT = "INSERT into ARTICLES (no_utilisateur, id_adresse, id_categorie, nom_article, descr_article, date_debut_encheres, date_fin_encheres, mise_a_prix, prix_vente, etat_vente )VALUES(?,?,?,?,?,?,?,?,?,?)";
+    private final String DELETE = "DELETE FROM ARTICLES WHERE id_article=?";
+	private final String UPDATE = "UPDATE FROM ARTICLES SET no_utilisateur=?, id_adresse=?, id_categorie=?, nom_article=?, descr_article=?, date_debut_encheres=?, date_fin_encheres=?, mis_a_prix=?, prix_vente=?,  etat_vente=? ";
 	
 	
 	
@@ -33,18 +36,25 @@ public  class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 	    	Connection cnx = ConnectionProvider.getConnection();
 	    	Statement stmt = cnx.createStatement();
 	    	ResultSet rs = stmt.executeQuery(SELECT_All);
-		
-			String nomArticle, description, dateDebutEncheres, dateFinEncheres, misAPrix, adresse;
+		    int no_utilisateur, id_adresse, id_categorie, prix_vente ,mise_a_prix;
+			String nom_article, descr_article, date_Debut_Encheres, date_Fin_Encheres,  etat_vente;
+			LocalDate date_debut_encheres, date_fin_encheres;
 			ArticleVendu av = null ;
 			List<ArticleVendu> liste = new ArrayList<>();
 			
 			while(rs.next()) {
-				nomArticle = rs.getString("Nom_Article");
-				description = rs.getString("Description");
-				dateDebutEncheres = rs.getString("Date_Debut_Encheres");
-				dateFinEncheres = rs.getString("Date_Fin_Encheres");
-				misAPrix = rs.getString("Mis_a_Prix");
-				adresse = rs.getString("Adresse");
+				no_utilisateur = rs.getInt("no_utilisateur");
+				id_adresse = rs.getInt("id_adresse");
+				id_categorie = rs.getInt("id_categorie");
+				nom_article = rs.getString("nom_article");
+				descr_article = rs.getString("descr_article");
+				date_debut_encheres = rs.getDate("date_debut_encheres").toLocalDate();
+				date_fin_encheres = rs.getDate("date_fin_encheres").toLocalDate();
+				mise_a_prix = rs.getInt("mise_a_prix");
+				prix_vente = rs.getInt("prix_vente");
+				etat_vente = rs.getString("etat_vente");
+				
+				av = new ArticleVendu( nom_article, descr_article, date_debut_encheres, date_fin_encheres, mise_a_prix, prix_vente, etat_vente, AdresseManager.getInstance().findById(id_adresse), UtilisateurManager.getInstance().selectById(no_utilisateur), CategorieManager.getInstance().selectCategorie(id_categorie) );
 				
 				liste.add(av);
 				
@@ -62,14 +72,16 @@ public  class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 	}
 	
 	@Override
-	public void delete(ArticleVendu  articleVendu) {
+	public void delete(ArticleVendu  articles) {
 		try (Connection cnx = ConnectionProvider.getConnection()){
-			Statement stmt;
-			stmt=cnx.createStatement();
-			stmt.executeUpdate(DELETE);
+			PreparedStatement stmt;
+			stmt= cnx.prepareStatement(DELETE);
+			stmt.setInt(1, articles.getNoArticle());
+			
+			stmt.executeUpdate();
 			cnx.close();
 			
-			
+			AdresseManager.getInstance().delete(articles.getAdresse());//supprimer l'adresse associer a l'article supprimé
 			
 			}catch(Exception e) {
 				e.printStackTrace();
@@ -77,22 +89,27 @@ public  class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 	}
 	
 	@Override
-     public void insert(ArticleVendu articleVendu) {
+     public void insert(ArticleVendu articles) {
 	
     try {
 		Connection cnx = ConnectionProvider.getConnection();
 		 PreparedStatement pstmt;
 		 LocalDate date = LocalDate.now();
+		 Adresse nouvelleAdresseID = AdresseManager.getInstance().insert(articles.getAdresse());
+		 articles.setAdresse(nouvelleAdresseID);
 		 pstmt = cnx.prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS);
 		 
+		 pstmt.setInt(1,articles.getUtilisateur().getNoUtilisateur());
+		 pstmt.setInt(2,articles.getAdresse().getId_adresse());
+		 pstmt.setInt(3, articles.getCategorie().getNoCategorie());
+		 pstmt.setString(4, articles.getNomArticle());
+		 pstmt.setString(5, articles.getDescription());
+		 pstmt.setDate(6, java.sql.Date.valueOf(articles.getDateDebutEncheres()));
+		 pstmt.setDate(7,java.sql.Date.valueOf(articles.getDateFinEncheres()));
+		 pstmt.setInt(8, articles.getMiseAPrix());
+		 pstmt.setInt(9, articles.getPrixVente());
+		 pstmt.setString(10, articles.getEtatVente());
 		 
-		 pstmt.setString(1, articleVendu.getNomArticle());
-		 pstmt.setString(2, articleVendu.getDescription());
-		 pstmt.setDate(3, java.sql.Date.valueOf(articleVendu.getDateDebutEncheres()));
-		 pstmt.setDate(4,java.sql.Date.valueOf(articleVendu.getDateFinEncheres()));
-		 pstmt.setInt(5, articleVendu.getMiseAPrix());
-		 pstmt.setString(1, articleVendu.getCategorie().getLibelle());
-		
 		 
 		 pstmt.executeUpdate();
 		 pstmt.close();
@@ -102,20 +119,27 @@ public  class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 		} 
      }
    @Override
-    public  void update(ArticleVendu articleVendu) {
+    public  void update(ArticleVendu articles) {
     	
     	try {
     	 Connection cnx = ConnectionProvider.getConnection();
 		 PreparedStatement pstmt;
+		 AdresseManager.getInstance().update(articles.getAdresse());
+		
 		 pstmt = cnx.prepareStatement(UPDATE);
 		 
-		 pstmt.setString(1, articleVendu.getNomArticle());
-		 pstmt.setString(2, articleVendu.getDescription());
-		 pstmt.setDate(3,java.sql.Date.valueOf(articleVendu.getDateDebutEncheres()));
-		 pstmt.setDate(4, java.sql.Date.valueOf(articleVendu.getDateFinEncheres()));
-		 pstmt.setInt(5, articleVendu.getMiseAPrix());
-		 pstmt.setString(6, articleVendu.getCategorie().getLibelle());
-		 pstmt.setString(7, articleVendu.getAdresse().getRue());//rajouter le reste de l'adresse+ convertion a faire pour les types
+		 pstmt.setInt(1,articles.getUtilisateur().getNoUtilisateur());
+		 pstmt.setInt(2,articles.getAdresse().getId_adresse());
+		 pstmt.setInt(3, articles.getCategorie().getNoCategorie());
+		 pstmt.setString(4, articles.getNomArticle());
+		 pstmt.setString(5, articles.getDescription());
+		 pstmt.setDate(6, java.sql.Date.valueOf(articles.getDateDebutEncheres()));
+		 pstmt.setDate(7,java.sql.Date.valueOf(articles.getDateFinEncheres()));
+		 pstmt.setInt(8, articles.getMiseAPrix());
+		 pstmt.setInt(9, articles.getPrixVente());
+		 pstmt.setString(10, articles.getEtatVente());
+		 
+		
 		
 		 pstmt.close();
 		 cnx.close();

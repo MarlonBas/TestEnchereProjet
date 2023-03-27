@@ -59,7 +59,7 @@ public class UtilisateurManager {
 	
 	//SELECT UTILISATEUR
 	public Utilisateur selectById(int id_utilisateur) {
-		utilisateurDAO.selectById(id_utilisateur);
+		return utilisateurDAO.selectById(id_utilisateur);
 	}
 	
 	//MODIFIER UTILISATEUR
