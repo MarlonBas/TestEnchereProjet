@@ -128,12 +128,15 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	@Override
 	public Utilisateur selectByPseudo(String utilisateurPseudo) {
 		Utilisateur utilisateur = null;
+		ResultSet rs;
 		try {
 			Connection cnx = ConnectionProvider.getConnection();
 			PreparedStatement pstmt = cnx.prepareStatement(SELECT_UTILISATEUR_BY_PSEUDO);
 			pstmt.setString(1, utilisateurPseudo);
-			ResultSet rs = pstmt.executeQuery();
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
 			utilisateur = rsToUtilisateur(rs);
+			}
 			pstmt.close();
 			cnx.close();
 		}catch(SQLException e) {
