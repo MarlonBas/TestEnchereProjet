@@ -62,8 +62,8 @@ public class UtilisateurManager {
 		return utilisateurDAO.selectById(id_utilisateur);
 	}
 	
-	public Utilisateur selectByName(String utilisateur) {
-		return utilisateurDAO.selectByName(utilisateur);
+	public Utilisateur selectByPseudo(String pseudo) {
+		return utilisateurDAO.selectByPseudo(pseudo);
 	}
 	
 	//MODIFIER UTILISATEUR

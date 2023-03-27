@@ -23,7 +23,7 @@ public class AfficherUtilisateur extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession ses = request.getSession();
 		// request doit contenir un parametre "utilisateur"
-		request.setAttribute("utilisateur",UtilisateurManager.getInstance().selectByName(request.getParameter("utilisateur")));
+		request.setAttribute("utilisateur",UtilisateurManager.getInstance().selectByPseudo(request.getParameter("pseudo")));
 		if (request.getAttribute("utilisateur").equals(ses.getAttribute("utilisateur"))) {
 			request.getRequestDispatcher("/WEB-INF/MonCompte.jsp").forward(request, response);
 		}
