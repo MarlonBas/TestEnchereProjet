@@ -11,7 +11,7 @@ import fr.eni.enchere.bo.Enchere;
 public class EnchereDAOJdbcImpl implements EnchereDAO{
 	
 	private final String INSERT = "INSERT into ENCHERES (date_enchere, montant_enchere )VALUES(?,?)";
-	
+	private final String DELETE = "DELETE FROM ENCHERES where montant_enchere =?";
 	
 	
 	@Override
@@ -34,5 +34,32 @@ public class EnchereDAOJdbcImpl implements EnchereDAO{
 	} catch (SQLException e) {
 		e.printStackTrace();
 	}
-}
-}
+	}
+	@Override
+    public void delete (int Enchere) {
+    	
+    
+    	Connection cnx = null;
+		try {
+			cnx = ConnectionProvider.getConnection();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+    	{try {
+			PreparedStatement stmt;
+			stmt= cnx.prepareStatement(DELETE);
+			
+				stmt.setInt(1, Enchere);
+			
+    	
+			stmt.executeUpdate();
+			stmt.close();
+			cnx.close();
+    	}catch (Exception e) {
+			
+		}
+	  } 
+    	
+	}
+}    
+
