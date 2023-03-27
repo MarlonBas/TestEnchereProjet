@@ -22,7 +22,7 @@ public class CategorieDAOJdbcImpl implements CategorieDAO {
 			
 			ResultSet rs=pstmt.executeQuery();
 			if (rs.next()) {
-				categorie = new Categorie(rs.getInt("id"),rs.getString("nom"));
+				categorie = new Categorie(rs.getInt("id_categorie"),rs.getString("libelle"));
 			}
 			cnx.close();		
 		}

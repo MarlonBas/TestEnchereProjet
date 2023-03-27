@@ -7,6 +7,6 @@ public interface AdresseDAO {
 	public Adresse insert(Adresse adresse);
 	public void update(Adresse adresse);
 	public void delete(Adresse adresse);
-	public Adresse selectById(int no_utilisateur);
+	public Adresse selectById(int id_adresse);
 
 }
