@@ -6,8 +6,6 @@ public interface EnchereDAO {
 
 	void insert(Enchere enchere);
 
-	
-
 	void delete(int Enchere);
 
 }
