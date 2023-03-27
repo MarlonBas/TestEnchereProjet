@@ -31,9 +31,6 @@
         }%>
     	</select><br/>
 			
-		<label for="image">Photo de l'article :</label>
-		<input name="image" type="file"><br/>
-			
 		<label for="prix">Mise à prix :</label>
 		<input name="prix" type="text"><br/>
 			

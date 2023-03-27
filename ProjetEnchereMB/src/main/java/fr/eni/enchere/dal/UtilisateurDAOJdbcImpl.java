@@ -14,9 +14,10 @@ import fr.eni.enchere.bo.Utilisateur;
 public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 
 	private static final String INSERT_UTILISATEUR = "INSERT INTO UTILISATEURS (pseudo,nom,prenom,email,telephone,mot_de_passe,credit,administrateur,id_adresse) VALUES (?,?,?,?,?,?,?,?,?);";
-	private static final String UPDATE_UTILISATEUR = "UPDATE UTILISATEURS SET pseudo=?, nom=?, prenom=?, email=?, telephone=?, mot_de_passe=?, credit=?, administrateur=? WHERE no_utilisateur=?";
+	private static final String UPDATE_UTILISATEUR = "UPDATE UTILISATEURS SET nom=?, prenom=?, email=?, telephone=?, mot_de_passe=?, credit=?, administrateur=? WHERE no_utilisateur=?";
 	private static final String DELETE_UTILISATEUR = "DELETE FROM UTILISATEURS WHERE no_utilisateur=?";
-	private static final String SELECT_UTILISATEUR_BY_ID = "SELECT * FROM UTILISATEURS WHERE no_utilisateur=?"; 
+	private static final String SELECT_UTILISATEUR_BY_ID = "SELECT * FROM UTILISATEURS WHERE no_utilisateur=?";
+	private static final String SELECT_UTILISATEUR_BY_NAME = "SELECT * FROM UTILISATEURS WHERE nom=?";
 	private static final String LOGIN_PSEUDO = "SELECT no_utilisateur,pseudo,nom,prenom,email,telephone,mot_de_passe,credit,administrateur,id_adresse FROM UTILISATEURS WHERE pseudo=? and mot_de_passe=?";
 	private static final String LOGIN_EMAIL = "SELECT no_utilisateur,pseudo,nom,prenom,email,telephone,mot_de_passe,credit,administrateur,id_adresse FROM UTILISATEURS WHERE email=? and mot_de_passe=?";
 	private final static String VERIF_EMAIL = "SELECT * FROM UTILISATEURS WHERE email=?";
@@ -59,26 +60,25 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 		try (Connection cnx = ConnectionProvider.getConnection()){
 			PreparedStatement pstmt;
 			
-			//Mise à jour de l'utilisateur et récupération de son numéro
+			//Mise à jour de l'utilisateur
 			pstmt = cnx.prepareStatement(UPDATE_UTILISATEUR);
-			pstmt.setString(1,utilisateur.getPseudo());
-			pstmt.setString(2,utilisateur.getNom());
-			pstmt.setString(3,utilisateur.getPrenom());
-			pstmt.setString(4,utilisateur.getEmail());
-			pstmt.setString(5,utilisateur.getTelephone());
-			pstmt.setString(6, utilisateur.getMotDePasse());
-			pstmt.setInt(7, utilisateur.getCredit());
-			pstmt.setBoolean(8, utilisateur.isAdministrateur());
-			pstmt.setInt(9, utilisateur.getNoUtilisateur());
+			pstmt.setString(1,utilisateur.getNom());
+			pstmt.setString(2,utilisateur.getPrenom());
+			pstmt.setString(3,utilisateur.getEmail());
+			pstmt.setString(4,utilisateur.getTelephone());
+			pstmt.setString(5, utilisateur.getMotDePasse());
+			pstmt.setInt(6, utilisateur.getCredit());
+			pstmt.setBoolean(7, utilisateur.isAdministrateur());
+			pstmt.setInt(8, utilisateur.getNoUtilisateur());
 			pstmt.executeUpdate();
 			
 			pstmt.close();
 			cnx.close();
-			
-			
-		}catch(Exception e) {
+		}	catch(Exception e) {
 			e.printStackTrace();
 		}
+		// Mise à jour de l'addresse associé à l'utilisateur NE MARCHE PAS ?
+		//AdresseManager.getInstance().update(utilisateur.getAdresse());
 	}
 
 	@Override
@@ -110,6 +110,25 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 			Connection cnx = ConnectionProvider.getConnection();
 			PreparedStatement pstmt = cnx.prepareStatement(SELECT_UTILISATEUR_BY_ID);
 			pstmt.setInt(1, noUtilisateur);
+			ResultSet rs = pstmt.executeQuery();
+			utilisateur = rsToUtilisateur(rs);
+			pstmt.close();
+			cnx.close();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		
+		
+		return utilisateur;
+	}
+
+	@Override
+	public Utilisateur selectByName(String utilisateurName) {
+		Utilisateur utilisateur = null;
+		try {
+			Connection cnx = ConnectionProvider.getConnection();
+			PreparedStatement pstmt = cnx.prepareStatement(SELECT_UTILISATEUR_BY_NAME);
+			pstmt.setString(1, utilisateurName);
 			ResultSet rs = pstmt.executeQuery();
 			utilisateur = rsToUtilisateur(rs);
 			pstmt.close();

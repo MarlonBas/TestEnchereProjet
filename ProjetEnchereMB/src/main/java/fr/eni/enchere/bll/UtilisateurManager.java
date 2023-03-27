@@ -62,6 +62,10 @@ public class UtilisateurManager {
 		return utilisateurDAO.selectById(id_utilisateur);
 	}
 	
+	public Utilisateur selectByName(String utilisateur) {
+		return utilisateurDAO.selectByName(utilisateur);
+	}
+	
 	//MODIFIER UTILISATEUR
 	public void modifier(Utilisateur utilisateur) {
 		utilisateurDAO.update(utilisateur);

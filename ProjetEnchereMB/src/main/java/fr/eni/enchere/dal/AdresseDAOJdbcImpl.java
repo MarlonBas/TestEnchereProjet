@@ -11,7 +11,7 @@ public class AdresseDAOJdbcImpl implements AdresseDAO{
 
 	private static final String SELECT_ADRESSE_BY_ID = "SELECT id_adresse, rue, code_postal, ville FROM ADRESSES WHERE id_adresse=?;";
 	private static final String INSERT_ADRESSE = "INSERT INTO ADRESSES (rue,code_postal,ville) VALUES (?,?,?);";
-	private static final String UPDATE_ADRESSE = "UPDATE ADRESSE SET rue=?,code_postal=?,ville=? WHERE id_adresse=?;";
+	private static final String UPDATE_ADRESSE = "UPDATE ADRESSES SET rue=?,code_postal=?,ville=? WHERE id_adresse=?;";
 	private static final String DELETE_ADRESSE = "DELETE FROM ADRESSES WHERE id_adresse=?";
 	
 	

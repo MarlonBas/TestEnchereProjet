@@ -30,6 +30,7 @@ public class SupprimerUtilisateur extends HttpServlet
 		Utilisateur utilisateur;
 		utilisateur = (Utilisateur)ses.getAttribute("utilisateur");
 		UtilisateurManager.getInstance().delete(utilisateur);
+		ses.invalidate();
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/accueil.jsp");
 		rd.forward(request, response);
 	}

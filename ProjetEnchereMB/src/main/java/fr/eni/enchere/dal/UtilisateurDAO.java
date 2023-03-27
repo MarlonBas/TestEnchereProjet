@@ -12,6 +12,7 @@ public interface UtilisateurDAO {
 	void delete(Utilisateur utilisateur);
 	public List<Utilisateur> selectAll();
 	public Utilisateur selectById(int noUtilisateur);
+	public Utilisateur selectByName(String utilisateurName);
 	public Utilisateur login(String pseudo, String motDePasse);
 	public Utilisateur loginEmail(String email, String motDePasse);
 	boolean isEmailOk(String email);
