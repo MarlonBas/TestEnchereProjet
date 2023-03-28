@@ -30,14 +30,18 @@ public class Recherche extends HttpServlet {
 		// Récup des parametres des filtres
 			int categorie = Integer.parseInt(request.getParameter("categorie"));
 			String search = request.getParameter("recherche");
-			List<ArticleVendu> Articles;
+			List<ArticleVendu> articles;
+			
+			if (search.equals("/")) {
+				search = null;
+			}
 		// Recuperation des articles de la BDD
 			try {
-				Articles = ArticleVenduManager.getInstance().getAllArticleVendu();
+				articles = ArticleVenduManager.getInstance().getAllArticleVendu();
 					
 				// Filtres (avec objet Iterator, c'est plutôt classe ce truc, ça evite des problemes d'index quand tu remove le dernier element etc...)
 				if (search != null) {
-				    Iterator<ArticleVendu> iterator = Articles.iterator();
+				    Iterator<ArticleVendu> iterator = articles.iterator();
 				    while (iterator.hasNext()) {
 				        ArticleVendu article = iterator.next();
 				        if (!article.getNomArticle().contains(search) && !article.getDescription().contains(search)) {
@@ -47,7 +51,7 @@ public class Recherche extends HttpServlet {
 				}
 
 				if (categorie != 0) {
-				    Iterator<ArticleVendu> iterator = Articles.iterator();
+				    Iterator<ArticleVendu> iterator = articles.iterator();
 				    while (iterator.hasNext()) {
 				        ArticleVendu article = iterator.next();
 				        if (article.getCategorie().getNoCategorie() != categorie) {
@@ -57,7 +61,7 @@ public class Recherche extends HttpServlet {
 				}
 				
 				// Passage de la liste d'articles filtrés au request pour retour à la JSP
-				request.setAttribute("articles",Articles);
+				request.setAttribute("articles",articles);
 			} catch (BllException e) {
 				e.printStackTrace();
 			} catch (SQLException e) {
