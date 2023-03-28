@@ -4,19 +4,25 @@
 
 
 <!DOCTYPE html>
-<html>
+<html  lang="fr" data-bs-theme="dark">
 <head>
 	<meta charset="UTF-8">
 	<title>Créer un compte</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="CSS/login.css">
 </head>
 <body>
+	<a href="encheres" id="logoAccueil">ENI Encheres</a>
+	<div class="creationCompte">
+	<h1>Inscription</h1>
 	<form method="POST" action="ajouterutilisateur">
 	
 		<label for="pseudo">Pseudo :</label>
-		<input type="text" name="pseudo" value="${utilisateurEnCreation.pseudo}" required><br/>
+		<input type="text" name="pseudo" value="${utilisateurEnCreation.pseudo}" pattern="[a-zA-Z0-9]+$" required><br/>
+		<p class="info">Le pseudo ne doit contenir que des caractères alphanumériques</p>
 		
 		<label for="nom">Nom :</label>
-		<input type="text" name="nom" value="${utilisateurEnCreation.nom}" required><br/>
+		<input type="text" name="nom" value="${utilisateurEnCreation.nom}" pattern="^[a-z]+[ \-']?[[a-z]+[ \-']?]*[a-z]+$" required><br/>
 		
 		<label for="prenom">Prenom :</label>
 		<input type="text" name="prenom"  value="${utilisateurEnCreation.prenom}"required><br/>
@@ -43,12 +49,13 @@
 		<input type ="password" placeholder ="********" name="confirmation_mot_de_passe" required><br/>
 		
 		
-		<input type="submit" name="valider" value="Créer">
-		<input type="submit" name="annuler" value="Annuler">
+		<input type="submit" name="valider" class="button" value="Créer">
+		<a href="encheres" class="button">Annuler</a>
 		<%-- Afficher une erreur si on retourne sur la page après une de connection --%>
 		    <% if (request.getAttribute("erreur") != null) { %>
-		        <p style="color: red;"><%= request.getAttribute("erreur") %></p>
+		        <p class="erreur"><%= request.getAttribute("erreur") %></p>
 		    <% } %>
 	</form>
+	</div>
 </body>
 </html>

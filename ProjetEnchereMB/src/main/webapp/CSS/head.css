@@ -6,11 +6,14 @@ nav{
 	display:flex;
 	justify-content:space-between;
 	flex-wrap:wrap;
+	margin-bottom:30px;
+	
 }
 @media only screen and (max-width: 600px) {
   nav {
   	flex-direction:column;
     justify-content:space-around;
+    
   }
 }
 
@@ -37,7 +40,7 @@ nav div{
     padding: 10px; 
     background-color: #4d5154;
 }
-#deco {
+.danger {
 	background-color:#f27676;
 }
 
@@ -45,6 +48,6 @@ nav div{
 	background-color: #646669;
 }
 
-#deco:hover{
+.danger:hover{
 	background-color: #e85353;
 }

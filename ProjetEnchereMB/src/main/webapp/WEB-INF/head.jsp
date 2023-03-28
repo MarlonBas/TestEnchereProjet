@@ -20,7 +20,7 @@
 <span>Bienvenue  ${utilisateur.prenom} </span>
 <a href="AjouterArticleVendu" class="button">Mettre en vente un article</a>
 <a href="MonCompte" class="button">Voir mon profil</a>
-<a href="Deconnection" class="button" id="deco">Se déconnecter</a>
+<a href="Deconnection" class="button danger">Se déconnecter</a>
 
 </div>
 <% } %>

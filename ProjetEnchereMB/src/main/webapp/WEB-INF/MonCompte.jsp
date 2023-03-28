@@ -2,17 +2,18 @@
     pageEncoding="UTF-8"%>
 <%@page import="fr.eni.enchere.bo.Utilisateur" %>
 <!DOCTYPE html>
-<html>
+<html lang="fr" data-bs-theme="dark">
 <head>
 <meta charset="UTF-8">
 <title>Mon compte</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="CSS/login.css">
 <% Utilisateur utilisateur = (Utilisateur)session.getAttribute("utilisateur"); %>
 </head>
 <body>
-	<header>
-		<h1>ENI - Encheres</h1>
-	</header>
+	<a href="encheres" id="logoAccueil">ENI Encheres</a>
 		
+		<div class="modifCompte">
 		<form action="ModifierUtilisateur" method="POST">
 			<label for="pseudo">Pseudo :</label>
 			<input name ="pseudo" type="text" value="<%= utilisateur.getPseudo() %>" readonly><br/>
@@ -39,13 +40,15 @@
 			<input name="ville" type="text" value="<%= utilisateur.getAdresse().getVille() %>"><br/>
 			<br/>
 			
-			<input type="submit" name="valider" value="Modifier">
+			<input type="submit" name="valider" class="button" value="Modifier">
 		</form>
 		<br/>
-		<span>Je veux supprimer mon compte pour toujours <br/>-- ATTENTION --<br/>
-		Ceci est irreversible et entrainera la perte de tout vos credits</span>
+		<p>Je veux supprimer mon compte pour toujours</p>
+		<p>-- ATTENTION --</p>
+		<p>Ceci est irreversible et entrainera la perte de tout vos credits</p>
 		<form action="SupprimerUtilisateur" method="POST">
-			<input type="submit" name="valider" value="Supprimer">
+			<input type="submit" name="valider" class="button danger" value="Supprimer">
 		</form>
+		</div>
 </body>
 </html>
