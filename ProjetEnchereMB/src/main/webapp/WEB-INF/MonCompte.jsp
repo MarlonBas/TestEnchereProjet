@@ -11,7 +11,7 @@
 <% Utilisateur utilisateur = (Utilisateur)session.getAttribute("utilisateur"); %>
 </head>
 <body>
-	<a href="encheres" id="logoAccueil">ENI Encheres</a>
+		<%@ include file="head.jsp" %>
 		
 		<div class="modifCompte">
 		<form action="ModifierUtilisateur" method="POST">

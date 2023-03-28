@@ -20,9 +20,28 @@ public class ArticleVendu {
 		super();
 	}
 
+	
 	public ArticleVendu(String nomArticle, String description, LocalDate dateDebutEncheres, LocalDate dateFinEncheres,
+			int miseAPrix, int prixVente, String etatVente, Adresse adresse, Utilisateur utilisateur,
+			Categorie categorie) {
+		super();
+		this.nomArticle = nomArticle;
+		this.description = description;
+		this.dateDebutEncheres = dateDebutEncheres;
+		this.dateFinEncheres = dateFinEncheres;
+		this.miseAPrix = miseAPrix;
+		this.prixVente = prixVente;
+		this.etatVente = etatVente;
+		this.adresse = adresse;
+		this.utilisateur = utilisateur;
+		this.categorie = categorie;
+	}
+
+
+	public ArticleVendu(int noArticle,String nomArticle, String description, LocalDate dateDebutEncheres, LocalDate dateFinEncheres,
 			int miseAPrix, int prixVente, String etatVente, Adresse adresse, Utilisateur utilisateur, Categorie categorie) {
 		super();
+		this.noArticle = noArticle;
 		this.nomArticle = nomArticle;
 		this.description = description;
 		this.dateDebutEncheres = dateDebutEncheres;

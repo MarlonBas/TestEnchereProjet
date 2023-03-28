@@ -37,6 +37,14 @@ public class ArticleVenduManager {
 	
 	}
 	
+	public ArticleVendu selectArticleById(int id_article) throws BllException {
+		ArticleVendu article = ArticleVenduDAO.selectById(id_article);
+		if(article == null) {
+			throw new BllException ("Article non trouvé");
+		}
+		return article;
+	}
+	
 	public void creerArticleVendu(ArticleVendu article) {
 		ArticleVenduDAO.insert(article);
 	}

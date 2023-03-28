@@ -17,10 +17,12 @@
 <a href="ajouterutilisateur" class="button" >S'inscrire</a>
 <a href="ServletLogin" class="button">Se connecter</a>
 <% } else { %>
-<span>Bienvenue  ${utilisateur.prenom} </span>
+<span>Bienvenue  ${utilisateur.prenom}, vous avez actuellement <strong>${utilisateur.credit} </strong> crédit(s) </span>
+<div>
 <a href="AjouterArticleVendu" class="button">Mettre en vente un article</a>
 <a href="MonCompte" class="button">Voir mon profil</a>
 <a href="Deconnection" class="button danger">Se déconnecter</a>
+</div>
 
 </div>
 <% } %>

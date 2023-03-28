@@ -2,16 +2,18 @@
     pageEncoding="UTF-8"%>
 <%@page import="fr.eni.enchere.bo.Utilisateur" %>
 <!DOCTYPE html>
-<html>
+<html lang="fr" data-bs-theme="dark">
 <head>
 <meta charset="UTF-8">
-<title>Info Utilisateur</title>
 <% Utilisateur utilisateur = (Utilisateur)request.getAttribute("utilisateur"); %>
+<title>Profil de <%= utilisateur.getPseudo() %> </title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="CSS/login.css">
+
 </head>
 <body>
-	<header>
-		<h1>ENI - Encheres</h1>
-	</header>
+	<%@ include file="head.jsp" %>
+	<div class="profilUtilisateur">
 	<form>
 		<label for="pseudo">Pseudo :</label>
 		<input name ="pseudo" type="text" value="<%= utilisateur.getPseudo() %>" readonly><br/>
@@ -37,5 +39,6 @@
 		<label for="ville">Ville :</label>
 		<input name="ville" type="text" value="<%= utilisateur.getAdresse().getVille() %>" readonly><br/>
 	</form>	
+	</div>
 </body>
 </html>

@@ -7,6 +7,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import fr.eni.enchere.bll.ArticleVenduManager;
+import fr.eni.enchere.bo.ArticleVendu;
+
 /**
  * Servlet implementation class AfficherArticleVendu
  */
@@ -19,7 +22,21 @@ public class AfficherArticleVendu extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// request doit contenir un attribut "article" qui est un objet de type Article Vendu
-		request.getRequestDispatcher("/WEB-INF/ArticleVendu.jsp").forward(request, response);
+		int id_article = Integer.parseInt(request.getParameter("id_article"));
+		ArticleVendu article = null;
+		// Recuperation de l'article de la bdd
+					try {
+						article = ArticleVenduManager.getInstance().selectArticleById(id_article);
+						request.setAttribute("article", article);
+						if(article!=null) {
+						request.getRequestDispatcher("/WEB-INF/ArticleVendu.jsp").forward(request, response);
+						}else {
+							request.getRequestDispatcher("encheres").forward(request, response);
+						}
+					}catch(Exception e) {
+						e.printStackTrace();
+					}
+					
 	}
 
 	/**

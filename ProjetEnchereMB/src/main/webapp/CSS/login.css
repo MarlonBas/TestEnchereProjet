@@ -23,7 +23,7 @@ p{
 	font-style: italic;
 }
 
-.boiteLogin , .creationCompte , .modifCompte{
+.boiteLogin , .creationCompte , .modifCompte , .profilUtilisateur , .detailVente , .nouvelleVente{
 	display:flex;
 	min-width:330px;
 	background-color:#33393f;
@@ -34,11 +34,47 @@ p{
 	align-items:center;
 	margin:auto;
 	padding:15px;
+	box-shadow: 0px 0px 20px 10px rgba(0,0,0,0.4);
 }
 .creationCompte{
 	flex-wrap:wrap;
 	width:45%;
+}
+
+.detailVente {
+	width:55%;
+	flex-direction:row;
+	justify-content:space-between;	
+	align-items:flex-start;
+	text-align:center;
+	height:auto;
 	
+}
+.detailVente div:first-child{
+	width:60%;
+}
+.detailVente div p {
+	text-align:left;
+}
+.detailVente .nomArticle {
+	font-size:2.2em;
+	font-weight:bold;
+	
+}
+
+.nouvelleVente {
+	width:50%;
+}
+
+.nouvelleVente input, textarea, select {
+	width:100%;
+}
+.nouvelleVente label {
+	margin-top:10px;
+}
+.nouvelleVente form{
+	text-align:left;
+	width:80%;
 }
 
 form{

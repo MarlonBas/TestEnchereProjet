@@ -2,7 +2,7 @@ package fr.eni.enchere.dal;
 
 import java.sql.Connection;
 
-import java.sql.Date;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -18,11 +18,11 @@ import fr.eni.enchere.bll.CategorieManager;
 import fr.eni.enchere.bll.UtilisateurManager;
 import fr.eni.enchere.bo.Adresse;
 import fr.eni.enchere.bo.ArticleVendu;
-import fr.eni.enchere.bo.Utilisateur;
 
 public  class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 
 	private final String SELECT_All = "SELECT * FROM articles ";
+	private final String SELECT_BY_ID = "SELECT * FROM articles WHERE id_article=?;";
 	private final String INSERT = "INSERT into ARTICLES (no_utilisateur, id_adresse, id_categorie, nom_article, descr_article, date_debut_encheres, date_fin_encheres, mise_a_prix, prix_vente, etat_vente )VALUES(?,?,?,?,?,?,?,?,?,?)";
     private final String DELETE = "DELETE FROM ARTICLES WHERE id_article=?";
 	private final String UPDATE = "UPDATE FROM ARTICLES SET no_utilisateur=?, id_adresse=?, id_categorie=?, nom_article=?, descr_article=?, date_debut_encheres=?, date_fin_encheres=?, mis_a_prix=?, prix_vente=?,  etat_vente=? ";
@@ -36,13 +36,14 @@ public  class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 	    	Connection cnx = ConnectionProvider.getConnection();
 	    	Statement stmt = cnx.createStatement();
 	    	ResultSet rs = stmt.executeQuery(SELECT_All);
-	   	    int no_utilisateur, id_adresse, id_categorie, prix_vente ,mise_a_prix;
-			String nom_article, descr_article, date_Debut_Encheres, date_Fin_Encheres,  etat_vente;
+	   	    int no_utilisateur, id_adresse,id_article, id_categorie, prix_vente ,mise_a_prix;
+			String nom_article, descr_article,  etat_vente;
 			LocalDate date_debut_encheres, date_fin_encheres;
 			ArticleVendu av = null ;
 			List<ArticleVendu> liste = new ArrayList<>();
 			
 			while(rs.next()) {
+				id_article = rs.getInt("id_article");
 				no_utilisateur = rs.getInt("no_utilisateur");
 				id_adresse = rs.getInt("id_adresse");
 				id_categorie = rs.getInt("id_categorie");
@@ -54,7 +55,7 @@ public  class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 				prix_vente = rs.getInt("prix_vente");
 				etat_vente = rs.getString("etat_vente");
 				
-				av = new ArticleVendu( nom_article, descr_article, date_debut_encheres, date_fin_encheres, mise_a_prix, prix_vente, etat_vente, AdresseManager.getInstance().findById(id_adresse), UtilisateurManager.getInstance().selectById(no_utilisateur), CategorieManager.getInstance().selectCategorie(id_categorie) );
+				av = new ArticleVendu(id_article, nom_article, descr_article, date_debut_encheres, date_fin_encheres, mise_a_prix, prix_vente, etat_vente, AdresseManager.getInstance().findById(id_adresse), UtilisateurManager.getInstance().selectById(no_utilisateur), CategorieManager.getInstance().selectCategorie(id_categorie) );
 				
 				liste.add(av);
 				
@@ -70,6 +71,43 @@ public  class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 		return null;
 		
 	}
+	
+	@Override
+	public ArticleVendu selectById(int id_article) {
+		ArticleVendu article = null;
+		try {
+			Connection cnx = ConnectionProvider.getConnection();
+			PreparedStatement pstmt;
+			
+			
+			pstmt = cnx.prepareStatement(SELECT_BY_ID);
+			pstmt.setInt(1, id_article);
+			ResultSet rs = pstmt.executeQuery();
+			if(rs.next()) {
+				article = new ArticleVendu(
+						rs.getInt("id_article"),
+						rs.getString("nom_article"),
+						rs.getString("descr_article"),
+						rs.getDate("date_debut_encheres").toLocalDate(),
+						rs.getDate("date_fin_encheres").toLocalDate(),
+						rs.getInt("mise_a_prix"),
+						rs.getInt("prix_vente"),
+						rs.getString("etat_vente"),
+						AdresseManager.getInstance().findById(rs.getInt("id_adresse")),
+						UtilisateurManager.getInstance().selectById(rs.getInt("no_utilisateur")),
+						CategorieManager.getInstance().selectCategorie(rs.getInt("id_categorie")));
+			}else {
+				article=null;
+			}
+			pstmt.close();
+			rs.close();
+			cnx.close();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		return article;
+	}
+	   
 	
 	@Override
 	public void delete(ArticleVendu  articles) {
@@ -94,7 +132,6 @@ public  class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
     try {
 		Connection cnx = ConnectionProvider.getConnection();
 		 PreparedStatement pstmt;
-		 LocalDate date = LocalDate.now();
 		 Adresse nouvelleAdresseID = AdresseManager.getInstance().insert(articles.getAdresse());
 		 articles.setAdresse(nouvelleAdresseID);
 		 pstmt = cnx.prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS);
@@ -153,7 +190,8 @@ public  class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 	
 	
 }
-   
+
+
 
 	
 	
