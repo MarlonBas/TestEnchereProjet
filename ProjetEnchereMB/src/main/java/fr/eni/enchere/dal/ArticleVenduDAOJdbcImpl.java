@@ -14,6 +14,7 @@ import java.util.List;
 
 
 import fr.eni.enchere.bll.AdresseManager;
+import fr.eni.enchere.bll.ArticleVenduManager;
 import fr.eni.enchere.bll.CategorieManager;
 import fr.eni.enchere.bll.UtilisateurManager;
 import fr.eni.enchere.bo.Adresse;
@@ -57,9 +58,27 @@ public  class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 				
 				av = new ArticleVendu(id_article, nom_article, descr_article, date_debut_encheres, date_fin_encheres, mise_a_prix, prix_vente, etat_vente, AdresseManager.getInstance().findById(id_adresse), UtilisateurManager.getInstance().selectById(no_utilisateur), CategorieManager.getInstance().selectCategorie(id_categorie) );
 				
+				// Mettre à jour l'état de l'article s'il n'est pas à jour
+				if (LocalDate.now().isBefore(date_debut_encheres)) {
+					if (!etat_vente.equals("pas debute")) {
+						av.setEtatVente("pas debute");
+						ArticleVenduManager.getInstance().modifierArticleVendu(av);
+					}
+				}
+				if (LocalDate.now().isBefore(date_fin_encheres) && LocalDate.now().isAfter(date_debut_encheres)) {
+					if (!etat_vente.equals("en cours")) {
+						av.setEtatVente("en cours");
+						ArticleVenduManager.getInstance().modifierArticleVendu(av);
+					}
+				}
+				if (LocalDate.now().isAfter(date_fin_encheres)) {
+					if (!etat_vente.equals("termine")) {
+						av.setEtatVente("termine");
+						ArticleVenduManager.getInstance().modifierArticleVendu(av);
+					}
+				}
+				
 				liste.add(av);
-				
-				
 			 }
 			stmt.close();
 			return liste;
@@ -96,7 +115,28 @@ public  class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 						AdresseManager.getInstance().findById(rs.getInt("id_adresse")),
 						UtilisateurManager.getInstance().selectById(rs.getInt("no_utilisateur")),
 						CategorieManager.getInstance().selectCategorie(rs.getInt("id_categorie")));
-			}else {
+				
+				// Mettre à jour l'état de l'article s'il n'est pas à jour
+				if (LocalDate.now().isBefore(rs.getDate("date_debut_encheres").toLocalDate())) {
+					if (!rs.getString("etat_vente").equals("pas debute")) {
+						article.setEtatVente("pas debute");
+						ArticleVenduManager.getInstance().modifierArticleVendu(article);
+					}
+				}
+				if (LocalDate.now().isBefore(rs.getDate("date_fin_encheres").toLocalDate()) && LocalDate.now().isAfter(rs.getDate("date_debut_encheres").toLocalDate())) {
+					if (!rs.getString("etat_vente").equals("en cours")) {
+						article.setEtatVente("en cours");
+						ArticleVenduManager.getInstance().modifierArticleVendu(article);
+					}
+				}
+				if (LocalDate.now().isAfter(rs.getDate("date_fin_encheres").toLocalDate())) {
+					if (!rs.getString("etat_vente").equals("termine")) {
+						article.setEtatVente("termine");
+						ArticleVenduManager.getInstance().modifierArticleVendu(article);
+					}
+				}
+			
+			} else {
 				article=null;
 			}
 			pstmt.close();
