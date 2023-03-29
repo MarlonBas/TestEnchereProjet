@@ -12,7 +12,9 @@
     <link rel="stylesheet" type="text/css" href="CSS/login.css">
 </head>
 <body>
-	<a href="encheres" id="logoAccueil">ENI Encheres</a>
+   	<div>
+   		<a href="encheres" id="logoAccueil">ENI Encheres</a>
+   	</div>
 	<div class="creationCompte">
 	<h1>Inscription</h1>
 	<form method="POST" action="ajouterutilisateur">

@@ -5,6 +5,8 @@ body{
 }
 
 #logoAccueil{
+	text-align: center;
+	margin-left: 34%;
 	font-size:2.8em;
 	font-weight:bold;
 	text-decoration:none;
@@ -39,6 +41,7 @@ p{
 	box-shadow: 0px 0px 20px 10px rgba(0,0,0,0.4);
 }
 .creationCompte{
+	margin-top: 17%;
 	flex-wrap:wrap;
 	width:45%;
 }
@@ -151,4 +154,17 @@ form input {
 	border-radius:5px;
 	padding:10px;
 	color:red;
+}
+
+@media screen and (max-width:768px){
+	
+	body{
+	margin: 0px;
+	background-color: brown;
+	}
+	#logoAcceuil{
+	 text-align: center;
+	}
+	.div{
+	margin-top: 25%}
 }
