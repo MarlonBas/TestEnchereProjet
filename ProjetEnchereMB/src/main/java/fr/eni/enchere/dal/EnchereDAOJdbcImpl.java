@@ -2,16 +2,25 @@ package fr.eni.enchere.dal;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
+import fr.eni.enchere.bll.ArticleVenduManager;
+import fr.eni.enchere.bll.UtilisateurManager;
+import fr.eni.enchere.bo.Categorie;
 import fr.eni.enchere.bo.Enchere;
 
 public class EnchereDAOJdbcImpl implements EnchereDAO{
 	
 	private final String INSERT = "INSERT into ENCHERES (date_enchere, montant_enchere, id_article, no_utilisateur)VALUES(?,?,?,?)";
 	private final String DELETE = "DELETE FROM ENCHERES where id_enchere=?";
+	
+	private static final String SELECT_BY_ID = "SELECT * FROM ENCHERES WHERE id_enchere=?";
+	private static final String SELECT_ALL = "SELECT * FROM ENCHERES";
 	
 	
 	@Override
@@ -60,5 +69,51 @@ public class EnchereDAOJdbcImpl implements EnchereDAO{
 		}
 	  } 
     	
+	}
+	
+	@Override
+	public Enchere selectByID(int idCategorie) {
+		Enchere enchere = null;
+		try {	Connection cnx = ConnectionProvider.getConnection();
+			PreparedStatement pstmt = cnx.prepareStatement(SELECT_BY_ID);
+			pstmt.setInt(1,idCategorie);
+			
+			ResultSet rs=pstmt.executeQuery();
+			if (rs.next()) {
+				enchere = new Enchere(rs.getInt("id_enchere"),
+						UtilisateurManager.getInstance().selectById(rs.getInt("no_utilisateur")),
+						ArticleVenduManager.getInstance().selectArticleById(rs.getInt("id_article")),
+						rs.getDate("date_enchere").toLocalDate(),
+						rs.getInt("montant_enchere"));
+			}
+			cnx.close();		
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return enchere;
+	}
+	
+	@Override
+	public List<Enchere> selectAll() {
+		List<Enchere> encheres = new ArrayList<Enchere>();
+		try {	
+			Connection cnx = ConnectionProvider.getConnection();
+			PreparedStatement pstmt = cnx.prepareStatement(SELECT_ALL);
+			
+			ResultSet rs=pstmt.executeQuery();
+			while(rs.next()) {
+				encheres.add(new Enchere(rs.getInt("id_enchere"),
+						UtilisateurManager.getInstance().selectById(rs.getInt("no_utilisateur")),
+						ArticleVenduManager.getInstance().selectArticleById(rs.getInt("id_article")),
+						rs.getDate("date_enchere").toLocalDate(),
+						rs.getInt("montant_enchere")));
+			}
+			cnx.close();		
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return encheres;
 	}
 }    

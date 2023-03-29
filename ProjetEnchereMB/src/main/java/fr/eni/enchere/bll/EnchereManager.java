@@ -1,5 +1,9 @@
 package fr.eni.enchere.bll;
 
+import java.util.List;
+
+import fr.eni.enchere.bo.Categorie;
+import fr.eni.enchere.bo.Enchere;
 import fr.eni.enchere.dal.CategorieDAO;
 import fr.eni.enchere.dal.DAOFactory;
 import fr.eni.enchere.dal.EnchereDAO;
@@ -19,4 +23,13 @@ public class EnchereManager {
 		}
 		return instance;
 	}
+	
+	public Enchere selectEnchere(int idEnchere) {
+		return EnchereDAO.selectByID(idEnchere);
+	}
+	
+	public List<Enchere> selectAllEncheres() {
+		return EnchereDAO.selectAll();
+	}
+
 }

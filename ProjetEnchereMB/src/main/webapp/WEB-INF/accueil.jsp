@@ -1,6 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="fr.eni.enchere.bll.ArticleVenduManager,fr.eni.enchere.bll.CategorieManager,fr.eni.enchere.bo.ArticleVendu,java.util.List,fr.eni.enchere.bo.Categorie,fr.eni.enchere.bo.Utilisateur,java.util.Iterator" %>
+<%@ page import="fr.eni.enchere.bll.ArticleVenduManager,
+fr.eni.enchere.bll.CategorieManager,
+fr.eni.enchere.bo.ArticleVendu,
+java.util.List,
+java.util.ArrayList,
+java.time.LocalDate,
+fr.eni.enchere.bo.Categorie,
+fr.eni.enchere.bo.Utilisateur,
+java.util.Iterator,
+fr.eni.enchere.bo.Enchere,
+fr.eni.enchere.bll.EnchereManager" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,10 +18,17 @@
 <link rel="stylesheet" type="text/css" href="CSS/style.css">
 </head>
 <body>
-<% List<Categorie> categories = CategorieManager.getInstance().selectAllCategories(); 
+<% 
+	List<Categorie> categories = CategorieManager.getInstance().selectAllCategories();
+	List<ArticleVendu> articles = ArticleVenduManager.getInstance().getAllArticleVendu();
+	List<Enchere> encheres = EnchereManager.getInstance().selectAllEncheres();
 	String search = request.getParameter("recherche");
-	Utilisateur utilisateur = (Utilisateur)session.getAttribute("utilisateur"); %>
+	Utilisateur utilisateur = (Utilisateur) session.getAttribute("utilisateur"); 
+%>
+	
 <%@ include file="head.jsp" %>
+
+
 <h1>Liste des enchères</h1>
 <form action="Recherche" method="get" class="searchBar">
 	<label for="recherche">Nom de l'article recherché : </label>
@@ -35,17 +52,18 @@
 
 <% if (utilisateur != null) { %>
 <div class ="listeEncheres">
-	<% List<ArticleVendu> lstArticlesUtilisateur = ArticleVenduManager.getInstance().getAllArticleVendu();
-	Iterator<ArticleVendu> iterator = lstArticlesUtilisateur.iterator();
+	<% List<ArticleVendu> articlesU = new ArrayList<>();
+	articlesU.addAll(articles); 
+	Iterator<ArticleVendu> iterator = articlesU.iterator();
 	  while (iterator.hasNext()) {
 	        ArticleVendu article = iterator.next();
 	        if (!article.getUtilisateur().getPseudo().equals(utilisateur.getPseudo())) {
 	            iterator.remove();
 	        }
 	    } 
-	    if (!lstArticlesUtilisateur.isEmpty()) { %>
+	    if (!articlesU.isEmpty()) { %>
 	    <h3>Mes ventes</h3><br/>
-	    <% for(ArticleVendu article : lstArticlesUtilisateur){ %>
+	    <% for(ArticleVendu article : articlesU){ %>
 		<div class="article">
 			<h2><%= article.getNomArticle() %></h2>
 			<p>Prix actuel : <%= article.getPrixVente() %></p>
@@ -57,21 +75,20 @@
 <br/>
 <div class ="listeEncheres">
 	<%
-	// Ici il va falloir chercher la liste des encheres d'un utilisateur puis créer une liste de tout
-	// les articles qui figure dans cette liste d'enchères
-	
-	//List<Enchere> encheres = EnchereManager.
-	List<ArticleVendu> lstArticlesEnchere = ArticleVenduManager.getInstance().getAllArticleVendu();
-	Iterator<ArticleVendu> iterator2 = lstArticlesEnchere.iterator();
+	List<Enchere> encheresE = new ArrayList<>();
+	encheresE.addAll(encheres);
+	List<ArticleVendu> articlesE = new ArrayList<>();
+	Iterator<Enchere> iterator2 = encheresE.iterator();
 	  while (iterator2.hasNext()) {
-	        ArticleVendu article = iterator2.next();
-	        if (1 == 1) {
-	            iterator2.remove();
+	        Enchere enchere = iterator2.next();
+	        if (enchere.getUtilisateur().equals(utilisateur)) {
+	        	if (enchere.getArticleVendu().getDateFinEncheres().isAfter(LocalDate.now()))
+	            	articlesE.add(enchere.getArticleVendu());
 	        }
 	    } 
-	    if (!lstArticlesEnchere.isEmpty()) { %>
+	    if (!articlesE.isEmpty()) { %>
 	    <h3>Mes achats</h3><br/>
-	    <% for(ArticleVendu article : lstArticlesEnchere){ %>
+	    <% for(ArticleVendu article : articlesE){ %>
 		<div class="article">
 			<h2><%= article.getNomArticle() %></h2>
 			<p>Prix actuel : <%= article.getPrixVente() %></p>
@@ -85,20 +102,20 @@
 <br/>
 <div class ="listeEncheres">
 	<%  
-	// Ici il va falloir récupérer les encheres de l'utilisateur et les articles dont la vente est terminé
-	// et pour chaque article dont la vente est terminé on compare le prix avec l'enchere de l'utilisateur
-	// si c'est pareil alors l'utilisateur à remporté et c'est un achat à affiché
-	List<ArticleVendu> lstArticlesAchats = ArticleVenduManager.getInstance().getAllArticleVendu();
-	Iterator<ArticleVendu> iterator3 = lstArticlesAchats.iterator();
-	  while (iterator3.hasNext()) {
-	        ArticleVendu article = iterator3.next();
-	        if (1 == 1) {
-	            iterator3.remove();
+	List<Enchere> encheresA = new ArrayList<>();
+	encheresE.addAll(encheres);
+	List<ArticleVendu> articlesA = new ArrayList<>();
+	Iterator<Enchere> iterator3 = encheresA.iterator();
+	  while (iterator2.hasNext()) {
+	        Enchere enchere = iterator3.next();
+	        if (enchere.getUtilisateur().equals(utilisateur)) {
+	        	if (enchere.getArticleVendu().getDateFinEncheres().isBefore(LocalDate.now()) && enchere.getArticleVendu().getPrixVente() == enchere.getMontantEnchere())
+	            	articlesA.add(enchere.getArticleVendu());
 	        }
 	    } 
-	    if (!lstArticlesAchats.isEmpty()) { %>
+	    if (!articlesA.isEmpty()) { %>
 	    <h3>Mes achats</h3><br/>
-	    <% for(ArticleVendu article : lstArticlesAchats){ %>
+	    <% for(ArticleVendu article : articlesE){ %>
 		<div class="article">
 			<h2><%= article.getNomArticle() %></h2>
 			<p>Prix actuel : <%= article.getPrixVente() %></p>
@@ -107,39 +124,21 @@
 		</div>
 	<% 		}
 	    }
-%>
+%>	
 </div>
 <br/>
 <% } %>
 
 <div class ="listeEncheres">
 <h3>A vendre</h3><br/>
-	<% 
-	if (request.getAttribute("articles") == null) {
-	List<ArticleVendu> lstArticles = ArticleVenduManager.getInstance().getAllArticleVendu();
-	for(ArticleVendu article : lstArticles){ %>
+	<% for(ArticleVendu article : articles){ %>
 		<div class="article">
 			<h2><%= article.getNomArticle()%></h2>
 			<p>Prix actuel : <%= article.getPrixVente() %></p>
 			<p>Fin de l'enchere le : <%= article.getDateFinEncheres() %></p>
 			<p>Vendeur : <a href="AfficherUtilisateur?pseudo=<%= article.getUtilisateur().getPseudo() %>"><%= article.getUtilisateur().getPseudo() %></a></p>
-			
 		</div>
-	<% }
-	} 
-	else {
-		List<ArticleVendu> lstArticles = (List<ArticleVendu>) request.getAttribute("articles");
-		for(ArticleVendu article : lstArticles){ %>
-		<div class="article">
-			<h2><%= article.getNomArticle()%></h2>
-			<p>Prix actuel : <%= article.getPrixVente() %></p>
-			<p>Fin de l'enchere le : <%= article.getDateFinEncheres() %></p>
-			<p>Vendeur : <a href="AfficherUtilisateur?pseudo=<%= article.getUtilisateur().getPseudo() %>"><%= article.getUtilisateur().getPseudo() %></a></p>
-			
-		</div>
-	<% }
-	}%>
-
+	<% } %>
 </div>
 </body>
 </html>

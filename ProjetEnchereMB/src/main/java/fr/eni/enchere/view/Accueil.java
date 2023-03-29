@@ -14,7 +14,11 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.catalina.connector.Request;
 
 import fr.eni.enchere.bll.ArticleVenduManager;
+import fr.eni.enchere.bll.CategorieManager;
+import fr.eni.enchere.bll.EnchereManager;
 import fr.eni.enchere.bo.ArticleVendu;
+import fr.eni.enchere.bo.Categorie;
+import fr.eni.enchere.bo.Enchere;
 import fr.eni.enchere.exceptions.BllException;
 
 /**
@@ -29,6 +33,20 @@ public class Accueil extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// RECUPERATION DE LA BDD ET STOCKAGE DES LISTES DANS LA REQUETE - 
+		// MISE EN COMMENTAIRE PARCE QUE PEUT-ETRE PAS NECESSAIRE
+		/*List<Categorie> categories = CategorieManager.getInstance().selectAllCategories();
+		request.setAttribute("categories", categories);
+		try {
+			List<ArticleVendu> articles = ArticleVenduManager.getInstance().getAllArticleVendu();
+			request.setAttribute("articles", articles);
+		} catch (BllException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		List<Enchere> encheres = EnchereManager.getInstance().selectAllEncheres();
+		request.setAttribute("encheres", categories);*/
 		RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/accueil.jsp");
 		rd.forward(request, response);
 	}
