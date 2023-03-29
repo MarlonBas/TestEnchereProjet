@@ -21,9 +21,10 @@ fr.eni.enchere.bll.EnchereManager" %>
 <% 
 	List<Categorie> categories = CategorieManager.getInstance().selectAllCategories();
 	List<ArticleVendu> articles = ArticleVenduManager.getInstance().getAllArticleVendu();
+	List<ArticleVendu> articlesR = (List<ArticleVendu>) request.getAttribute("articles");
 	List<Enchere> encheres = EnchereManager.getInstance().selectAllEncheres();
 	String search = request.getParameter("recherche");
-	Utilisateur utilisateur = (Utilisateur) session.getAttribute("utilisateur"); 
+	Utilisateur utilisateur = (Utilisateur) session.getAttribute("utilisateur");
 %>
 	
 <%@ include file="head.jsp" %>
@@ -72,7 +73,7 @@ fr.eni.enchere.bll.EnchereManager" %>
 	<% 		}
 	    } %>
 </div>
-<br/>
+
 <div class ="listeEncheres">
 	<%
 	List<Enchere> encheresE = new ArrayList<>();
@@ -99,7 +100,7 @@ fr.eni.enchere.bll.EnchereManager" %>
 	    }
 %>	    
 </div>
-<br/>
+
 <div class ="listeEncheres">
 	<%  
 	List<Enchere> encheresA = new ArrayList<>();
@@ -126,12 +127,20 @@ fr.eni.enchere.bll.EnchereManager" %>
 	    }
 %>	
 </div>
-<br/>
+
 <% } %>
 
 <div class ="listeEncheres">
 <h3>A vendre</h3><br/>
-	<% for(ArticleVendu article : articles){ %>
+	<%	
+	List<ArticleVendu> articlesRB = new ArrayList<ArticleVendu>();
+	if (articlesR == null) {
+		articlesRB.addAll(articles);
+	}
+	if (articlesR != null) {
+		articlesRB.addAll(articlesR);
+	}
+	for(ArticleVendu article : articlesRB){ %>
 		<div class="article">
 			<h2><%= article.getNomArticle()%></h2>
 			<p>Prix actuel : <%= article.getPrixVente() %></p>
