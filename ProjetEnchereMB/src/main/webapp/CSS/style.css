@@ -12,8 +12,11 @@ margin:20px;
 	width:auto;
 	gap:25px;
 }
+.listeEncheres h3 {
+	width:100%;
+}
 
-
+  
 .article{
 	width:30%;
 	min-width:250px;
@@ -25,18 +28,25 @@ margin:20px;
 	flex-direction:column;
 	box-shadow: 0px 0px 20px 10px rgba(0,0,0,0.4);
 }
+@media only screen and (max-width: 650px) {
+  .article {
+  	width:100%;
+  }
+  
+  }
 
 .article a {
 	text-decoration: none;
 	color:white;
-	font-size:2em;
 }
 
 .article a:hover {
 	text-shadow: 0px 0px 10px rgba(255,255,255,0.75);
 
+} 
+.article .titreArticle{
+	font-size:1.7em;
 }
-
 
 .searchBar{
 	display : flex;

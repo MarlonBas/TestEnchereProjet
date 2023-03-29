@@ -52,7 +52,7 @@ fr.eni.enchere.bll.EnchereManager" %>
 </form>
 
 <% if (utilisateur != null) { %>
-<div class ="listeEncheres">
+
 	<% List<ArticleVendu> articlesU = new ArrayList<>();
 	articlesU.addAll(articles); 
 	Iterator<ArticleVendu> iterator = articlesU.iterator();
@@ -63,18 +63,18 @@ fr.eni.enchere.bll.EnchereManager" %>
 	        }
 	    } 
 	    if (!articlesU.isEmpty()) { %>
-	    <h3>Mes ventes</h3><br/>
+	    <div class ="listeEncheres">
+	    <h3>Mes ventes</h3>
 	    <% for(ArticleVendu article : articlesU){ %>
 		<div class="article">
-			<h2><%= article.getNomArticle() %></h2>
+			<a class="titreArticle" href="AfficherArticleVendu?id_article=<%= article.getNoArticle() %>"><%= article.getNomArticle() %></a>
 			<p>Prix actuel : <%= article.getPrixVente() %></p>
 			<p>Fin de l'enchere le : <%= article.getDateFinEncheres() %></p>
 		</div>
+	</div>
 	<% 		}
 	    } %>
-</div>
 
-<div class ="listeEncheres">
 	<%
 	List<Enchere> encheresE = new ArrayList<>();
 	encheresE.addAll(encheres);
@@ -88,20 +88,22 @@ fr.eni.enchere.bll.EnchereManager" %>
 	        }
 	    } 
 	    if (!articlesE.isEmpty()) { %>
-	    <h3>Mes achats</h3><br/>
+	 <div class ="listeEncheres">
+	    <h3>Mes achats</h3>
 	    <% for(ArticleVendu article : articlesE){ %>
 		<div class="article">
-			<h2><%= article.getNomArticle() %></h2>
+			<a class="titreArticle" href="AfficherArticleVendu?id_article=<%= article.getNoArticle() %>"><%= article.getNomArticle() %></a>
 			<p>Prix actuel : <%= article.getPrixVente() %></p>
 			<p>Fin de l'enchere le : <%= article.getDateFinEncheres() %></p>
 			<p>Vendeur : <a href="AfficherUtilisateur?pseudo=<%= article.getUtilisateur().getPseudo() %>"><%= article.getUtilisateur().getPseudo() %></a></p>
 		</div>
+	</div>
 	<% 		}
 	    }
 %>	    
-</div>
 
-<div class ="listeEncheres">
+
+
 	<%  
 	List<Enchere> encheresA = new ArrayList<>();
 	encheresE.addAll(encheres);
@@ -115,23 +117,22 @@ fr.eni.enchere.bll.EnchereManager" %>
 	        }
 	    } 
 	    if (!articlesA.isEmpty()) { %>
-	    <h3>Mes achats</h3><br/>
+	    <div class ="listeEncheres">
+	    <h3>Mes achats</h3>
 	    <% for(ArticleVendu article : articlesA){ %>
 		<div class="article">
-			<h2><%= article.getNomArticle() %></h2>
+			<a class="titreArticle" href="AfficherArticleVendu?id_article=<%= article.getNoArticle() %>"><%= article.getNomArticle() %></a>
 			<p>Prix actuel : <%= article.getPrixVente() %></p>
 			<p>Fin de l'enchere le : <%= article.getDateFinEncheres() %></p>
 			<p>Vendeur : <a href="AfficherUtilisateur?pseudo=<%= article.getUtilisateur().getPseudo() %>"><%= article.getUtilisateur().getPseudo() %></a></p>
 		</div>
-	<% 		}
-	    }
-%>	
-</div>
-
+		</div>
+		<% } %>
+	<% }  %>	
 <% } %>
 
 <div class ="listeEncheres">
-<h3>A vendre</h3><br/>
+<h3>A vendre</h3>
 	<%	
 	List<ArticleVendu> articlesRB = new ArrayList<ArticleVendu>();
 	if (articlesR == null) {
@@ -140,13 +141,21 @@ fr.eni.enchere.bll.EnchereManager" %>
 	if (articlesR != null) {
 		articlesRB.addAll(articlesR);
 	}
+	if(articlesRB !=null){
 	for(ArticleVendu article : articlesRB){ %>
 		<div class="article">
-			<h2><%= article.getNomArticle()%></h2>
+			<%if(utilisateur != null) { %>
+			<a class="titreArticle" href="AfficherArticleVendu?id_article=<%= article.getNoArticle() %>"><%= article.getNomArticle() %></a>
+			<% }else{ %>
+			<h3><%= article.getNomArticle() %></h3>
+			<% } %>
 			<p>Prix actuel : <%= article.getPrixVente() %></p>
 			<p>Fin de l'enchere le : <%= article.getDateFinEncheres() %></p>
 			<p>Vendeur : <a href="AfficherUtilisateur?pseudo=<%= article.getUtilisateur().getPseudo() %>"><%= article.getUtilisateur().getPseudo() %></a></p>
 		</div>
+	<% } %>
+	<% }else{ %>
+			<div><p>Aucun article en vente :/</p></div>
 	<% } %>
 </div>
 </body>

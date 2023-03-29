@@ -19,6 +19,8 @@ p{
 	text-align:center;
 }
 .info{
+	margin-top:0;
+	margin-bottom:5px;
 	font-size:small;
 	font-style: italic;
 }
@@ -70,7 +72,7 @@ p{
 	width:50%;
 }
 
-.nouvelleVente input, textarea, select, .creationCompte input, button {
+.nouvelleVente input, textarea, select, .creationCompte input, button , .boiteLogin input:not(.button) {
 	width:100%;
 	color:#fff;
 }
@@ -82,14 +84,12 @@ p{
 .nouvelleVente select {
 	background:#33393F;
 }
-.nouvelleVente input:not(:nth-last-child(-n+2)), textarea, select, .creationCompte input{
+.nouvelleVente input:not(.button), textarea, select, .creationCompte input, .boiteLogin input:not(.button){
 	background-color: rgba(0,0,0,0);
 	border: 1px solid #fff;
 	border-radius:5px;
 }
-body > div > form > input.button{
-	background-color: rgba(77,81,84,1);
-}
+
 .nouvelleVente label {
 	margin-top:9px;
 }
