@@ -21,10 +21,10 @@
 	<h1>Nouvelle vente</h1>
 	<form method="post" action="AjouterArticleVendu">
 		<label for="nom">Article :</label>
-		<input name ="nom" type="text"><br/>
+		<input name ="nom" type="text" required>
 			
 		<label for="description">Description :</label>
-		<textarea name="description" rows=3 cols=30 style="resize:none;vertical-align:top;"></textarea>
+		<textarea name="description" rows=2 cols=30 style="resize:none;vertical-align:top;"></textarea>
 			
 		<label for="categorie">Catégorie :</label>
 		<select id="categorie" name="categorie">
@@ -35,40 +35,30 @@
         <% } 
         }%>
     	</select>
+		<label for="prix">Mise à prix : (en Crédits)</label>
+		<input name="prix" type="number" min="0" step="10" value="10" required >
+		
+		<label for="debutenchere" class="labelDate"> Début de l'enchère :</label>
+		<input name="debutenchere" class="inputDate" type="date" required>
 			
-		<label for="prix">Mise à prix :</label>
-		<input name="prix" type="text">
-			
-		<label for="debutenchere"> Début de l'enchère :</label>
-		<input name="debutenchere" type="date">
-			
-		<label for="finenchere">Fin de l'enchère :</label>
-		<input name="finenchere" type="date">
-	<% if(utilisateur != null) { %>	
-		<fieldset>
-  			<legend>Retrait</legend>
+		<label for="finenchere" class="labelDate">Fin de l'enchère :</label>
+		<input name="finenchere"  class="inputDate"type="date" required>
+
+  			<p class="adresseRetrait">Adresse de retrait</p>
 			<label for="rue">Rue :</label>
-			<input name="rue" type="text" value="<%= utilisateur.getAdresse().getRue() %>">
+			<input name="rue" type="text" value="${utilisateur.adresse.rue }" required>
 			<label for="codepostal">Code postal :</label>
-			<input name="codepostal" type="text" value="<%= utilisateur.getAdresse().getCodePostal() %>">
+			<input name="codepostal" type="text"  pattern="[0-9]{5}" value="${utilisateur.adresse.codePostal }" required>
 			<label for="ville">Ville :</label>
-			<input name="ville" type="text" value="<%= utilisateur.getAdresse().getVille() %>">
-		</fieldset>
-	<% } %>
-	<%-- POUR LE TEST POUR GERER L'ABSENCE DE SESSION --%>
-	<% if(utilisateur == null) { %>	
-		<div>
-  			<p>Adresse de retrait</p>
-			<label for="rue">Rue :</label>
-			<input name="rue" type="text">
-			<label for="codepostal">Code postal :</label>
-			<input name="codepostal" type="text">
-			<label for="ville">Ville :</label>
-			<input name="ville" type="text">
-		</div>
-	<% } %>
-		<input type="submit" name="valider" value="Enregistrer">
-		<input type="submit" name="annuler" value="Annuler">
+			<input name="ville" type="text" value="${utilisateur.adresse.ville }" required>
+	
+		<%-- Afficher une erreur si on retourne sur la page après une de connection --%>
+		    <% if (request.getAttribute("erreur") != null) { %>
+		        <p class="erreur"><%= request.getAttribute("erreur") %></p>
+		    <% } %>
+	
+		<input type="submit" name="valider" class="button" value="Enregistrer">
+		<a href="encheres" class="button danger">Annuler</a>
 		
 	</form>
 	</div>

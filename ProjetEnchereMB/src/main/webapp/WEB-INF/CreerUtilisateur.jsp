@@ -50,7 +50,7 @@
 		
 		
 		<input type="submit" name="valider" class="button" value="Créer">
-		<a href="encheres" class="button">Annuler</a>
+		<a href="encheres" class="button danger">Annuler</a>
 		<%-- Afficher une erreur si on retourne sur la page après une de connection --%>
 		    <% if (request.getAttribute("erreur") != null) { %>
 		        <p class="erreur"><%= request.getAttribute("erreur") %></p>

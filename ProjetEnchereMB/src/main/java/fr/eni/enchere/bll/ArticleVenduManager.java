@@ -45,8 +45,8 @@ public class ArticleVenduManager {
 		return article;
 	}
 	
-	public void creerArticleVendu(ArticleVendu article) {
-		ArticleVenduDAO.insert(article);
+	public ArticleVendu creerArticleVendu(ArticleVendu article) {
+		return ArticleVenduDAO.insert(article);
 	}
 	
 	//Corriger delete dans le DAO

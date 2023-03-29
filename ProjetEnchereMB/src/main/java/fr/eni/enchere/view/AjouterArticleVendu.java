@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -31,8 +32,14 @@ public class AjouterArticleVendu extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		List<Categorie> categories = CategorieManager.getInstance().selectAllCategories();
+		HttpSession ses = request.getSession();
+		
 		request.setAttribute("categories", categories);
+		if(ses.getAttribute("utilisateur")!=null) {
 		request.getRequestDispatcher("/WEB-INF/NouvelleVente.jsp").forward(request, response);	
+		}else {
+		response.sendRedirect("encheres");		
+		}
 	}
 
 	/**
@@ -50,6 +57,14 @@ public class AjouterArticleVendu extends HttpServlet {
 		Categorie categorie = new Categorie();
 		int noCategorie = Integer.parseInt(request.getParameter("categorie"));
 		categorie = CategorieManager.getInstance().selectCategorie(noCategorie);
+		
+		if(prix <= 0 ) {
+			request.setAttribute("erreur", "La mise à prix doit être un nombre positif");
+		}else if(finEnchere.isBefore(LocalDate.now())){
+			request.setAttribute("erreur", "La date de fin d'enchère ne peut pas se situer dans le passé");
+		}else if (finEnchere.isBefore(debutEnchere)) {
+			request.setAttribute("erreur", "La date de fin d'enchère ne peut pas être avant le début");
+		}
 		
 		if (utilisateur != null) {
 			// DETERMINATION DU STATUT DE LA VENTE
@@ -83,11 +98,17 @@ public class AjouterArticleVendu extends HttpServlet {
 					categorie
 					);
 			
-			// ENVOIE DE L'ARTICLE A LA BLL
-			ArticleVenduManager.getInstance().creerArticleVendu(article);
-			
-			//request.getRequestDispatcher("Article.jsp").forward(request, response);
+			request.setAttribute("articleEnCreation", article);
+			if(request.getAttribute("erreur")!=null) {
+				doGet(request,response);
+			}else {
+				// ENVOIE DE L'ARTICLE A LA BLL SI IL N'Y A PAS D'ERREUR
+				 article = ArticleVenduManager.getInstance().creerArticleVendu(article);
+				 request.setAttribute("id_article", article.getNoArticle());
+				
+			}
+			request.getRequestDispatcher("AfficherArticleVendu").forward(request, response);
 		}
-		doGet(request, response);
+
 	}
 }

@@ -127,14 +127,15 @@ public  class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 	}
 	
 	@Override
-     public void insert(ArticleVendu articles) {
+     public ArticleVendu insert(ArticleVendu articles) {
 	
     try {
 		Connection cnx = ConnectionProvider.getConnection();
 		 PreparedStatement pstmt;
+		 ResultSet rs;
 		 Adresse nouvelleAdresseID = AdresseManager.getInstance().insert(articles.getAdresse());
 		 articles.setAdresse(nouvelleAdresseID);
-		 pstmt = cnx.prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS);
+		 pstmt = cnx.prepareStatement(INSERT, PreparedStatement.RETURN_GENERATED_KEYS);
 		 
 		 pstmt.setInt(1,articles.getUtilisateur().getNoUtilisateur());
 		 pstmt.setInt(2,articles.getAdresse().getId_adresse());
@@ -146,14 +147,18 @@ public  class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 		 pstmt.setInt(8, articles.getMiseAPrix());
 		 pstmt.setInt(9, articles.getPrixVente());
 		 pstmt.setString(10, articles.getEtatVente());
-		 
-		 
+	
 		 pstmt.executeUpdate();
+		 rs = pstmt.getGeneratedKeys();
+			if(rs.next()) 
+				articles.setNoArticle(rs.getInt(1));
+		 rs.close();
 		 pstmt.close();
 		 cnx.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} 
+		}
+	return articles; 
      }
    @Override
     public  void update(ArticleVendu articles) {
@@ -176,8 +181,6 @@ public  class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 		 pstmt.setInt(9, articles.getPrixVente());
 		 pstmt.setString(10, articles.getEtatVente());
 		 
-		
-		
 		 pstmt.close();
 		 cnx.close();
 		 

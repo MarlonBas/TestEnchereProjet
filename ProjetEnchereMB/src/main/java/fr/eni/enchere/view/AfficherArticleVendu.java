@@ -22,7 +22,12 @@ public class AfficherArticleVendu extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// request doit contenir un attribut "article" qui est un objet de type Article Vendu
-		int id_article = Integer.parseInt(request.getParameter("id_article"));
+		int id_article = 0;
+		if(request.getParameter("id_article")!=null) {
+			id_article = Integer.parseInt(request.getParameter("id_article"));
+		}else if (id_article == 0) {
+			id_article = (int)request.getAttribute("id_article");
+		}
 		ArticleVendu article = null;
 		// Recuperation de l'article de la bdd
 					try {

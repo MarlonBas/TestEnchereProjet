@@ -40,6 +40,9 @@ p{
 	flex-wrap:wrap;
 	width:45%;
 }
+.creationCompte form{
+	text-align:left;
+}
 
 .detailVente {
 	width:55%;
@@ -59,6 +62,7 @@ p{
 .detailVente .nomArticle {
 	font-size:2.2em;
 	font-weight:bold;
+	color:white;
 	
 }
 
@@ -66,15 +70,46 @@ p{
 	width:50%;
 }
 
-.nouvelleVente input, textarea, select {
+.nouvelleVente input, textarea, select, .creationCompte input, button {
 	width:100%;
+	color:#fff;
+}
+.nouvelleVente a, .creationCompte a{
+	display:block;
+	width:100%;
+	text-align:center;
+}
+.nouvelleVente select {
+	background:#33393F;
+}
+.nouvelleVente input:not(:nth-last-child(-n+2)), textarea, select, .creationCompte input{
+	background-color: rgba(0,0,0,0);
+	border: 1px solid #fff;
+	border-radius:5px;
+}
+body > div > form > input.button{
+	background-color: rgba(77,81,84,1);
 }
 .nouvelleVente label {
-	margin-top:10px;
+	margin-top:9px;
 }
 .nouvelleVente form{
 	text-align:left;
 	width:80%;
+}
+.nouvelleVente .labelDate {
+	width:35%;
+}
+.nouvelleVente .inputDate{
+	width:64%;
+}
+.nouvelleVente .adresseRetrait {
+	text-align:left;
+	font-size:1.4em;
+	color:#fff;
+	margin-bottom:0px;
+	border-bottom:1px solid #fff;
+	
 }
 
 form{
@@ -97,7 +132,7 @@ form input {
 	border-radius:10px;
     border: 1px solid white;
     color: white;
-    padding: 10px; 
+    padding: 10px;
     background-color: #4d5154;
 }
 .button:hover{
