@@ -33,9 +33,9 @@ fr.eni.enchere.bll.EnchereManager" %>
 <form action="Recherche" method="get" class="searchBar">
 	<label for="recherche">Nom de l'article recherché : </label>
 	<% if (search != null && !search.contains("/")) { %>
-			<input type="search" name="recherche" value=<%= search %> />
+			<input type="search" name="recherche" value="<%= search %>" />
 	<% 	} else { %>
-	<input type="search" name="recherche"/>
+	<input type="search" name="recherche" value=""/>
 	<% } %>
 	<label for="categorie">Catégorie :</label>
 	<select id="categorie" name="categorie">
@@ -106,7 +106,7 @@ fr.eni.enchere.bll.EnchereManager" %>
 	encheresE.addAll(encheres);
 	List<ArticleVendu> articlesA = new ArrayList<>();
 	Iterator<Enchere> iterator3 = encheresA.iterator();
-	  while (iterator2.hasNext()) {
+	  while (iterator3.hasNext()) {
 	        Enchere enchere = iterator3.next();
 	        if (enchere.getUtilisateur().equals(utilisateur)) {
 	        	if (enchere.getArticleVendu().getDateFinEncheres().isBefore(LocalDate.now()) && enchere.getArticleVendu().getPrixVente() == enchere.getMontantEnchere())
@@ -115,7 +115,7 @@ fr.eni.enchere.bll.EnchereManager" %>
 	    } 
 	    if (!articlesA.isEmpty()) { %>
 	    <h3>Mes achats</h3><br/>
-	    <% for(ArticleVendu article : articlesE){ %>
+	    <% for(ArticleVendu article : articlesA){ %>
 		<div class="article">
 			<h2><%= article.getNomArticle() %></h2>
 			<p>Prix actuel : <%= article.getPrixVente() %></p>
