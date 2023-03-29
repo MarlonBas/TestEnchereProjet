@@ -33,9 +33,9 @@ fr.eni.enchere.bll.EnchereManager" %>
 <form action="Recherche" method="get" class="searchBar">
 	<label for="recherche">Nom de l'article recherché : </label>
 	<% if (search != null && !search.contains("/")) { %>
-			<input type="search" name="recherche" value=<%= search %> />
+			<input type="search" name="recherche" value="<%= search %>" />
 	<% 	} else { %>
-	<input type="search" name="recherche"/>
+	<input type="search" name="recherche" value=""/>
 	<% } %>
 	<label for="categorie">Catégorie :</label>
 	<select id="categorie" name="categorie">
