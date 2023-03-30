@@ -1,0 +1,69 @@
+@charset "UTF-8";
+
+body{
+margin:20px;	
+}
+
+.listeEncheres {
+	display:flex;
+	justify-content:center;
+	margin:30px;
+	flex-wrap:wrap;
+	width:auto;
+	gap:25px;
+}
+.listeEncheres h3 {
+	width:100%;
+}
+
+  
+.article{
+	width:30%;
+	min-width:250px;
+	padding:10px;
+	border-radius:10px;
+	background-color:#4d5154;
+	border:1px solid white;
+	display : flex;
+	flex-direction:column;
+	box-shadow: 0px 0px 20px 10px rgba(0,0,0,0.4);
+}
+@media only screen and (max-width: 650px) {
+  .article {
+  	width:100%;
+  }
+  
+  }
+
+.article a {
+	text-decoration: none;
+	color:white;
+}
+
+.article a:hover {
+	text-shadow: 0px 0px 10px rgba(255,255,255,0.75);
+
+} 
+.article .titreArticle{
+	font-size:1.7em;
+}
+
+.searchBar{
+	display : flex;
+	justify-content : center;
+	padding: 10px;
+	gap:10px;
+	border:1px solid white;
+	border-radius: 10px;
+	flex-wrap:wrap;
+	margin:20px;
+	background-color:#1a1e21;
+}
+.searchBar label {
+	display:flex;
+	align-items:center;
+}
+.searchBar .button {
+	border-radius:5px;
+    padding: 5px; 
+}

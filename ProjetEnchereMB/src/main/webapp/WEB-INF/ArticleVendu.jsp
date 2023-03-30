@@ -7,7 +7,7 @@
 <meta charset="UTF-8">
 <title>${article.nomArticle}</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-<link rel="stylesheet" type="text/css" href="CSS/login.css">
+<link rel="stylesheet" type="text/css" href="CSS/style.css">
 </head>
 <body>
 <%@ include file="head.jsp" %>
@@ -44,19 +44,19 @@
 		<p>Retrait : ${article.adresse.rue} ${article.adresse.codePostal} ${article.adresse.ville}</p>
 		<p>Vendeur : ${article.utilisateur.pseudo}</p>
 		</div>
-		<div class="photoArticle">
-			<img src="" alt="Photo indisponible">
-		</div>
 	<% if (!article.getUtilisateur().getPseudo().equals(utilisateur.getPseudo())
 			&& article.getEtatVente().equals("en cours")) { %>
+	<div>		
 	<form action="AfficherArticleVendu" method="post">
 		<input name="noArticle" type="hidden" value="${article.noArticle}">
 		<label for="proposition">Proposition </label>
 		<input name="proposition" type="number" step="10" min="${article.miseAPrix}" required>
 		<input type="submit" value="Encherir !">
+		<p class="info"><%=request.getAttribute("erreur")%></p>
 	</form>
+	</div>
 	<% } %>
 	</div>
-	<%=request.getAttribute("erreur")%>
+	
 </body>
 </html>
