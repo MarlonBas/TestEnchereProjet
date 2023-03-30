@@ -15,4 +15,6 @@ public interface EnchereDAO {
 	
 	public List<Enchere> selectAll();
 
+	List<Enchere> selectByIdArticle(int id_article);
+
 }

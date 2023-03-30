@@ -27,7 +27,9 @@ public class EnchereManager {
 	public Enchere selectEnchere(int idEnchere) {
 		return EnchereDAO.selectByID(idEnchere);
 	}
-	
+	public List<Enchere>selectEncheresByIdArticle(int id_article){
+		return EnchereDAO.selectByIdArticle(id_article);
+	}
 	public List<Enchere> selectAllEncheres() {
 		return EnchereDAO.selectAll();
 	}
@@ -39,5 +41,13 @@ public class EnchereManager {
 	public void deleteEnchere(int idEnchere) {
 		EnchereDAO.delete(idEnchere);
 	}
-
+	public Enchere meilleureEnchere(List<Enchere> encheres) {
+		Enchere meilleurEnchere =  null;
+		for (Enchere enchere : encheres) {
+			if (enchere.getMontantEnchere() > meilleurEnchere.getMontantEnchere())
+				meilleurEnchere = enchere;
+		}
+		return meilleurEnchere;
+		
+	}
 }

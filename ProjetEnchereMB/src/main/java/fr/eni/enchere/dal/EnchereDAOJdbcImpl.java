@@ -20,6 +20,7 @@ public class EnchereDAOJdbcImpl implements EnchereDAO{
 	private final String DELETE = "DELETE FROM ENCHERES where id_enchere=?";
 	
 	private static final String SELECT_BY_ID = "SELECT * FROM ENCHERES WHERE id_enchere=?";
+	private static final String SELECT_BY_ID_ARTICLE ="SELECT * FROM ENCHERES WHER id_article=?";
 	private static final String SELECT_ALL = "SELECT * FROM ENCHERES";
 	
 	
@@ -72,11 +73,11 @@ public class EnchereDAOJdbcImpl implements EnchereDAO{
 	}
 	
 	@Override
-	public Enchere selectByID(int idCategorie) {
+	public Enchere selectByID(int id_enchere) {
 		Enchere enchere = null;
 		try {	Connection cnx = ConnectionProvider.getConnection();
 			PreparedStatement pstmt = cnx.prepareStatement(SELECT_BY_ID);
-			pstmt.setInt(1,idCategorie);
+			pstmt.setInt(1,id_enchere);
 			
 			ResultSet rs=pstmt.executeQuery();
 			if (rs.next()) {
@@ -92,6 +93,30 @@ public class EnchereDAOJdbcImpl implements EnchereDAO{
 			e.printStackTrace();
 		}
 		return enchere;
+	}
+	
+	@SuppressWarnings("null")
+	@Override
+	public List<Enchere> selectByIdArticle(int id_article) {
+		List<Enchere> encheres = null;
+		try {	Connection cnx = ConnectionProvider.getConnection();
+			PreparedStatement pstmt = cnx.prepareStatement(SELECT_BY_ID_ARTICLE);
+			pstmt.setInt(1,id_article);
+			
+			ResultSet rs=pstmt.executeQuery();
+			while (rs.next()) {
+				encheres.add(new Enchere(rs.getInt("id_enchere"),
+						UtilisateurManager.getInstance().selectById(rs.getInt("no_utilisateur")),
+						ArticleVenduManager.getInstance().selectArticleById(rs.getInt("id_article")),
+						rs.getDate("date_enchere").toLocalDate(),
+						rs.getInt("montant_enchere")));
+			}
+			cnx.close();		
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return encheres;
 	}
 	
 	@Override
