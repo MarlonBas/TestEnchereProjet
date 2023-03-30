@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@page import="fr.eni.enchere.bo.ArticleVendu,java.time.format.DateTimeFormatter,java.time.format.FormatStyle" %>
+<%@page import="fr.eni.enchere.bo.ArticleVendu,java.time.format.DateTimeFormatter,java.time.format.FormatStyle,fr.eni.enchere.bo.*,fr.eni.enchere.bll.*,java.util.List,java.util.Iterator" %>
 <!DOCTYPE html>
 <html lang="fr" data-bs-theme="dark">
 <head>
@@ -11,14 +11,34 @@
 </head>
 <body>
 <%@ include file="head.jsp" %>
-	
+	<% ArticleVendu article = (ArticleVendu) request.getAttribute("article");
+       Utilisateur utilisateur = (Utilisateur) session.getAttribute("utilisateur");%>
+       
+       <%
+       List<Enchere> encheres = EnchereManager.getInstance().selectEncheresByIdArticle(article.getNoArticle());
+       String pseudo = null;
+       if (encheres != null)
+       		pseudo = EnchereManager.getInstance().meilleureEnchere(encheres).getUtilisateur().getPseudo();
+       if (pseudo == null) {
+    	   pseudo = "aucune enchère";
+       }
+       %>
+       
+    <% if (article.getEtatVente().equals("termine")) {
+    	if (pseudo.equals(utilisateur.getPseudo())) {%>
+    <p>Félicitations vous avez remporter l'enchère ! =)</p>
+	<% }
+    }%>
 	<div class="detailVente">
 		<div>
 		<h1>Détail vente</h1>
 		<p class="nomArticle">${article.nomArticle}</p>
 		<p>Description de l'article : ${article.description}</p>
 		<p>Catégorie : ${article.categorie.libelle}</p>
-		<p>Meilleur offre : ${enchere.montantEnchere} par ${enchere.Utilisateur.pseudo}</p>
+		<% if (article.getEtatVente().equals("en cours")) { %>
+		<p>Meilleur offre : ${article.prixVente} par <%=pseudo%></p>
+		
+		<% } %>
 		<p>Mise à prix: ${article.miseAPrix}</p>
 		<p>Fin de l'enchère : ${article.dateFinEncheres.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT)) }</p>
 		<p>Retrait : ${article.adresse.rue} ${article.adresse.codePostal} ${article.adresse.ville}</p>
@@ -27,7 +47,15 @@
 		<div class="photoArticle">
 			<img src="" alt="Photo indisponible">
 		</div>
+	<% if (!article.getUtilisateur().getPseudo().equals(utilisateur.getPseudo())
+			&& article.getEtatVente().equals("en cours")) { %>
+	<form action="AfficherArticleVendu" method="post">
+		<label for="proposition">Proposition </label>
+		<input name="proposition" type="number" step="10" min="${article.miseAPrix}" required>
+		<input type="submit" value="Encherir !">
+	</form>
+	<% } %>
 	</div>
-	
+	<%=request.getAttribute("erreur")%>
 </body>
 </html>

@@ -62,7 +62,7 @@ public class AfficherArticleVendu extends HttpServlet {
 
         // Récupération des données du formulaire HTTP POST
         
-        int montantEnchere; 
+        int montantEnchere = 0; 
         montantEnchere = Integer.parseInt(request.getParameter("proposition"));
         int noArticle = Integer.parseInt(request.getParameter("noArticle"));
         ArticleVendu article = null;
@@ -91,7 +91,10 @@ public class AfficherArticleVendu extends HttpServlet {
         	utilisateur.setCredit(utilisateur.getCredit()-montantEnchere);
         	session.setAttribute("utilisateur", utilisateur);
         	UtilisateurManager.getInstance().modifier(utilisateur);
-        	request.setAttribute("ok", "Votre enchère à bien été prise en compte");
+        	article.setPrixVente(montantEnchere);
+        	ArticleVenduManager.getInstance().modifierArticleVendu(article);
+            request.setAttribute("erreur", "Votre enchère à bien été prise en compte");
+
         }
         
         // Si l'enchère n'est pas valide on retourne un attribut erreur pour afficher dans la JSP
@@ -105,12 +108,10 @@ public class AfficherArticleVendu extends HttpServlet {
     }
 
     private boolean verifierEnchere(Utilisateur utilisateur, ArticleVendu article, int montantEnchere) {
-    	if (article != null 
-    			&& montantEnchere > article.getPrixVente() 
-    			&& montantEnchere <= utilisateur.getCredit()
-    			&& article.getUtilisateur().getPseudo().equals(utilisateur.getPseudo()))
+    	if (montantEnchere > article.getPrixVente() && montantEnchere <= utilisateur.getCredit())
     		return true;
-    	return false;
+    	else 
+    		return false;
     }
 	
 }
