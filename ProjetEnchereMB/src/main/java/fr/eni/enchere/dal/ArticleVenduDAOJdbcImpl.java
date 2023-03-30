@@ -16,6 +16,7 @@ import java.util.List;
 import fr.eni.enchere.bll.AdresseManager;
 import fr.eni.enchere.bll.ArticleVenduManager;
 import fr.eni.enchere.bll.CategorieManager;
+import fr.eni.enchere.bll.EnchereManager;
 import fr.eni.enchere.bll.UtilisateurManager;
 import fr.eni.enchere.bo.Adresse;
 import fr.eni.enchere.bo.ArticleVendu;
@@ -132,6 +133,7 @@ public  class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 				if (LocalDate.now().isAfter(rs.getDate("date_fin_encheres").toLocalDate())) {
 					if (!rs.getString("etat_vente").equals("termine")) {
 						article.setEtatVente("termine");
+						EnchereManager.getInstance().payerVendeur(article);
 						ArticleVenduManager.getInstance().modifierArticleVendu(article);
 					}
 				}

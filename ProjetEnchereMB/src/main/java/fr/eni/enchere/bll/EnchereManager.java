@@ -1,9 +1,12 @@
 package fr.eni.enchere.bll;
 
+import java.util.Iterator;
 import java.util.List;
 
+import fr.eni.enchere.bo.ArticleVendu;
 import fr.eni.enchere.bo.Categorie;
 import fr.eni.enchere.bo.Enchere;
+import fr.eni.enchere.bo.Utilisateur;
 import fr.eni.enchere.dal.CategorieDAO;
 import fr.eni.enchere.dal.DAOFactory;
 import fr.eni.enchere.dal.EnchereDAO;
@@ -36,6 +39,7 @@ public class EnchereManager {
 	
 	public void insertEnchere(Enchere enchere) {
 		EnchereDAO.insert(enchere);
+		rembourserPrecedent(enchere);
 	}
 	
 	public void deleteEnchere(int idEnchere) {
@@ -49,5 +53,31 @@ public class EnchereManager {
 		}
 		return meilleurEnchere;
 		
+	}
+	
+	public void rembourserPrecedent(Enchere enchere) {
+		List<Enchere> encheres = selectEncheresByIdArticle(enchere.getArticleVendu().getNoArticle());
+		
+		int recredit = 0;
+		int noUtilisateurARecrediter = 0;
+		for (Enchere enchereList : encheres) {
+			if (enchereList.getMontantEnchere() > recredit) {
+				recredit = enchereList.getMontantEnchere();
+				noUtilisateurARecrediter = enchereList.getUtilisateur().getNoUtilisateur();
+			}
+		 }
+		Utilisateur utilisateurARecrediter = UtilisateurManager.getInstance().selectById(noUtilisateurARecrediter);
+		utilisateurARecrediter.setCredit(utilisateurARecrediter.getCredit() + recredit);
+		UtilisateurManager.getInstance().modifier(utilisateurARecrediter);
+	}
+	
+	public void payerVendeur(ArticleVendu article) {
+		List<Enchere> encheres = selectEncheresByIdArticle(article.getNoArticle());
+		if (!encheres.isEmpty()) {
+			Enchere enchereGagnant = meilleureEnchere(encheres);
+			Utilisateur vendeur = article.getUtilisateur();
+			vendeur.setCredit(vendeur.getCredit()+enchereGagnant.getMontantEnchere());
+			UtilisateurManager.getInstance().modifier(vendeur);
+		}
 	}
 }
