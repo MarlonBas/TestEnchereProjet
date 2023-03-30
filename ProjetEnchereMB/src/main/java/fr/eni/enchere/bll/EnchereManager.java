@@ -38,8 +38,9 @@ public class EnchereManager {
 	}
 	
 	public void insertEnchere(Enchere enchere) {
-		EnchereDAO.insert(enchere);
 		rembourserPrecedent(enchere);
+		EnchereDAO.insert(enchere);
+		
 	}
 	
 	public void deleteEnchere(int idEnchere) {

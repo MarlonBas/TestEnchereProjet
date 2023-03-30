@@ -38,7 +38,7 @@ public class EnchereDAOJdbcImpl implements EnchereDAO{
 	 pstmt.setInt(2,enchere.getArticleVendu().getNoArticle());
 	 pstmt.setDate(3,java.sql.Date.valueOf(enchere.getDateEnchere()));
 	 pstmt.setInt(4, enchere.getMontantEnchere());
-	
+	 
 	 pstmt.executeUpdate();
 	 pstmt.close();
 	 cnx.close();

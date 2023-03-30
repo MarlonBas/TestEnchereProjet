@@ -204,6 +204,7 @@ fr.eni.enchere.bll.EnchereManager"%>
 		<%
 		for (ArticleVendu article : articlesRB) {
 		%>
+		<% if(article.getEtatVente().equals("en cours")){ %>
 		<div class="article">
 			<%
 			if (utilisateur != null) {
@@ -228,6 +229,9 @@ fr.eni.enchere.bll.EnchereManager"%>
 					href="AfficherUtilisateur?pseudo=<%=article.getUtilisateur().getPseudo()%>"><%=article.getUtilisateur().getPseudo()%></a>
 			</p>
 		</div>
+		<%
+		}
+		%>
 		<%
 		}
 		%>
