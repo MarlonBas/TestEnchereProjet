@@ -20,7 +20,7 @@ public class EnchereDAOJdbcImpl implements EnchereDAO{
 	private final String DELETE = "DELETE FROM ENCHERES where id_enchere=?";
 	
 	private static final String SELECT_BY_ID = "SELECT * FROM ENCHERES WHERE id_enchere=?";
-	private static final String SELECT_BY_ID_ARTICLE ="SELECT * FROM ENCHERES WHER id_article=?";
+	private static final String SELECT_BY_ID_ARTICLE ="SELECT * FROM ENCHERES WHERE id_article=?";
 	private static final String SELECT_ALL = "SELECT * FROM ENCHERES";
 	
 	
