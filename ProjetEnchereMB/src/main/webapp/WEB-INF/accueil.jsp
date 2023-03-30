@@ -183,9 +183,9 @@ fr.eni.enchere.bll.EnchereManager"%>
 	<%
 	}
 	%>
-
-
-
+	<%
+	}
+	%>
 	<%
 	List<ArticleVendu> articlesRB = new ArrayList<ArticleVendu>();
 	if (articlesR == null) {
@@ -196,6 +196,8 @@ fr.eni.enchere.bll.EnchereManager"%>
 	}
 	if (articlesRB != null) {
 	%>
+	
+	
 	<div class="listeEncheres">
 		<h3>A vendre</h3>
 
@@ -232,9 +234,7 @@ fr.eni.enchere.bll.EnchereManager"%>
 		<%
 		}
 		%>
-		<%
-		}
-		%>
+		
 	</div>
 </body>
 </html>
