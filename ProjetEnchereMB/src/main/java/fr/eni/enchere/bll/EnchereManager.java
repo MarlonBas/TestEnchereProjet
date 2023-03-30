@@ -31,5 +31,13 @@ public class EnchereManager {
 	public List<Enchere> selectAllEncheres() {
 		return EnchereDAO.selectAll();
 	}
+	
+	public void insertEnchere(Enchere enchere) {
+		EnchereDAO.insert(enchere);
+	}
+	
+	public void deleteEnchere(int idEnchere) {
+		EnchereDAO.delete(idEnchere);
+	}
 
 }
