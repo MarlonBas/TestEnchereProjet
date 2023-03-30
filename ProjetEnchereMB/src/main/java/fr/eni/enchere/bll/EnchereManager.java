@@ -42,7 +42,7 @@ public class EnchereManager {
 		EnchereDAO.delete(idEnchere);
 	}
 	public Enchere meilleureEnchere(List<Enchere> encheres) {
-		Enchere meilleurEnchere =  null;
+		Enchere meilleurEnchere =  new Enchere();
 		for (Enchere enchere : encheres) {
 			if (enchere.getMontantEnchere() > meilleurEnchere.getMontantEnchere())
 				meilleurEnchere = enchere;

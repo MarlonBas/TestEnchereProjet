@@ -65,10 +65,11 @@ public class AfficherArticleVendu extends HttpServlet {
         int montantEnchere = 0; 
         montantEnchere = Integer.parseInt(request.getParameter("proposition"));
         int noArticle = Integer.parseInt(request.getParameter("noArticle"));
+        request.setAttribute("id_article", noArticle);
         ArticleVendu article = null;
         
         // Récupération de l'article grâce à son numéro
-        
+      
 		try {
 			article = ArticleVenduManager.getInstance().selectArticleById(noArticle);
 		} catch (BllException e) {
@@ -105,6 +106,8 @@ public class AfficherArticleVendu extends HttpServlet {
         
         // Retour sur la JSP
         doGet(request, response);
+        //request.getRequestDispatcher("/WEB-INF/ArticleVendu.jsp").forward(request, response);
+        
     }
 
     private boolean verifierEnchere(Utilisateur utilisateur, ArticleVendu article, int montantEnchere) {

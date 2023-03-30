@@ -26,7 +26,7 @@ public  class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 	private final String SELECT_BY_ID = "SELECT * FROM articles WHERE id_article=?;";
 	private final String INSERT = "INSERT into ARTICLES (no_utilisateur, id_adresse, id_categorie, nom_article, descr_article, date_debut_encheres, date_fin_encheres, mise_a_prix, prix_vente, etat_vente )VALUES(?,?,?,?,?,?,?,?,?,?)";
     private final String DELETE = "DELETE FROM ARTICLES WHERE id_article=?";
-	private final String UPDATE = "UPDATE FROM ARTICLES SET no_utilisateur=?, id_adresse=?, id_categorie=?, nom_article=?, descr_article=?, date_debut_encheres=?, date_fin_encheres=?, mis_a_prix=?, prix_vente=?,  etat_vente=? ";
+	private final String UPDATE = "UPDATE ARTICLES SET no_utilisateur=?, id_adresse=?, id_categorie=?, nom_article=?, descr_article=?, date_debut_encheres=?, date_fin_encheres=?, mise_a_prix=?, prix_vente=?, etat_vente=? WHERE id_article=?";
 	
 	
 	
@@ -220,7 +220,9 @@ public  class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 		 pstmt.setInt(8, articles.getMiseAPrix());
 		 pstmt.setInt(9, articles.getPrixVente());
 		 pstmt.setString(10, articles.getEtatVente());
+		 pstmt.setInt(11, articles.getNoArticle());
 		 
+		 pstmt.executeUpdate();
 		 pstmt.close();
 		 cnx.close();
 		 

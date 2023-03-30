@@ -17,7 +17,7 @@
        <%
        List<Enchere> encheres = EnchereManager.getInstance().selectEncheresByIdArticle(article.getNoArticle());
        String pseudo = null;
-       if (encheres != null)
+       if (!encheres.isEmpty())
        		pseudo = EnchereManager.getInstance().meilleureEnchere(encheres).getUtilisateur().getPseudo();
        if (pseudo == null) {
     	   pseudo = "aucune enchère";
@@ -50,6 +50,7 @@
 	<% if (!article.getUtilisateur().getPseudo().equals(utilisateur.getPseudo())
 			&& article.getEtatVente().equals("en cours")) { %>
 	<form action="AfficherArticleVendu" method="post">
+		<input name="noArticle" type="hidden" value="${article.noArticle}">
 		<label for="proposition">Proposition </label>
 		<input name="proposition" type="number" step="10" min="${article.miseAPrix}" required>
 		<input type="submit" value="Encherir !">

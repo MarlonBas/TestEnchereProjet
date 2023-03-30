@@ -107,8 +107,8 @@ public class AjouterArticleVendu extends HttpServlet {
 				 request.setAttribute("id_article", article.getNoArticle());
 				
 			}
-			request.getRequestDispatcher("AfficherArticleVendu").forward(request, response);
-		}
+			request.getRequestDispatcher("encheres").forward(request, response);
+		} //"AfficherArticleVendu?id_article="+String.valueOf(article.getNoArticle())
 
 	}
 }

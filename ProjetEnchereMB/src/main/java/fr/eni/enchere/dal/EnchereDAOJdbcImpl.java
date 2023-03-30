@@ -6,7 +6,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import fr.eni.enchere.bll.ArticleVenduManager;
@@ -16,7 +18,7 @@ import fr.eni.enchere.bo.Enchere;
 
 public class EnchereDAOJdbcImpl implements EnchereDAO{
 	
-	private final String INSERT = "INSERT into ENCHERES (date_enchere, montant_enchere, id_article, no_utilisateur)VALUES(?,?,?,?)";
+	private final String INSERT = "INSERT into ENCHERES (no_utilisateur, id_article, date_enchere, montant_enchere)VALUES(?,?,?,?)";
 	private final String DELETE = "DELETE FROM ENCHERES where id_enchere=?";
 	
 	private static final String SELECT_BY_ID = "SELECT * FROM ENCHERES WHERE id_enchere=?";
@@ -31,13 +33,12 @@ public class EnchereDAOJdbcImpl implements EnchereDAO{
 	 PreparedStatement pstmt;
 	 LocalDate date = LocalDate.now();
 	 pstmt = cnx.prepareStatement(INSERT);
-	 
 	
+	 pstmt.setInt(1,enchere.getUtilisateur().getNoUtilisateur());
+	 pstmt.setInt(2,enchere.getArticleVendu().getNoArticle());
 	 pstmt.setDate(3,java.sql.Date.valueOf(enchere.getDateEnchere()));
 	 pstmt.setInt(4, enchere.getMontantEnchere());
-	 pstmt.setInt(1,enchere.getUtilisateur().getNoUtilisateur());
-	 pstmt.setString(2,enchere.getArticleVendu().getNomArticle());
-	 
+	
 	 pstmt.executeUpdate();
 	 pstmt.close();
 	 cnx.close();
@@ -98,8 +99,8 @@ public class EnchereDAOJdbcImpl implements EnchereDAO{
 	@SuppressWarnings("null")
 	@Override
 	public List<Enchere> selectByIdArticle(int id_article) {
-		List<Enchere> encheres = null;
 		try {	Connection cnx = ConnectionProvider.getConnection();
+			List<Enchere> encheres = new ArrayList<>();
 			PreparedStatement pstmt = cnx.prepareStatement(SELECT_BY_ID_ARTICLE);
 			pstmt.setInt(1,id_article);
 			
@@ -111,12 +112,13 @@ public class EnchereDAOJdbcImpl implements EnchereDAO{
 						rs.getDate("date_enchere").toLocalDate(),
 						rs.getInt("montant_enchere")));
 			}
-			cnx.close();		
+			cnx.close();
+			return encheres;
 		}
 		catch(Exception e) {
 			e.printStackTrace();
 		}
-		return encheres;
+		return null;
 	}
 	
 	@Override

@@ -82,14 +82,14 @@ fr.eni.enchere.bll.EnchereManager" %>
 	Iterator<Enchere> iterator2 = encheresE.iterator();
 	  while (iterator2.hasNext()) {
 	        Enchere enchere = iterator2.next();
-	        if (enchere.getUtilisateur().equals(utilisateur)) {
+	        if (enchere.getUtilisateur().getPseudo().equals(utilisateur.getPseudo())) {
 	        	if (enchere.getArticleVendu().getDateFinEncheres().isAfter(LocalDate.now()))
 	            	articlesE.add(enchere.getArticleVendu());
 	        }
 	    } 
 	    if (!articlesE.isEmpty()) { %>
 	 <div class ="listeEncheres">
-	    <h3>Mes achats</h3>
+	    <h3>Mes encheres en cours</h3>
 	    <% for(ArticleVendu article : articlesE){ %>
 		<div class="article">
 			<a class="titreArticle" href="AfficherArticleVendu?id_article=<%= article.getNoArticle() %>"><%= article.getNomArticle() %></a>
@@ -111,7 +111,7 @@ fr.eni.enchere.bll.EnchereManager" %>
 	Iterator<Enchere> iterator3 = encheresA.iterator();
 	  while (iterator3.hasNext()) {
 	        Enchere enchere = iterator3.next();
-	        if (enchere.getUtilisateur().equals(utilisateur)) {
+	        if (enchere.getUtilisateur().getPseudo().equals(utilisateur.getPseudo())) {
 	        	if (enchere.getArticleVendu().getDateFinEncheres().isBefore(LocalDate.now()) && enchere.getArticleVendu().getPrixVente() == enchere.getMontantEnchere())
 	            	articlesA.add(enchere.getArticleVendu());
 	        }
