@@ -33,16 +33,16 @@
 		<div>
 		<h1>Détail vente</h1>
 		<p class="nomArticle">${article.nomArticle}</p>
-		<p>Description de l'article : ${article.description}</p>
-		<p>Catégorie : ${article.categorie.libelle}</p>
+		<p>Description de l'article : <span class="articleInfo"> ${article.description}</span></p>
+		<p>Catégorie : <span class="articleInfo">${article.categorie.libelle}</span></p>
 		<% if (article.getEtatVente().equals("en cours")) { %>
-		<p>Meilleur offre : ${article.prixVente} par <%=pseudo%></p>
+		<p>Meilleur offre : <span class="articleInfo"> ${article.prixVente} par <%=pseudo%></span></p>
 		
 		<% } %>
-		<p>Mise à prix: ${article.miseAPrix}</p>
-		<p>Fin de l'enchère : ${article.dateFinEncheres.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT)) }</p>
-		<p>Retrait : ${article.adresse.rue} ${article.adresse.codePostal} ${article.adresse.ville}</p>
-		<p>Vendeur : ${article.utilisateur.pseudo}</p>
+		<p>Mise à prix: <span class="articleInfo"> ${article.miseAPrix}</span></p>
+		<p>Fin de l'enchère : <span class="articleInfo"> ${article.dateFinEncheres.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT)) }</span></p>
+		<p>Retrait : <span class="articleInfo"> ${article.adresse.rue} ${article.adresse.codePostal} ${article.adresse.ville}</span></p>
+		<p>Vendeur : <a href="AfficherUtilisateur?pseudo=${article.getUtilisateur().getPseudo()}">${article.getUtilisateur().getPseudo()}</a></p>
 		</div>
 	<% if (!article.getUtilisateur().getPseudo().equals(utilisateur.getPseudo())
 			&& article.getEtatVente().equals("en cours")) { %>
@@ -50,9 +50,11 @@
 	<form action="AfficherArticleVendu" method="post">
 		<input name="noArticle" type="hidden" value="${article.noArticle}">
 		<label for="proposition">Proposition </label>
-		<input name="proposition" type="number" step="10" min="${article.miseAPrix}" required>
+		<input name="proposition" type="number" min="${article.prixVente}" required>
 		<input type="submit" value="Encherir !">
+		<%if(request.getAttribute("erreur")!=null){ %>
 		<p class="info"><%=request.getAttribute("erreur")%></p>
+		<% } %>
 	</form>
 	</div>
 	<% } %>
