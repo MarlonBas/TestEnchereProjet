@@ -32,7 +32,7 @@ public class AjouterUtilisateur extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
-		Utilisateur u;
+		Utilisateur nouveauUtilisateur;
 		Adresse adresse;
 		
 		try {
@@ -41,7 +41,7 @@ public class AjouterUtilisateur extends HttpServlet {
 					Integer.parseInt(request.getParameter("code_postal")),
 					request.getParameter("ville")
 					);
-			u=new Utilisateur(
+			nouveauUtilisateur=new Utilisateur(
 					request.getParameter("pseudo"),
 					request.getParameter("nom"),
 					request.getParameter("prenom"),
@@ -51,15 +51,16 @@ public class AjouterUtilisateur extends HttpServlet {
 					request.getParameter("mot_de_passe")
 					); 
 			
-					request.setAttribute("utilisateurEnCreation", u);
+					request.setAttribute("utilisateurEnCreation", nouveauUtilisateur);
 			
 					// Verification que le mot de passe soit le meme dans la case confirmation et qu'elle n'est pas vide.
 			if(request.getParameter("confirmation_mot_de_passe").equals(request.getParameter("mot_de_passe")) && !request.getParameter("mot_de_passe").isEmpty())
 			{
 				try {
-					UtilisateurManager.getInstance().creerUtilisateur(u);
+					UtilisateurManager.getInstance().creerUtilisateur(nouveauUtilisateur);
 					HttpSession ses = request.getSession();
-					ses.setAttribute("utilisateur", u);
+					nouveauUtilisateur.setCredit(100);
+					ses.setAttribute("utilisateur", nouveauUtilisateur);
 					response.sendRedirect("encheres");
 				} catch (BllException e) {
 			
