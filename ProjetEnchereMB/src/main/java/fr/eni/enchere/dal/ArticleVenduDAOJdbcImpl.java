@@ -82,6 +82,7 @@ public  class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 				liste.add(av);
 			 }
 			stmt.close();
+			cnx.close();
 			return liste;
            
 			

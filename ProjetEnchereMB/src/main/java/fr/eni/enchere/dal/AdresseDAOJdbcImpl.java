@@ -71,6 +71,7 @@ public class AdresseDAOJdbcImpl implements AdresseDAO{
 		pstmt.executeUpdate();
 		pstmt.close();
 		
+		cnx.close();
 		}catch (Exception e) {
 			e.printStackTrace();
 		}

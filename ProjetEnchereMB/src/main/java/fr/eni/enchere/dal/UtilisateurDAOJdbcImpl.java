@@ -90,6 +90,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 			pstmt.setInt(1, utilisateur.getNoUtilisateur());
 			pstmt.executeUpdate();
 			pstmt.close();
+			cnx.close();
 			
 			AdresseManager.getInstance().delete(utilisateur.getAdresse());	
 			
@@ -248,7 +249,8 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 		pstmt.setString(1, pseudo);
 		ResultSet rs = pstmt.executeQuery();
 		isPseudoAvailable = !rs.next();
-		
+		pstmt.close();
+		cnx.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
