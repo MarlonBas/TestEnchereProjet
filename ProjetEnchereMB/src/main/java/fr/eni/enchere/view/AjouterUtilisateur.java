@@ -59,8 +59,7 @@ public class AjouterUtilisateur extends HttpServlet {
 				try {
 					UtilisateurManager.getInstance().creerUtilisateur(nouveauUtilisateur);
 					HttpSession ses = request.getSession();
-					nouveauUtilisateur.setCredit(100);
-					ses.setAttribute("utilisateur", nouveauUtilisateur);
+					ses.setAttribute("utilisateur", UtilisateurManager.getInstance().selectByPseudo(nouveauUtilisateur.getPseudo()));
 					response.sendRedirect("encheres");
 				} catch (BllException e) {
 			

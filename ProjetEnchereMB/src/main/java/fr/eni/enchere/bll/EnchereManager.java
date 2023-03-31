@@ -58,18 +58,20 @@ public class EnchereManager {
 	
 	public void rembourserPrecedent(Enchere enchere) {
 		List<Enchere> encheres = selectEncheresByIdArticle(enchere.getArticleVendu().getNoArticle());
-		
-		int recredit = 0;
-		int noUtilisateurARecrediter = 0;
-		for (Enchere enchereList : encheres) {
-			if (enchereList.getMontantEnchere() > recredit) {
-				recredit = enchereList.getMontantEnchere();
-				noUtilisateurARecrediter = enchereList.getUtilisateur().getNoUtilisateur();
-			}
-		 }
-		Utilisateur utilisateurARecrediter = UtilisateurManager.getInstance().selectById(noUtilisateurARecrediter);
-		utilisateurARecrediter.setCredit(utilisateurARecrediter.getCredit() + recredit);
-		UtilisateurManager.getInstance().modifier(utilisateurARecrediter);
+		if (!encheres.isEmpty())
+		{
+			int recredit = 0;
+			int noUtilisateurARecrediter = 0;
+			for (Enchere enchereList : encheres) {
+				if (enchereList.getMontantEnchere() > recredit) {
+					recredit = enchereList.getMontantEnchere();
+					noUtilisateurARecrediter = enchereList.getUtilisateur().getNoUtilisateur();
+				}
+			 }
+			Utilisateur utilisateurARecrediter = UtilisateurManager.getInstance().selectById(noUtilisateurARecrediter);
+			utilisateurARecrediter.setCredit(utilisateurARecrediter.getCredit() + recredit);
+			UtilisateurManager.getInstance().modifier(utilisateurARecrediter);
+		}
 	}
 	
 	public void payerVendeur(ArticleVendu article) {
