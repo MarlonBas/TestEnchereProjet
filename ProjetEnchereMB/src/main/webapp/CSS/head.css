@@ -2,6 +2,30 @@ body{
 	margin:20px;
 	margin-top:10px;
 }
+
+@media screen and (max-width:768px){
+	
+	body{
+	margin: 0px;
+	background-color: brown;
+	}
+	
+	  nav {
+  	flex-direction:column;
+    justify-content:space-around;
+    
+  }
+  
+  nav div{
+  	flex-direction:column;
+  	justify-content:space-around;
+  	min-width:265px;
+  }
+  
+  #logoAccueil{
+  text-align:center;
+  }
+}
 nav{
 	width:auto;
 	display:flex;
@@ -21,17 +45,7 @@ nav div{
 }
 
 @media only screen and (max-width: 600px) {
-  nav {
-  	flex-direction:column;
-    justify-content:space-around;
-    
-  }
-  
-  nav div{
-  	flex-direction:column;
-  	justify-content:space-around;
-  	min-width:265px;
-  }
+
 }
 
 #logoAccueil{

@@ -16,7 +16,7 @@
 		<div class="modifCompte">
 		<form action="ModifierUtilisateur" method="POST">
 			<label for="pseudo">Pseudo :</label>
-			<input name ="pseudo" type="text" value="<%= utilisateur.getPseudo() %>" readonly><br/>
+			<span><%= utilisateur.getPseudo() %></span><br/>
 			
 			<label for="nom">Nom :</label>
 			<input name="nom" type="text" value="<%= utilisateur.getNom() %>"><br/>
@@ -38,7 +38,13 @@
 			
 			<label for="ville">Ville :</label>
 			<input name="ville" type="text" value="<%= utilisateur.getAdresse().getVille() %>"><br/>
-			<br/>
+		
+			<label for="credit">Crédits :</label>
+			<% if(utilisateur.isAdministrateur()){ %>
+			<input name="credit" type="number" value="<%= utilisateur.getCredit() %>"><br/>
+			<% }else{ %>
+			<span><%= utilisateur.getCredit() %></span><br/>
+			<% } %>
 			
 			<input type="submit" name="valider" class="button" value="Modifier">
 		</form>

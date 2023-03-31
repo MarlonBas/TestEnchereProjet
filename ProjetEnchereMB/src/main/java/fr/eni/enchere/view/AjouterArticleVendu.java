@@ -46,6 +46,8 @@ public class AjouterArticleVendu extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("utf8");
+        response.setContentType("text/html; charset=UTF-8");
 		
 		// CONVERSION DES PARAMETRES - de String en int, LocalDate, et Categorie
 		LocalDate debutEnchere = LocalDate.parse(request.getParameter("debutenchere"));

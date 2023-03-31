@@ -51,7 +51,7 @@
 		<input name="noArticle" type="hidden" value="${article.noArticle}">
 		<label for="proposition">Proposition </label>
 		<input name="proposition" type="number" min="${article.prixVente}" required>
-		<input type="submit" value="Encherir !">
+		<input type="submit" value="Encherir !" class="button">
 		<%if(request.getAttribute("erreur")!=null){ %>
 		<p class="info"><%=request.getAttribute("erreur")%></p>
 		<% } %>

@@ -22,6 +22,8 @@ public class AfficherUtilisateur extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("utf8");
+        response.setContentType("text/html; charset=UTF-8");
 		HttpSession ses = request.getSession();
 		Utilisateur utilisateurSession = (Utilisateur)ses.getAttribute("utilisateur");
 		Utilisateur utilisateurProfil = UtilisateurManager.getInstance().selectByPseudo(request.getParameter("pseudo"));
